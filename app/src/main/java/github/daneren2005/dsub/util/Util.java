@@ -1285,7 +1285,7 @@ public final class Util {
             Constructor<BitmapDrawable> constructor = BitmapDrawable.class.getConstructor(Resources.class, Bitmap.class);
             return constructor.newInstance(context.getResources(), bitmap);
         } catch (Throwable x) {
-            return new BitmapDrawable(bitmap);
+            return new BitmapDrawable(context.getResources(), bitmap);
         }
     }
 

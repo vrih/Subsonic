@@ -226,7 +226,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	protected void createCustomActionBarView() {
 		actionBarSpinner = (Spinner) getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
 		if((this instanceof SubsonicFragmentActivity || this instanceof SettingsActivity) && (Util.getPreferences(this).getBoolean(Constants.PREFERENCES_KEY_COLOR_ACTION_BAR, true) || ThemeUtil.getThemeRes(this) != R.style.Theme_DSub_Light_No_Color)) {
-			actionBarSpinner.setBackgroundDrawable(DrawableTint.getTintedDrawableFromColor(this, R.drawable.abc_spinner_mtrl_am_alpha, android.R.color.white));
+			actionBarSpinner.setBackground(DrawableTint.getTintedDrawableFromColor(this, R.drawable.abc_spinner_mtrl_am_alpha, android.R.color.white));
 		}
 		spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -426,7 +426,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 					drawerIdle = false;
 				}
 			};
-			drawer.setDrawerListener(drawerToggle);
+			drawer.addDrawerListener(drawerToggle);
 			drawerToggle.setDrawerIndicatorEnabled(true);
 
 			drawer.setOnTouchListener(new View.OnTouchListener() {
@@ -1251,7 +1251,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 				PackageInfo packageInfo = context.getPackageManager().getPackageInfo("github.daneren2005.dsub", 0);
 				file = new File(Environment.getExternalStorageDirectory(), "dsub-stacktrace.txt");
 				printWriter = new PrintWriter(file);
-				printWriter.println("Android API level: " + Build.VERSION.SDK);
+				printWriter.println("Android API level: " + Build.VERSION.SDK_INT);
 				printWriter.println("Subsonic version name: " + packageInfo.versionName);
 				printWriter.println("Subsonic version code: " + packageInfo.versionCode);
 				printWriter.println();

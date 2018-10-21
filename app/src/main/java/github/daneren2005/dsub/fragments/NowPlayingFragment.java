@@ -30,7 +30,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.MediaRouteButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -166,7 +165,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		d.getSize(p);
 		swipeDistance = (p.x + p.y) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
 		swipeVelocity = (p.x + p.y) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
-		gestureScanner = new GestureDetector(this);
+		gestureScanner = new GestureDetector(context, this);
 
 		playlistFlipper = rootView.findViewById(R.id.download_playlist_flipper);
 		emptyTextView = rootView.findViewById(R.id.download_empty);
@@ -500,7 +499,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		if(downloadService != null) {
 			MenuItem mediaRouteItem = menu.findItem(R.id.menu_mediaroute);
 			if(mediaRouteItem != null) {
-				MediaRouteButton mediaRouteButton = (MediaRouteButton) MenuItemCompat.getActionView(mediaRouteItem);
+				MediaRouteButton mediaRouteButton = (MediaRouteButton) mediaRouteItem.getActionView();
 				mediaRouteButton.setDialogFactory(new CustomMediaRouteDialogFactory());
 				mediaRouteButton.setRouteSelector(downloadService.getRemoteSelector());
 			}

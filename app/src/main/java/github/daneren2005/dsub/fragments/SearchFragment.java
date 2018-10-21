@@ -9,7 +9,6 @@ import java.util.TreeMap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -211,7 +210,7 @@ public class SearchFragment extends SubsonicFragment implements SectionAdapter.O
 		task.execute();
 
 		if(searchItem != null) {
-			MenuItemCompat.collapseActionView(searchItem);
+			searchItem.collapseActionView();
 		}
 	}
 

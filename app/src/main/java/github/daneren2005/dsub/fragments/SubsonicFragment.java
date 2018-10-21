@@ -21,7 +21,6 @@ package github.daneren2005.dsub.fragments;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -178,7 +177,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 	protected void onFinishSetupOptionsMenu(final Menu menu) {
 		searchItem = menu.findItem(R.id.menu_global_search);
 		if(searchItem != null) {
-			searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+			searchView = (SearchView) searchItem.getActionView();
 			SearchManager searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
 			SearchableInfo searchableInfo = searchManager.getSearchableInfo(context.getComponentName());
 			if(searchableInfo == null) {

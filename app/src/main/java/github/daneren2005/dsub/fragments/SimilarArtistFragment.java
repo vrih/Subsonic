@@ -18,6 +18,7 @@ package github.daneren2005.dsub.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ import github.daneren2005.dsub.util.ProgressListener;
 import github.daneren2005.dsub.util.Util;
 import github.daneren2005.dsub.view.UpdateView;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,8 +87,13 @@ public class SimilarArtistFragment extends SelectRecyclerFragment<Artist> {
 	@Override
 	public void onItemClicked(UpdateView<Artist> updateView, Artist artist) {
 		if(Artist.MISSING_ID.equals(artist.getId())) {
-			String url = "http://www.last.fm/music/" + URLEncoder.encode(artist.getName());
-			Intent intent = new Intent(Intent.ACTION_VIEW);
+			String url = "";
+			try {
+				url = "http://www.last.fm/music/" + URLEncoder.encode(artist.getName(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				Log.e(TAG, "Unsupported encoding in LastFM URL");
+			}
+				Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setData(Uri.parse(url));
 			startActivity(intent);
 		} else {

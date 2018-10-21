@@ -1,6 +1,7 @@
 package github.daneren2005.dsub.fragments;
 
 import android.annotation.TargetApi;
+import android.graphics.Point;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -1220,7 +1221,9 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 						// Use LeadingMarginSpan2 to try to make text flow around image
 						Display display = context.getWindowManager().getDefaultDisplay();
 						ImageView coverArtView = header.findViewById(R.id.select_album_art);
-						coverArtView.measure(display.getWidth(), display.getHeight());
+						Point p = new Point();
+			                        display.getSize(p);
+						coverArtView.measure(p.x, p.y);
 
 						int height, width;
 						ViewGroup.MarginLayoutParams vlp = (ViewGroup.MarginLayoutParams) coverArtView.getLayoutParams();
