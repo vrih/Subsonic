@@ -21,6 +21,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import android.annotation.TargetApi;
+import android.graphics.Point;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -161,8 +162,10 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 
 		WindowManager w = context.getWindowManager();
 		Display d = w.getDefaultDisplay();
-		swipeDistance = (d.getWidth() + d.getHeight()) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
-		swipeVelocity = (d.getWidth() + d.getHeight()) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
+		Point p = new Point();
+		d.getSize(p);
+		swipeDistance = (p.x + p.y) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
+		swipeVelocity = (p.x + p.y) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
 		gestureScanner = new GestureDetector(this);
 
 		playlistFlipper = rootView.findViewById(R.id.download_playlist_flipper);

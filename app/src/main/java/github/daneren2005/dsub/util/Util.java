@@ -80,6 +80,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -104,7 +105,7 @@ public final class Util {
 	private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("MMM d h:mm a");
 	private static final SimpleDateFormat DATE_FORMAT_LONG = new SimpleDateFormat("MMM d, yyyy h:mm a");
 	private static final SimpleDateFormat DATE_FORMAT_NO_TIME = new SimpleDateFormat("MMM d, yyyy");
-	private static final int CURRENT_YEAR = new Date().getYear();
+	private static final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 
     public static final String EVENT_META_CHANGED = "github.daneren2005.dsub.EVENT_META_CHANGED";
     public static final String EVENT_PLAYSTATE_CHANGED = "github.daneren2005.dsub.EVENT_PLAYSTATE_CHANGED";
@@ -884,8 +885,10 @@ public final class Util {
 		if(date == null) {
 			return "Never";
 		} else {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
 			if(includeTime) {
-				if (date.getYear() != CURRENT_YEAR) {
+				if (cal.get(Calendar.YEAR) != CURRENT_YEAR) {
 					return DATE_FORMAT_LONG.format(date);
 				} else {
 					return DATE_FORMAT_SHORT.format(date);
@@ -896,7 +899,9 @@ public final class Util {
 		}
 	}
 	public static String formatDate(long millis) {
-		return formatDate(new Date(millis));
+    	Date date = new Date();
+    	date.setTime(millis);
+		return formatDate(date);
 	}
 
 	public static String formatBoolean(Context context, boolean value) {
