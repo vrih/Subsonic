@@ -68,11 +68,10 @@ public final class Notifications {
 		}
 
 		// Set the icon, scrolling text and timestamp
-		final Notification notification = new NotificationCompat.Builder(context)
+		final Notification notification = new NotificationCompat.Builder(context, "now-playing-channel")
 				.setSmallIcon(R.drawable.stat_notify_playing)
 				.setTicker(song.getTitle())
 				.setWhen(System.currentTimeMillis())
-				.setChannelId("now-playing-channel")
 				.build();
 
 		final boolean playing = downloadService.getPlayerState() == PlayerState.STARTED;
@@ -382,7 +381,7 @@ public final class Notifications {
 		}
 
 		NotificationCompat.Builder builder;
-		builder = new NotificationCompat.Builder(context)
+		builder = new NotificationCompat.Builder(context, "downloading-channel")
 				.setSmallIcon(android.R.drawable.stat_sys_download)
 				.setContentTitle(context.getResources().getString(R.string.download_downloading_title, size))
 				.setContentText(context.getResources().getString(R.string.download_downloading_summary, currentDownloading))
@@ -392,8 +391,7 @@ public final class Notifications {
 				.setOngoing(true)
 				.addAction(R.drawable.notification_close,
 						context.getResources().getString(R.string.common_cancel),
-						cancelPI)
-				.setChannelId("downloading-channel");
+						cancelPI);
 
 		Intent notificationIntent = new Intent(context, SubsonicFragmentActivity.class);
 		notificationIntent.putExtra(Constants.INTENT_EXTRA_NAME_DOWNLOAD_VIEW, true);
@@ -451,11 +449,10 @@ public final class Notifications {
 		getDownloadingNotificationChannel(downloadService);
 
 		NotificationCompat.Builder builder;
-		builder = new NotificationCompat.Builder(downloadService)
+		builder = new NotificationCompat.Builder(downloadService, "downloading-channel")
 				.setSmallIcon(android.R.drawable.stat_sys_download)
 				.setContentTitle(downloadService.getResources().getString(R.string.download_downloading_title, 0))
-				.setContentText(downloadService.getResources().getString(R.string.download_downloading_summary, "Temp"))
-				.setChannelId("downloading-channel");
+				.setContentText(downloadService.getResources().getString(R.string.download_downloading_summary, "Temp"));
 
 		final Notification notification = builder.build();
 		startForeground(downloadService, NOTIFICATION_ID_SHUT_GOOGLE_UP, notification);
@@ -476,7 +473,7 @@ public final class Notifications {
 			}
 
 			NotificationCompat.Builder builder;
-			builder = new NotificationCompat.Builder(context)
+			builder = new NotificationCompat.Builder(context, "sync-channel")
 					.setSmallIcon(R.drawable.stat_notify_sync)
 					.setContentTitle(context.getResources().getString(stringId))
 					.setContentText(extra)
@@ -484,7 +481,6 @@ public final class Notifications {
 					.setOngoing(false)
 					.setGroup(NOTIFICATION_SYNC_GROUP)
 					.setPriority(NotificationCompat.PRIORITY_LOW)
-					.setChannelId("sync-channel")
 					.setAutoCancel(true);
 
 			Intent notificationIntent = new Intent(context, SubsonicFragmentActivity.class);
