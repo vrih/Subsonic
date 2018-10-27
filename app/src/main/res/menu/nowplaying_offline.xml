@@ -10,8 +10,8 @@
 
 	<item
 		android:id="@+id/menu_mediaroute"
-		compat:actionProviderClass="android.support.v7.app.MediaRouteActionProvider"
-		compat:actionViewClass="android.support.v7.app.MediaRouteButton"
+		compat:actionProviderClass="androidx.appcompat.app.MediaRouteActionProvider"
+		compat:actionViewClass="androidx.appcompat.app.MediaRouteButton"
 		compat:showAsAction="always"
 		android:title="@string/menu.cast"/>
 		

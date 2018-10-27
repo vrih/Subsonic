@@ -164,7 +164,7 @@ public class DownloadServiceTest extends
 		if (oldPlayState == PAUSED || oldPlayState == COMPLETED
 				|| oldPlayState == STOPPED) {
 			assertEquals(STARTED, newPlayState);
-		} else if (oldPlayState == STOPPED || oldPlayState == IDLE) {
+		} else if (oldPlayState == IDLE) {
 			if (downloadService.size() == 0) {
 				assertEquals(IDLE, newPlayState);
 			} else {

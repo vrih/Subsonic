@@ -26,11 +26,11 @@ import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.MediaRouter;
 import android.os.IBinder;
-import android.support.v7.media.MediaControlIntent;
-import android.support.v7.media.MediaRouteDescriptor;
-import android.support.v7.media.MediaRouteDiscoveryRequest;
-import android.support.v7.media.MediaRouteProvider;
-import android.support.v7.media.MediaRouteProviderDescriptor;
+import androidx.appcompat.media.MediaControlIntent;
+import androidx.appcompat.media.MediaRouteDescriptor;
+import androidx.appcompat.media.MediaRouteDiscoveryRequest;
+import androidx.appcompat.media.MediaRouteProvider;
+import androidx.appcompat.media.MediaRouteProviderDescriptor;
 import android.util.Log;
 
 import org.eclipse.jetty.util.log.Logger;
@@ -327,7 +327,7 @@ public class DLNARouteProvider extends MediaRouteProvider {
 		}
 
 		@Override
-		public boolean onControlRequest(Intent intent, android.support.v7.media.MediaRouter.ControlRequestCallback callback) {
+		public boolean onControlRequest(Intent intent, androidx.appcompat.media.MediaRouter.ControlRequestCallback callback) {
 			if (intent.hasCategory(CATEGORY_DLNA)) {
 				return true;
 			} else {

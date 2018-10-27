@@ -13,7 +13,7 @@ import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.media.RemoteControlClient;
-import android.support.v7.media.MediaRouter;
+import androidx.appcompat.media.MediaRouter;
 
 import java.util.List;
 
