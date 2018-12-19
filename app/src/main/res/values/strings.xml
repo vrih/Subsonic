@@ -622,8 +622,13 @@
 	<string name="details.home_page">Home Page</string>
 
 	<string name="permission.external_storage.failed">DSub cannot function without the ability to write to storage</string>
+	<string name="rate_bad">Rate bad</string>
+	<string name="star_track">Star track</string>
+	<string name="playback_speed">Playback speed</string>
+	<string name="bookmark">Bookmark</string>
+	<string name="rate_good">Rate good</string>
 
-    <plurals name="select_album_n_songs">
+	<plurals name="select_album_n_songs">
         <item quantity="zero">No songs</item>
         <item quantity="one">One song</item>
         <item quantity="other">%d songs</item>
