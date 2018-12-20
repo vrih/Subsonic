@@ -15,14 +15,12 @@
 
 package github.vrih.xsub.fragments;
 
-import android.Manifest;
 import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,10 +45,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import github.vrih.xsub.R;
-import github.vrih.xsub.activity.SubsonicActivity;
 import github.vrih.xsub.service.DownloadService;
 import github.vrih.xsub.service.HeadphoneListenerService;
 import github.vrih.xsub.service.MusicService;
@@ -199,13 +194,6 @@ public class SettingsFragment extends PreferenceCompatFragment implements Shared
 				context.startService(serviceIntent);
 			} else {
 				context.stopService(serviceIntent);
-			}
-		} else if(Constants.PREFERENCES_KEY_THEME.equals(key)) {
-			String value = sharedPreferences.getString(key, null);
-			if("day/night".equals(value) || "day/black".equals(value)) {
-				if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-					ActivityCompat.requestPermissions(context, new String[]{ Manifest.permission.ACCESS_COARSE_LOCATION }, SubsonicActivity.PERMISSIONS_REQUEST_LOCATION);
-				}
 			}
 		} else if(Constants.PREFERENCES_KEY_DLNA_CASTING_ENABLED.equals(key)) {
 			DownloadService downloadService = DownloadService.getInstance();

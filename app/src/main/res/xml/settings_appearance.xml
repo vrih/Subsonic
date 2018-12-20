@@ -18,11 +18,7 @@
 			android:key="fullScreen"
 			android:defaultValue="false"/>
 
-		<SwitchPreference
-			android:title="@string/settings.color_action_bar"
-			android:summary="@string/settings.color_action_bar.summary"
-			android:key="colorActionBar"
-			android:defaultValue="true"/>
+
 	</PreferenceCategory>
 
 	<PreferenceCategory

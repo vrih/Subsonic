@@ -218,7 +218,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 
 	private void createCustomActionBarView() {
 		actionBarSpinner = (Spinner) getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
-		if((this instanceof SubsonicFragmentActivity || this instanceof SettingsActivity) && (Util.getPreferences(this).getBoolean(Constants.PREFERENCES_KEY_COLOR_ACTION_BAR, true) || ThemeUtil.getThemeRes(this) != R.style.Theme_DSub_Light_No_Color)) {
+		if(this instanceof SubsonicFragmentActivity || this instanceof SettingsActivity){
 			actionBarSpinner.setBackgroundDrawable(DrawableTint.getTintedDrawableFromColor(this, R.drawable.abc_spinner_mtrl_am_alpha, android.R.color.white));
 		}
 		spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
@@ -236,7 +236,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 
 		// Make sure to update theme
 		SharedPreferences prefs = Util.getPreferences(this);
-		if (theme != null && !theme.equals(ThemeUtil.getTheme(this)) || fullScreen != prefs.getBoolean(Constants.PREFERENCES_KEY_FULL_SCREEN, false) || actionbarColored != prefs.getBoolean(Constants.PREFERENCES_KEY_COLOR_ACTION_BAR, true)) {
+		if (theme != null && !theme.equals(ThemeUtil.getTheme(this)) || fullScreen != prefs.getBoolean(Constants.PREFERENCES_KEY_FULL_SCREEN, false)) {
 			restart();
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			DrawableTint.clearCache();
@@ -927,7 +927,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 		}
 
 		ThemeUtil.applyTheme(this, theme);
-		actionbarColored = Util.getPreferences(this).getBoolean(Constants.PREFERENCES_KEY_COLOR_ACTION_BAR, true);
 	}
 	private void applyFullscreen() {
 		fullScreen = Util.getPreferences(this).getBoolean(Constants.PREFERENCES_KEY_FULL_SCREEN, false);

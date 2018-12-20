@@ -290,8 +290,6 @@
     <string name="settings.theme_dark">Escuro</string>
 	<string name="settings.theme_black">Preto</string>
 	<string name="settings.theme_holo">Holo</string>
-	<string name="settings.theme_day_night">Dia/Noite</string>
-	<string name="settings.theme_day_black_night">Dia/Noite (Preto)</string>
 	<string name="settings.theme_fullscreen">Ecrã inteiro</string>
 	<string name="settings.theme_fullscreen_summary">Ocultar o maior número de elementos da interface que o Android permita</string>
 	<string name="settings.track_title">Mostrar número da faixa</string>
@@ -447,8 +445,6 @@
 	<string name="settings.rename_duplicates_summary">Renomear as faixas duplicadas para o nome do ficheiro original para que as possa distinguir</string>
 	<string name="settings.start_on_headphones">Iniciar com os auscultadores</string>
 	<string name="settings.start_on_headphones_summary">Iniciar quando os auscultadores são ligados.  Isto requer o uso de um serviço que inicia com o arranque, para verificar o evento de ligação dos auscultadores mesmo quando o DSub não está a ser executado</string>
-	<string name="settings.color_action_bar">Colorir barra de ações</string>
-	<string name="settings.color_action_bar.summary">Colorir ou não a barra de ações e a barra de estado</string>
 	<string name="settings.shuffle_by_album">Aleatorizar por álbum</string>
 	<string name="settings.shuffle_by_album.true">Aleatorizar a ordem dos álbuns</string>
 	<string name="settings.shuffle_by_album.false">Aleatorizar todas as músicas juntas</string>

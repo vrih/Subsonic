@@ -290,8 +290,6 @@
     <string name="settings.theme_dark">Dark</string>
 	<string name="settings.theme_black">Black</string>
 	<string name="settings.theme_holo">Holo</string>
-	<string name="settings.theme_day_night">Day/Night</string>
-	<string name="settings.theme_day_black_night">Day/Black Night</string>
 	<string name="settings.theme_fullscreen">Fullscreen</string>
 	<string name="settings.theme_fullscreen_summary">Hide as many UI elements as Android will allow</string>
 	<string name="settings.track_title">Display Track #</string>
@@ -449,8 +447,6 @@
 	<string name="settings.rename_duplicates_summary">Rename duplicate tracks to the original filename so you can tell them apart.</string>
 	<string name="settings.start_on_headphones">Start on headphones</string>
 	<string name="settings.start_on_headphones_summary">Start when headphones are plugged in.  This requires the use of a service which starts on boot up to check for the headphone plug event even when DSub is not running.</string>
-	<string name="settings.color_action_bar">Color Action Bar</string>
-	<string name="settings.color_action_bar.summary">Color the action bar and status bar or leave them alone</string>
 	<string name="settings.shuffle_by_album">Shuffle By Album</string>
 	<string name="settings.shuffle_by_album.true">Shuffle order of albums</string>
 	<string name="settings.shuffle_by_album.false">Shuffle all songs together</string>

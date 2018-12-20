@@ -289,8 +289,6 @@
     <string name="settings.theme_dark">Sötét</string>
 	<string name="settings.theme_black">Fekete</string>
 	<string name="settings.theme_holo">Holo</string>
-	<string name="settings.theme_day_night">Nappali/Éjszakai</string>
-	<string name="settings.theme_day_black_night">Nappali/Éjszakai (fekete)</string>
 	<string name="settings.theme_fullscreen">Teljes képernyős</string>
 	<string name="settings.theme_fullscreen_summary">Teljes képernyős üzemmód (értesítési sáv elrejtése).</string>
 	<string name="settings.track_title">Dalsorszám megjelenítése</string>
@@ -448,8 +446,6 @@
 	<string name="settings.rename_duplicates_summary">Duplikált dalok átnevezése az eredeti fájlnévre, így megkülönböztethetővé válnak.</string>
 	<string name="settings.start_on_headphones">Lejátszó elindítása</string>
 	<string name="settings.start_on_headphones_summary">Lejátszó elindítása fülhallgató csatlakoztatásakor. Ez a funkció olyan szolgáltatás használatát igényli, ami a Dsub elindítása nélkül tudja kontrollálni a fülhallgató csatlakoztatási eseményeket.</string>
-	<string name="settings.color_action_bar">Színes sávok</string>
-	<string name="settings.color_action_bar.summary">Színes kezelő- és értesítési sáv használata.</string>
 	<string name="settings.shuffle_by_album">Keverés albumok szerint</string>
 	<string name="settings.shuffle_by_album.true">Dalsorrend keverése albumonként szétválasztva.</string>
 	<string name="settings.shuffle_by_album.false">Dalsorrend keverése az összes dalt együtt kezelve.</string>
