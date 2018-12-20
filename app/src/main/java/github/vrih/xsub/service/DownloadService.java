@@ -92,6 +92,7 @@ import static github.vrih.xsub.domain.PlayerState.PREPARED;
 import static github.vrih.xsub.domain.PlayerState.PREPARING;
 import static github.vrih.xsub.domain.PlayerState.STARTED;
 import static github.vrih.xsub.domain.PlayerState.STOPPED;
+import static github.vrih.xsub.domain.RemoteControlState.CHROMECAST;
 import static github.vrih.xsub.domain.RemoteControlState.LOCAL;
 
 /**
@@ -1430,7 +1431,7 @@ public class DownloadService extends Service {
 
 	public int getPlayerPosition() {
 		try {
-			if (playerState == IDLE || playerState == DOWNLOADING || playerState == PREPARING) {
+			if (playerState == IDLE || playerState == DOWNLOADING || (playerState == PREPARING && remoteState != CHROMECAST)) {
 				return 0;
 			}
 			if (remoteState != LOCAL) {
@@ -1446,7 +1447,7 @@ public class DownloadService extends Service {
 	}
 
 	public synchronized int getPlayerDuration() {
-		if (playerState != IDLE && playerState != DOWNLOADING && playerState != PlayerState.PREPARING) {
+		if (playerState != IDLE && playerState != DOWNLOADING && (playerState != PlayerState.PREPARING && remoteState != CHROMECAST)) {
 			int duration;
 			if(remoteState == LOCAL) {
 				try {
@@ -1525,7 +1526,8 @@ public class DownloadService extends Service {
 			scrobbler.scrobble(this, currentPlaying, true, true);
 		}
 
-		if(playerState == STARTED && positionCache == null) {
+		//if(playerState == STARTED && positionCache == null) {
+		if((playerState == STARTED || (playerState == PREPARING && remoteState == CHROMECAST)) && positionCache == null) {
 			if(remoteState == LOCAL) {
 				positionCache = new LocalPositionCache();
 			} else {

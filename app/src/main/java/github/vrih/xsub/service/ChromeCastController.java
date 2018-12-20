@@ -49,6 +49,8 @@ public class ChromeCastController extends RemoteController {
 	private RemoteMediaClient mediaPlayer;
 	private double gain = 0.5;
 	private CastSession mCastSession;
+	private int cachedProgress;
+	private int cachedDuration;
 
 	public ChromeCastController(DownloadService downloadService) {
 		super(downloadService);
@@ -197,18 +199,32 @@ public class ChromeCastController extends RemoteController {
 	    return 0;
 	}
 
+    /**
+     * @return position in secs
+     */
 	@Override
 	public int getRemotePosition() {
+        // TODO: this should return ms
 		if(mediaPlayer != null) {
+		    if(cachedProgress > 0) {
+		        return cachedProgress / 1000;
+            }
 			return (int) (mediaPlayer.getApproximateStreamPosition() / 1000L);
 		} else {
 			return 0;
 		}
 	}
 
+    /**
+     * @return duration in secs
+     */
 	@Override
 	public int getRemoteDuration() {
+	    // TODO: this should return ms
 		if(mediaPlayer != null) {
+            if(cachedDuration > 0) {
+                return cachedDuration / 1000;
+            }
 			return (int) (mediaPlayer.getStreamDuration() / 1000L);
 		} else {
 			return 0;
@@ -240,12 +256,7 @@ public class ChromeCastController extends RemoteController {
 			downloadService.setPlayerState(PlayerState.IDLE);
 			return;
 		} else if(isStopping) {
-			afterUpdateComplete = new Runnable() {
-				@Override
-				public void run() {
-					startSong(currentPlaying, autoStart, position);
-				}
-			};
+		    startSong(currentPlaying, autoStart, position);
 			return;
 		}
 
@@ -331,7 +342,16 @@ public class ChromeCastController extends RemoteController {
                     .build();
 
             mediaPlayer.load(mediaInfo, mlo).setResultCallback(callback);
-		} catch (IllegalStateException e) {
+            RemoteMediaClient.ProgressListener rpl = new RemoteMediaClient.ProgressListener() {
+                @Override
+                public void onProgressUpdated(long progress, long duration) {
+										cachedProgress = (int) progress;
+                    cachedDuration = (int) duration;
+                }
+            };
+            mediaPlayer.addProgressListener(rpl, 1000);
+
+        } catch (IllegalStateException e) {
 			Log.e(TAG, "Problem occurred with media during loading", e);
 			failedLoad();
 		} catch (Exception e) {
