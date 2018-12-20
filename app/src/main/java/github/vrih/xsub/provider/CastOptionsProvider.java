@@ -31,7 +31,6 @@ public class CastOptionsProvider implements OptionsProvider {
         return new CastOptions.Builder()
                 .setCastMediaOptions(mediaOptions)
                 .setReceiverApplicationId(CastMediaControlIntent.DEFAULT_MEDIA_RECEIVER_APPLICATION_ID)
-                .setStopReceiverApplicationWhenEndingSession(true)
                 .build();
     }
 

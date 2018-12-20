@@ -1435,7 +1435,6 @@ public class DownloadService extends Service {
 				return 0;
 			}
 			if (remoteState != LOCAL) {
-			    Log.w("CAST", "remote controller position" + remoteController.getRemotePosition());
 				return remoteController.getRemotePosition() * 1000;
 			} else {
 				return Math.max(0, cachedPosition - subtractPosition);
@@ -1802,7 +1801,7 @@ public class DownloadService extends Service {
 		if(remoteController != null) {
 			remoteController.create(isPlaying, position / 1000);
 		} else {
-			play(getCurrentPlayingIndex(), isPlaying, position);
+			play(getCurrentPlayingIndex(), true, position);
 		}
 
 		if (remoteState != LOCAL) {

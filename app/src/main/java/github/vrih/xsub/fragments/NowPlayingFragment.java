@@ -158,7 +158,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 	private CastContext mCastContext;
 	private SessionManager mSessionManager;
 	private ChromeCastController castController;
-    private int lastKnownRemotePosition;
+    private int lastKnownRemotePositionMs;
 
     /**
 	 * Called when the activity is first created.
@@ -240,8 +240,8 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 			public void onSessionEnding(Session session) {
 			    Log.w("CAST","Session ending");
                 DownloadService downloadService = getDownloadService();
-                lastKnownRemotePosition = downloadService.getPlayerPosition() / 1000;
-				downloadService.setPlayerState(PlayerState.IDLE);
+                lastKnownRemotePositionMs = downloadService.getPlayerPosition();
+                downloadService.pause();
 			}
 
 			@Override
@@ -282,8 +282,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 				Log.w("CAST", "Application disconnected");
                 DownloadService downloadService = getDownloadService();
 				downloadService.setRemoteEnabled(RemoteControlState.LOCAL);
-				Log.w("CAST", "Application disconnected position" + lastKnownRemotePosition);
-				downloadService.play(downloadService.getCurrentPlayingIndex(), true, lastKnownRemotePosition);
+				Log.w("CAST", "Application disconnected position" + lastKnownRemotePositionMs);
 				//invalidateOptionsMenu();
 			}
 		}

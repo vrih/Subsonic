@@ -265,9 +265,6 @@ public class ChromeCastController extends RemoteController {
 			}
 			downloadService.setPlayerState(PlayerState.IDLE);
 			return;
-		} else if(isStopping) {
-		    startSong(currentPlaying, autoStart, position);
-			return;
 		}
 
 		downloadService.setPlayerState(PlayerState.PREPARING);
