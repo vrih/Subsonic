@@ -19,12 +19,4 @@
 			android:id="@+id/menu_rescan"
 			android:title="@string/menu.rescan"/>
 	</group>
-		
-	<item 
-		android:id="@+id/menu_about"
-		android:title="@string/menu.about"/>
-
-	<item
-		android:id="@+id/menu_faq"
-		android:title="@string/menu.faq"/>
 </menu>

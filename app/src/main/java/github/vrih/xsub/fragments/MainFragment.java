@@ -81,12 +81,6 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 		}
 
 		switch (item.getItemId()) {
-			case R.id.menu_about:
-				showAboutDialog();
-				return true;
-			case R.id.menu_faq:
-				showFAQDialog();
-				return true;
 			case R.id.menu_rescan:
 				rescanServer();
 				return true;
@@ -188,63 +182,6 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 		replaceFragment(fragment);
 	}
 
-	private void showAboutDialog() {
-		new LoadingTask<Void>(context) {
-			Long[] used;
-			long bytesTotalFs;
-			long bytesAvailableFs;
-
-			@Override
-			protected Void doInBackground() {
-				File rootFolder = FileUtil.getMusicDirectory(context);
-				StatFs stat = new StatFs(rootFolder.getPath());
-				bytesTotalFs = stat.getBlockCountLong() * stat.getBlockSizeLong();
-				bytesAvailableFs = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
-
-				used = FileUtil.getUsedSize(context, rootFolder);
-				return null;
-			}
-
-			@Override
-			protected void done(Void result) {
-				List<Integer> headers = new ArrayList<>();
-				List<String> details = new ArrayList<>();
-
-				headers.add(R.string.details_author);
-				details.add("Scott Jackson");
-
-				headers.add(R.string.details_email);
-				details.add("dsub.android@gmail.com");
-
-				try {
-					headers.add(R.string.details_version);
-					details.add(context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);
-				} catch(Exception e) {
-					details.add("");
-				}
-
-				Resources res = context.getResources();
-				headers.add(R.string.details_files_cached);
-				details.add(Long.toString(used[0]));
-
-				headers.add(R.string.details_files_permanent);
-				details.add(Long.toString(used[1]));
-
-				headers.add(R.string.details_used_space);
-				details.add(res.getString(R.string.details_of, Util.formatLocalizedBytes(used[2], context), Util.formatLocalizedBytes(Util.getCacheSizeMB(context) * 1024L * 1024L, context)));
-
-				headers.add(R.string.details_available_space);
-				details.add(res.getString(R.string.details_of, Util.formatLocalizedBytes(bytesAvailableFs, context), Util.formatLocalizedBytes(bytesTotalFs, context)));
-
-				Util.showDetailsDialog(context, R.string.main_about_title, headers, details);
-			}
-		}.execute();
-	}
-
-	private void showFAQDialog() {
-		Util.showHTMLDialog(context, R.string.main_faq_title, R.string.main_faq_text);
-	}
-
 	private void rescanServer() {
 		new LoadingTask<Void>(context, false) {
 			@Override
@@ -259,127 +196,6 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 				Util.toast(context, R.string.main_scan_complete);
 			}
 		}.execute();
-	}
-
-	private void getLogs() {
-		if (EnvironmentVariables.PASTEBIN_DEV_KEY == null) {
-			Util.toast(context, "No PASTEBIN_DEV_KEY configured - can't upload logs");
-			return;
-		}
-		try {
-			final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			new LoadingTask<String>(context) {
-				@Override
-				protected String doInBackground() throws Throwable {
-					updateProgress("Gathering Logs");
-					File logcat = new File(Environment.getExternalStorageDirectory(), "dsub-logcat.txt");
-					Util.delete(logcat);
-					Process logcatProc = null;
-
-					try {
-						List<String> progs = new ArrayList<>();
-						progs.add("logcat");
-						progs.add("-v");
-						progs.add("time");
-						progs.add("-d");
-						progs.add("-f");
-						progs.add(logcat.getCanonicalPath());
-						progs.add("*:I");
-
-						logcatProc = Runtime.getRuntime().exec(progs.toArray(new String[0]));
-						logcatProc.waitFor();
-					} finally {
-						if(logcatProc != null) {
-							logcatProc.destroy();
-						}
-					}
-
-					URL url = new URL("https://pastebin.com/api/api_post.php");
-					HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-					StringBuilder responseBuffer = new StringBuilder();
-					try {
-						urlConnection.setReadTimeout(10000);
-						urlConnection.setConnectTimeout(15000);
-						urlConnection.setRequestMethod("POST");
-						urlConnection.setDoInput(true);
-						urlConnection.setDoOutput(true);
-
-						OutputStream os = urlConnection.getOutputStream();
-						BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, Constants.UTF_8));
-						writer.write("api_dev_key=" + URLEncoder.encode(EnvironmentVariables.PASTEBIN_DEV_KEY, Constants.UTF_8) + "&api_option=paste&api_paste_private=1&api_paste_code=");
-
-						BufferedReader reader = null;
-						try {
-							reader = new BufferedReader(new InputStreamReader(new FileInputStream(logcat)));
-							String line;
-							while ((line = reader.readLine()) != null) {
-								writer.write(URLEncoder.encode(line + "\n", Constants.UTF_8));
-							}
-						} finally {
-							Util.close(reader);
-						}
-
-						File stacktrace = new File(Environment.getExternalStorageDirectory(), "dsub-stacktrace.txt");
-						if(stacktrace.exists() && stacktrace.isFile()) {
-							writer.write("\n\nMost Recent Stacktrace:\n\n");
-
-							reader = null;
-							try {
-								reader = new BufferedReader(new InputStreamReader(new FileInputStream(stacktrace)));
-								String line;
-								while ((line = reader.readLine()) != null) {
-									writer.write(URLEncoder.encode(line + "\n", Constants.UTF_8));
-								}
-							} finally {
-								Util.close(reader);
-							}
-						}
-
-						writer.flush();
-						writer.close();
-						os.close();
-
-						BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-						String inputLine;
-						while ((inputLine = in.readLine()) != null) {
-							responseBuffer.append(inputLine);
-						}
-						in.close();
-					} finally {
-						urlConnection.disconnect();
-					}
-
-					String response = responseBuffer.toString();
-					if(response.indexOf("http") == 0) {
-						return response.replace("http:", "https:");
-					} else {
-						throw new Exception("Pastebin Error: " + response);
-					}
-				}
-
-				@Override
-				protected void error(Throwable error) {
-					Log.e(TAG, "Failed to gather logs", error);
-					Util.toast(context, "Failed to gather logs");
-				}
-
-				@Override
-				protected void done(String logcat) {
-					String footer = "Android SDK: " + Build.VERSION.SDK_INT;
-					footer += "\nDevice Model: " + Build.MODEL;
-					footer += "\nDevice Name: " + Build.MANUFACTURER + " "  + Build.PRODUCT;
-					footer += "\nROM: " + Build.DISPLAY;
-					footer += "\nLogs: " + logcat;
-					footer += "\nBuild Number: " + packageInfo.versionCode;
-
-					Intent email = new Intent(Intent.ACTION_SENDTO,
-						Uri.fromParts("mailto", "dsub.android@gmail.com", null));
-					email.putExtra(Intent.EXTRA_SUBJECT, "DSub " + packageInfo.versionName + " Error Logs");
-					email.putExtra(Intent.EXTRA_TEXT, "Describe the problem here\n\n\n" + footer);
-					startActivity(email);
-				}
-			}.execute();
-		} catch(Exception e) {}
 	}
 
 	@Override
