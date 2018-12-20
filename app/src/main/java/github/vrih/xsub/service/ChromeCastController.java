@@ -24,8 +24,11 @@ import com.google.android.gms.cast.MediaLoadOptions;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.gms.cast.framework.CastSession;
 import com.google.android.gms.cast.framework.media.RemoteMediaClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 
+import androidx.annotation.NonNull;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.MusicDirectory;
 import github.vrih.xsub.domain.PlayerState;
@@ -109,7 +112,13 @@ public class ChromeCastController extends RemoteController {
 	public void stop() {
 		Log.w(TAG, "Attempting to stop chromecast song");
 		try {
-			mediaPlayer.pause();
+			PendingResult result = mediaPlayer.pause();
+			result.setResultCallback(new ResultCallback() {
+				@Override
+				public void onResult(@NonNull Result result) {
+					Log.w("CAST", "pending callback" + result.getStatus());
+				}
+			});
 		} catch(Exception e) {
 			Log.e(TAG, "Failed to pause");
 		}
@@ -162,10 +171,6 @@ public class ChromeCastController extends RemoteController {
 	}
 
 	@Override
-	public void changeTrack(int index, DownloadFile song) {
-		startSong(song, true, 0);
-	}
-
 	public void changeTrack(int index, DownloadFile song, int position) {
 		startSong(song, true, position);
 	}

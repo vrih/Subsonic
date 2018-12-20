@@ -115,7 +115,7 @@ public class JukeboxController extends RemoteController {
 		downloadService.setPlayerState(PlayerState.STARTED);
 	}
 	@Override
-	public void changeTrack(int index, DownloadFile song) {
+	public void changeTrack(int index, DownloadFile song, int position) {
 		tasks.remove(Skip.class);
 		tasks.remove(Stop.class);
 		tasks.remove(Start.class);
