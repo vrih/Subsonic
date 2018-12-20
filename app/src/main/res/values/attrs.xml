@@ -45,16 +45,6 @@
 	<attr name="download" format="reference"/>
 	<attr name="playback_speed" format="reference"/>
 	<attr name="drawerItemsIcons" format="reference"/>
-	<attr name="drawerHome" format="reference"/>
-	<attr name="drawerLibrary" format="reference"/>
-	<attr name="drawerPlaylists" format="reference"/>
-	<attr name="drawerPodcasts" format="reference"/>
-	<attr name="drawerBookmarks" format="reference"/>
-	<attr name="drawerInternetRadioStations" format="reference"/>
-	<attr name="drawerShares" format="reference"/>
-	<attr name="drawerAdmin" format="reference"/>
-	<attr name="drawerDownloading" format="reference"/>
-	<attr name="drawerSettings" format="reference"/>
 	<attr name="actionbarThemeStyle" format="reference"/>
 	<attr name="actionbarTitleStyle" format="reference"/>
 	<attr name="actionbarSubtitleStyle" format="reference"/>

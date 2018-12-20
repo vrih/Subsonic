@@ -3,50 +3,53 @@
 	<group android:checkableBehavior="single">
 		<item
 			android:id="@+id/drawer_home"
-			android:icon="?attr/drawerHome"
+			android:icon="@drawable/main_offline"
 			android:title="@string/button_bar.home"/>
 		<item
 			android:id="@+id/drawer_library"
-			android:icon="?attr/drawerLibrary"
+			android:icon="@drawable/ic_menu_library"
 			android:title="@string/button_bar.browse"/>
 		<item
 			android:id="@+id/drawer_playlists"
-			android:icon="?attr/drawerPlaylists"
+			android:icon="@drawable/ic_menu_playlist"
 			android:title="@string/button_bar.playlists"/>
 		<item
 			android:id="@+id/drawer_podcasts"
-			android:icon="?attr/drawerPodcasts"
+			android:icon="@drawable/ic_menu_podcast"
 			android:title="@string/button_bar.podcasts"/>
 		<item
 			android:id="@+id/drawer_bookmarks"
-			android:icon="?attr/drawerBookmarks"
+			android:icon="@drawable/ic_menu_bookmark"
 			android:title="@string/button_bar.bookmarks"/>
 		<item
 			android:id="@+id/drawer_internet_radio_stations"
-			android:icon="?attr/drawerInternetRadioStations"
+			android:icon="@drawable/ic_menu_radio"
 			android:title="@string/button_bar.internet_radio"/>
 		<item
 			android:id="@+id/drawer_shares"
-			android:icon="?attr/drawerShares"
+			android:icon="@drawable/ic_menu_share"
 			android:title="@string/button_bar.shares"/>
 		<item
 			android:id="@+id/drawer_admin"
-			android:icon="?attr/drawerAdmin"
+			android:icon="@drawable/ic_menu_admin"
 			android:title="@string/button_bar.admin"/>
 		<item
 			android:id="@+id/drawer_downloading"
-			android:icon="?attr/drawerDownloading"
+			android:icon="@drawable/ic_menu_download"
 			android:title="@string/button_bar.downloading"
 			android:visible="false"/>
 	</group>
 
 	<group android:checkableBehavior="single">
 
-		<item android:id="@+id/drawer_offline"
-			  android:title="@string/button_bar.offline"/>
+		<item
+			android:id="@+id/drawer_offline"
+			android:icon="@drawable/ic_menu_offline"
+			android:title="@string/button_bar.offline"/>
 
 		<item
 			android:id="@+id/drawer_settings"
+			android:icon="@drawable/ic_menu_settings"
 			android:title="@string/menu.settings"/>
 	</group>
 </menu>
