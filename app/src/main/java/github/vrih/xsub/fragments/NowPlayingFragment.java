@@ -268,8 +268,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 				    if (downloadService.getPlayerState() == PlayerState.STARTED || downloadService.getPlayerState() == PlayerState.PREPARING) {
 				        //mVideoView.pause();
                         downloadService.play(downloadService.getCurrentPlayingIndex(), true, position);
-                        // TODO: play should set player state
-                        downloadService.setPlayerState(PlayerState.STARTED);
 				        return;
 				    } else {
 					    downloadService.setPlayerState(PlayerState.IDLE);

@@ -102,7 +102,15 @@ public class ChromeCastController extends RemoteController {
 		}
 
 		try {
-			mediaPlayer.play();
+			PendingResult result = mediaPlayer.play();
+			result.setResultCallback(new ResultCallback() {
+				@Override
+				public void onResult(@NonNull Result result) {
+					if(result.getStatus().isSuccess()) {
+						downloadService.setPlayerState(PlayerState.STARTED);
+					}
+				}
+			});
 		} catch(Exception e) {
 			Log.e(TAG, "Failed to start");
 		}
@@ -330,6 +338,7 @@ public class ChromeCastController extends RemoteController {
 				@Override
 				public void onResult(RemoteMediaClient.MediaChannelResult result) {
 					if (result.getStatus().isSuccess()) {
+					    downloadService.setPlayerState(PlayerState.STARTED);
 						// Handled in other handler
 					} else if(result.getStatus().getStatusCode() == CastStatusCodes.REPLACED) {
 						Log.w(TAG, "Request was replaced: " + currentPlaying.toString());
