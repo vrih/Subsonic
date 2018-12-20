@@ -219,10 +219,7 @@ public class ChromeCastController extends RemoteController {
 	public int getRemotePosition() {
         // TODO: this should return ms
 		if(mediaPlayer != null) {
-		    if(cachedProgress > 0) {
-		        return cachedProgress / 1000;
-            }
-			return (int) (mediaPlayer.getApproximateStreamPosition() / 1000L);
+			return cachedProgress / 1000;
 		} else {
 			return 0;
 		}
