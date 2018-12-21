@@ -22,11 +22,17 @@ import com.google.android.gms.cast.CastStatusCodes;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaLoadOptions;
 import com.google.android.gms.cast.MediaMetadata;
+import com.google.android.gms.cast.MediaQueueItem;
+import com.google.android.gms.cast.MediaStatus;
 import com.google.android.gms.cast.framework.CastSession;
+import com.google.android.gms.cast.framework.media.MediaQueue;
 import com.google.android.gms.cast.framework.media.RemoteMediaClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import github.vrih.xsub.R;
@@ -97,7 +103,7 @@ public class ChromeCastController extends RemoteController {
 		if(error) {
 			error = false;
 			Log.w(TAG, "Attempting to restart song");
-			startSong(downloadService.getCurrentPlaying(), true, 0);
+			//startSong(downloadService.getCurrentPlaying(), true, 0);
 			return;
 		}
 
@@ -165,7 +171,7 @@ public class ChromeCastController extends RemoteController {
 	@Override
 	public void updatePlaylist() {
 		if(downloadService.getCurrentPlaying() == null) {
-			startSong(null, false, 0);
+			//startSong(null, false, 0);
 		}
 	}
 
@@ -179,8 +185,17 @@ public class ChromeCastController extends RemoteController {
 	}
 
 	@Override
+	public void changeTrack(int index, List<DownloadFile> downloadList, int position) {
+		// Create Queue
+		startSong(index, downloadList, true, position);
+		//
+	}
+
+	@Override
 	public void changeTrack(int index, DownloadFile song, int position) {
-		startSong(song, true, position);
+		List<DownloadFile> dl = new ArrayList<>();
+		dl.add(song);
+		changeTrack(index, dl, position);
 	}
 
 	@Override
@@ -241,10 +256,10 @@ public class ChromeCastController extends RemoteController {
 		}
 	}
 
-	private void startSong(final DownloadFile currentPlaying, final boolean autoStart, final int position) {
+	private void startSong(int index, final List<DownloadFile> playlist, final boolean autoStart, final int position) {
 		Log.w(TAG, "Starting song");
 
-		if(currentPlaying == null) {
+		if(playlist == null || playlist.isEmpty()) {
 			try {
 				if (mediaPlayer != null && !error && !isStopping) {
 					isStopping = true;
@@ -268,22 +283,26 @@ public class ChromeCastController extends RemoteController {
 		}
 
 		downloadService.setPlayerState(PlayerState.PREPARING);
-		MusicDirectory.Entry song = currentPlaying.getSong();
+
+		ArrayList<MediaQueueItem> queue = new ArrayList<>();
 
 		try {
-			MusicService musicService = MusicServiceFactory.getMusicService(downloadService);
-			String url = getStreamUrl(musicService, currentPlaying);
+			for (DownloadFile file: playlist) {
 
-			// Setup song/video information
-			MediaMetadata meta = new MediaMetadata(song.isVideo() ? MediaMetadata.MEDIA_TYPE_MOVIE : MediaMetadata.MEDIA_TYPE_MUSIC_TRACK);
-			meta.putString(MediaMetadata.KEY_TITLE, song.getTitle());
-			if(song.getTrack() != null) {
-				meta.putInt(MediaMetadata.KEY_TRACK_NUMBER, song.getTrack());
-			}
-			if(!song.isVideo()) {
-				meta.putString(MediaMetadata.KEY_ARTIST, song.getArtist());
-				meta.putString(MediaMetadata.KEY_ALBUM_ARTIST, song.getArtist());
-				meta.putString(MediaMetadata.KEY_ALBUM_TITLE, song.getAlbum());
+				MusicDirectory.Entry song = file.getSong();
+				MusicService musicService = MusicServiceFactory.getMusicService(downloadService);
+				String url = getStreamUrl(musicService, file);
+
+				// Setup song/video information
+				MediaMetadata meta = new MediaMetadata(song.isVideo() ? MediaMetadata.MEDIA_TYPE_MOVIE : MediaMetadata.MEDIA_TYPE_MUSIC_TRACK);
+				meta.putString(MediaMetadata.KEY_TITLE, song.getTitle());
+				if (song.getTrack() != null) {
+					meta.putInt(MediaMetadata.KEY_TRACK_NUMBER, song.getTrack());
+				}
+				if (!song.isVideo()) {
+					meta.putString(MediaMetadata.KEY_ARTIST, song.getArtist());
+					meta.putString(MediaMetadata.KEY_ALBUM_ARTIST, song.getArtist());
+					meta.putString(MediaMetadata.KEY_ALBUM_TITLE, song.getAlbum());
 
 /*				if(castDevice.hasCapability(CastDevice.CAPABILITY_VIDEO_OUT)) {
 					if (proxy == null || proxy instanceof WebProxy) {
@@ -303,31 +322,34 @@ public class ChromeCastController extends RemoteController {
 						}
 					}
 				}*/
-			}
+				}
 
-			String contentType;
-			if(song.isVideo()) {
-				contentType = "application/x-mpegURL";
-			}
-			else if(song.getTranscodedContentType() != null) {
-				contentType = song.getTranscodedContentType();
-			} else if(song.getContentType() != null) {
-				contentType = song.getContentType();
-			} else {
-				contentType = "audio/mpeg";
-			}
+				String contentType;
+				if (song.isVideo()) {
+					contentType = "application/x-mpegURL";
+				} else if (song.getTranscodedContentType() != null) {
+					contentType = song.getTranscodedContentType();
+				} else if (song.getContentType() != null) {
+					contentType = song.getContentType();
+				} else {
+					contentType = "audio/mpeg";
+				}
 
-			// Load it into a MediaInfo wrapper
-			MediaInfo mediaInfo = new MediaInfo.Builder(url)
-				.setContentType(contentType)
-				.setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
-				.setMetadata(meta)
-				.build();
+				// Load it into a MediaInfo wrapper
+				MediaInfo mediaInfo = new MediaInfo.Builder(url)
+						.setContentType(contentType)
+						.setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+						.setMetadata(meta)
+						.build();
 
 			if(autoStart) {
 				ignoreNextPaused = true;
 			}
 
+				MediaQueueItem mqi = new MediaQueueItem.Builder(mediaInfo)
+						.build();
+				queue.add(mqi);
+			}
 			ResultCallback callback = new ResultCallback<RemoteMediaClient.MediaChannelResult>() {
 				@Override
 				public void onResult(RemoteMediaClient.MediaChannelResult result) {
@@ -335,7 +357,7 @@ public class ChromeCastController extends RemoteController {
 					    downloadService.setPlayerState(PlayerState.STARTED);
 						// Handled in other handler
 					} else if(result.getStatus().getStatusCode() == CastStatusCodes.REPLACED) {
-						Log.w(TAG, "Request was replaced: " + currentPlaying.toString());
+						Log.i(TAG, "Playlist was replaced");
 					} else {
 						Log.e(TAG, "Failed to load: " + result.getStatus().toString());
 						failedLoad();
@@ -349,7 +371,11 @@ public class ChromeCastController extends RemoteController {
                     .setPlayPosition(position * 1000L)
                     .build();
 
-            mediaPlayer.load(mediaInfo, mlo).setResultCallback(callback);
+            //mediaPlayer.load(mediaInfo, mlo).setResultCallback(callback);
+			Log.w("CAST", "queue: " + queue);
+			MediaQueueItem[] queueList = new MediaQueueItem[queue.size()];
+			PendingResult a = mediaPlayer.queueLoad(queue.toArray(queueList), index, MediaStatus.REPEAT_MODE_REPEAT_OFF, position, null);
+			a.setResultCallback(callback);
             RemoteMediaClient.ProgressListener rpl = new RemoteMediaClient.ProgressListener() {
                 @Override
                 public void onProgressUpdated(long progress, long duration) {
@@ -378,6 +404,17 @@ public class ChromeCastController extends RemoteController {
 		this.mCastSession = mCastSession;
 		mediaPlayer = mCastSession.getRemoteMediaClient();
 	}
+
+	private RemoteMediaClient.Callback rmcCallback = new RemoteMediaClient.Callback() {
+		@Override
+		public void onQueueStatusUpdated() {
+			super.onQueueStatusUpdated();
+			MediaQueueItem mediaQueueItem = mediaPlayer.getCurrentItem();
+			MediaQueue mediaQueue = mediaPlayer.getMediaQueue();
+			int index = mediaQueue.indexOfItemWithId(mediaQueueItem.getItemId());
+			downloadService.setCurrentPlaying(index, false);
+		}
+	};
 }
 
 

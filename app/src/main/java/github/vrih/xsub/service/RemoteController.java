@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import github.vrih.xsub.domain.MusicDirectory;
@@ -53,7 +54,10 @@ public abstract class RemoteController {
 	
 	public abstract void updatePlaylist();
 	public abstract void changePosition(int seconds);
-	public abstract void changeTrack(int index, DownloadFile song, int position);
+
+    public abstract void changeTrack(int index, List<DownloadFile> downloadList, int position);
+
+    public abstract void changeTrack(int index, DownloadFile song, int position);
 	// Really is abstract, just don't want to require RemoteController's support it
 	public void changeNextTrack(DownloadFile song) {}
 	public boolean isNextSupported() {

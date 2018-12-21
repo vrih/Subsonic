@@ -57,6 +57,7 @@ import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicLong;
@@ -299,6 +300,10 @@ public class DLNAController extends RemoteController {
 				Log.w(TAG, "Seek failed: " + defaultMessage);
 			}
 		});
+	}
+
+	@Override
+	public void changeTrack(int index, List<DownloadFile> song, int position) {
 	}
 
 	@Override

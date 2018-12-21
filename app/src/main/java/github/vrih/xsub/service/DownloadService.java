@@ -1106,7 +1106,11 @@ public class DownloadService extends Service {
 			}
 			setCurrentPlaying(index, start);
 			if (start && remoteState != LOCAL) {
-				remoteController.changeTrack(index, currentPlaying, position);
+				if (remoteState == CHROMECAST) {
+					remoteController.changeTrack(index, downloadList, position);
+				} else {
+					remoteController.changeTrack(index, currentPlaying, position);
+				}
 			}
 			if (remoteState == LOCAL) {
 				bufferAndPlay(position, start);
