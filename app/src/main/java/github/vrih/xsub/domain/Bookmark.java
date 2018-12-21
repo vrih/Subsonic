@@ -70,10 +70,10 @@ public class Bookmark implements Serializable {
 			try {
 				this.created = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH).parse(created);
 			} catch (ParseException e) { 
-				this.created = null;
+				this.created = new Date();
 			}
 		} else {
-			this.created = null;
+			this.created = new Date();
 		}
 	}
 	public void setCreated(Date created) {

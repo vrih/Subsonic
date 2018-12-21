@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,10 +85,15 @@ public class SimilarArtistFragment extends SelectRecyclerFragment<Artist> {
 	@Override
 	public void onItemClicked(UpdateView<Artist> updateView, Artist artist) {
 		if(Artist.MISSING_ID.equals(artist.getId())) {
-			String url = "http://www.last.fm/music/" + URLEncoder.encode(artist.getName());
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse(url));
-			startActivity(intent);
+			String url = null;
+			try {
+				url = "http://www.last.fm/music/" + URLEncoder.encode(artist.getName(), "utf-8");
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse(url));
+				startActivity(intent);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		} else {
 			SubsonicFragment fragment = new SelectDirectoryFragment();
 			Bundle args = new Bundle();
