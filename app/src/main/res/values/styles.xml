@@ -55,6 +55,11 @@
         <item name="android:layout_height">@dimen/Button.Small</item>
     </style>
 
+	<style name="PlaybackControl.Smaller" parent="@style/PlaybackControl">
+		<item name="android:layout_width">@dimen/Button.Smaller</item>
+		<item name="android:layout_height">@dimen/Button.Smaller</item>
+	</style>
+
 	<style name="PlaybackControl.Large" parent="@style/PlaybackControl">
 		<item name="android:layout_width">@dimen/Button.Large</item>
 		<item name="android:layout_height">@dimen/Button.Large</item>

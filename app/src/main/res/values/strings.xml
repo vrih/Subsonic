@@ -623,6 +623,11 @@
 	<string name="playback_speed">Playback speed</string>
 	<string name="bookmark">Bookmark</string>
 	<string name="rate_good">Rate good</string>
+    <string name="playlist">Playlist</string>
+	<string name="repeat">Repeat</string>
+	<string name="pause">Pause</string>
+	<string name="stop">Stop</string>
+	<string name="start">Start</string>
 
 	<plurals name="select_album_n_songs">
         <item quantity="zero">No songs</item>
