@@ -580,9 +580,7 @@ public class CachedMusicService implements MusicService {
 							}.execute();
 						} else {
 							// If parent is null, then this is a root level album
-							final Artist artist = new Artist();
-							artist.setId(album.getId());
-							artist.setName(album.getTitle());
+							final Artist artist = new Artist(album.getId(), album.getTitle());
 
 							new IndexesUpdater(context, isTagBrowsing ? "artists" : "indexes") {
 								private boolean changed = false;

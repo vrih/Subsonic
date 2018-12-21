@@ -74,7 +74,7 @@ public class Indexes implements Serializable {
 		String ignoredArticlesString = prefs.getString(Constants.CACHE_KEY_IGNORE, "The El La Los Las Le Les");
 		final String[] ignoredArticles = ignoredArticlesString.split(" ");
 
-		Artist.sort(shortcuts, ignoredArticles);
-		Artist.sort(artists, ignoredArticles);
+		Artist.Companion.sort(shortcuts, ignoredArticles);
+		Artist.Companion.sort(artists, ignoredArticles);
 	}
 }

@@ -51,9 +51,7 @@ public class SearchResult2Parser extends MusicDirectoryEntryParser {
             if (eventType == XmlPullParser.START_TAG) {
                 String name = getElementName();
                 if ("artist".equals(name)) {
-                    Artist artist = new Artist();
-                    artist.setId(get("id"));
-                    artist.setName(get("name"));
+                    Artist artist = new Artist(get("id"), get("name"));
                     artists.add(artist);
                 } else if ("album".equals(name)) {
 					MusicDirectory.Entry entry = parseEntry("");

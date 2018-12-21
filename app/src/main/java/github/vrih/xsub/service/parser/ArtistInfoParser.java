@@ -49,9 +49,7 @@ public class ArtistInfoParser extends AbstractParser {
 					if(id.equals("-1")) {
 						missingArtists.add(get("name"));
 					} else {
-						Artist artist = new Artist();
-						artist.setId(id);
-						artist.setName(get("name"));
+						Artist artist = new Artist(id, get("name"));
 						artist.setStarred(get("starred") != null);
 						artists.add(artist);
 					}

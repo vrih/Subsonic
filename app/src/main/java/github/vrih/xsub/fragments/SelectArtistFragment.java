@@ -197,9 +197,7 @@ public class SelectArtistFragment extends SelectRecyclerFragment<Serializable> i
 			List<Artist> artists = new ArrayList<>();
 			MusicDirectory dir = musicService.getMusicDirectory(groupId, groupName, refresh, context, listener);
 			for(Entry entry: dir.getChildren(true, false)) {
-				Artist artist = new Artist();
-				artist.setId(entry.getId());
-				artist.setName(entry.getTitle());
+				Artist artist = new Artist(entry.getId(), entry.getTitle());
 				artist.setStarred(entry.isStarred());
 				artists.add(artist);
 			}

@@ -89,10 +89,9 @@ public class OfflineMusicService implements MusicService {
         File root = FileUtil.getMusicDirectory(context);
         for (File file : FileUtil.listFiles(root)) {
             if (file.isDirectory()) {
-                Artist artist = new Artist();
-                artist.setId(file.getPath());
-                artist.setIndex(file.getName().substring(0, 1));
-                artist.setName(file.getName());
+                Artist artist = new Artist(file.getPath(), file.getName());
+                // TODO: Does this break anything?
+//                artist.setIndex(file.getName().substring(0, 1));
                 artists.add(artist);
             } else if(!file.getName().equals("albumart.jpg") && !file.getName().equals(".nomedia")) {
 				entries.add(createEntry(context, file));
@@ -254,10 +253,9 @@ public class OfflineMusicService implements MusicService {
 			String artistName = artistFile.getName();
             if (artistFile.isDirectory()) {
 				if((closeness = matchCriteria(criteria, artistName)) > 0) {
-					Artist artist = new Artist();
-					artist.setId(artistFile.getPath());
-					artist.setIndex(artistFile.getName().substring(0, 1));
-					artist.setName(artistName);
+					Artist artist = new Artist(artistFile.getPath(), artistName);
+					// TODO: Does this break anything?
+					//					artist.setIndex(artistFile.getName().substring(0, 1));
 					artist.setCloseness(closeness);
 					artists.add(artist);
 				}

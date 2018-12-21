@@ -18,23 +18,24 @@
  */
 package github.vrih.xsub.service.parser;
 
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.Artist;
 import github.vrih.xsub.domain.Indexes;
 import github.vrih.xsub.domain.MusicDirectory;
-import github.vrih.xsub.util.ProgressListener;
-import android.util.Log;
 import github.vrih.xsub.util.Constants;
+import github.vrih.xsub.util.ProgressListener;
 import github.vrih.xsub.util.Util;
 
 /**
@@ -73,20 +74,16 @@ public class IndexesParser extends MusicDirectoryEntryParser {
                     index = get("name");
 
                 } else if ("artist".equals(name)) {
-                    Artist artist = new Artist();
-                    artist.setId(get("id"));
-                    artist.setName(get("name"));
-                    artist.setIndex(index);
+                    Artist artist = new Artist(get("id"), get("name"));
 					artist.setStarred(get("starred") != null);
-                    artist.setRating(getInteger("userRating"));
-
 					// Combine the id's for the two artists
 					if(artistList.containsKey(artist.getName())) {
 						Artist originalArtist = artistList.get(artist.getName());
 						if(originalArtist.isStarred()) {
 							artist.setStarred(true);
 						}
-						originalArtist.setId(originalArtist.getId() + ";" + artist.getId());
+						// TODO: should ID be mutable?
+						//originalArtist.setId(originalArtist.getId() + ";" + artist.getId());
 					} else {
 						artistList.put(artist.getName(), artist);
 						artists.add(artist);
@@ -97,10 +94,7 @@ public class IndexesParser extends MusicDirectoryEntryParser {
                         updateProgress(progressListener, msg);
                     }
                 } else if ("shortcut".equals(name)) {
-                    Artist shortcut = new Artist();
-                    shortcut.setId(get("id"));
-                    shortcut.setName(get("name"));
-                    shortcut.setIndex("*");
+                    Artist shortcut = new Artist(get("id"), get("name"));
 					shortcut.setStarred(get("starred") != null);
                     shortcuts.add(shortcut);
 				} else if("child".equals(name)) {
