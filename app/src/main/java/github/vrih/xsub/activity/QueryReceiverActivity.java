@@ -19,11 +19,11 @@
 
 package github.vrih.xsub.activity;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.util.Constants;
 import github.vrih.xsub.util.Util;
 
@@ -32,7 +32,7 @@ import github.vrih.xsub.util.Util;
  *
  * @author Sindre Mehus
  */
-public class QueryReceiverActivity extends Activity {
+public class QueryReceiverActivity extends AppCompatActivity {
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {

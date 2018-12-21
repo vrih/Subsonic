@@ -19,12 +19,12 @@
 
 package github.vrih.xsub.activity;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.util.Constants;
 import github.vrih.xsub.util.Util;
 
@@ -35,7 +35,7 @@ import github.vrih.xsub.util.Util;
  *
  * @author Sindre Mehus
  */
-public class VoiceQueryReceiverActivity extends Activity {
+public class VoiceQueryReceiverActivity extends AppCompatActivity {
 	private static final String GMS_SEARCH_ACTION = "com.google.android.gms.actions.SEARCH_ACTION";
 
     @Override

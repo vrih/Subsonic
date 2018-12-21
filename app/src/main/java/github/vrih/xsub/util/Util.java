@@ -18,7 +18,6 @@
 package github.vrih.xsub.util;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -79,6 +78,7 @@ import java.util.TimeZone;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.R;
 import github.vrih.xsub.adapter.DetailsAdapter;
 import github.vrih.xsub.domain.MusicDirectory;
@@ -1207,17 +1207,17 @@ public final class Util {
         }
     }
 
-    public static void startActivityWithoutTransition(Activity currentActivity, Intent intent) {
+    public static void startActivityWithoutTransition(AppCompatActivity currentActivity, Intent intent) {
         currentActivity.startActivity(intent);
         disablePendingTransition(currentActivity);
     }
 
-    public static void disablePendingTransition(Activity activity) {
+    public static void disablePendingTransition(AppCompatActivity activity) {
 
         // Activity.overridePendingTransition() was introduced in Android 2.0.  Use reflection to maintain
         // compatibility with 1.5.
         try {
-            Method method = Activity.class.getMethod("overridePendingTransition", int.class, int.class);
+            Method method = AppCompatActivity.class.getMethod("overridePendingTransition", int.class, int.class);
             method.invoke(activity, 0, 0);
         } catch (Throwable x) {
             // Ignored

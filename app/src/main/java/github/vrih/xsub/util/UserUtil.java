@@ -15,7 +15,6 @@
 
 package github.vrih.xsub.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -154,7 +153,7 @@ public final class UserUtil {
 		return defaultValue;
 	}
 
-	public static void confirmCredentials(final Activity context, final Runnable onSuccess) {
+	public static void confirmCredentials(final AppCompatActivity context, final Runnable onSuccess) {
 		final long currentTime = System.currentTimeMillis();
 		// If already ran this check within last x time, just go ahead and auth
 		if((currentTime - lastVerifiedTime) < MIN_VERIFY_DURATION) {
@@ -190,7 +189,7 @@ public final class UserUtil {
 		}
 	}
 
-	public static void changePassword(final Activity context, final User user) {
+	public static void changePassword(final AppCompatActivity context, final User user) {
 		View layout = context.getLayoutInflater().inflate(R.layout.change_password, null);
 		View currentPasswordLayout = layout.findViewById(R.id.current_password_layout);
 		final TextView currentPasswordView = layout.findViewById(R.id.current_password);
@@ -293,7 +292,7 @@ public final class UserUtil {
 		}.execute();
 	}
 
-	public static void changeEmail(final Activity context, final User user) {
+	public static void changeEmail(final AppCompatActivity context, final User user) {
 		View layout = context.getLayoutInflater().inflate(R.layout.change_email, null);
 		final TextView emailView = layout.findViewById(R.id.new_email);
 
@@ -386,7 +385,7 @@ public final class UserUtil {
 		});
 	}
 
-	public static void addNewUser(final Activity context, final SubsonicFragment fragment, User sampleUser) {
+	public static void addNewUser(final AppCompatActivity context, final SubsonicFragment fragment, User sampleUser) {
 		final User user = new User();
 		for(String role: User.ROLES) {
 			if(role.equals(User.SETTINGS) || role.equals(User.STREAM)) {

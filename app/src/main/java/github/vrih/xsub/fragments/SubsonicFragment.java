@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Random;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -1973,7 +1974,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 		boolean playNowOverride = false;
 		List<Entry> songs = new ArrayList<>();
 
-		RecursiveLoader(Activity context) {
+		RecursiveLoader(AppCompatActivity context) {
 			super(context);
 			musicService = MusicServiceFactory.getMusicService(context);
 		}

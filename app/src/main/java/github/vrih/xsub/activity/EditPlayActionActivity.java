@@ -15,7 +15,6 @@
 
 package github.vrih.xsub.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.Genre;
@@ -61,7 +61,7 @@ public class EditPlayActionActivity extends SubsonicActivity {
 		super.onCreate(savedInstanceState);
 		setTitle(R.string.tasker_start_playing_title);
 		setContentView(R.layout.edit_play_action);
-		final Activity context = this;
+		final AppCompatActivity context = this;
 		doNothing = context.getResources().getString(R.string.tasker_edit_do_nothing);
 
 		shuffleCheckbox = findViewById(R.id.edit_shuffle_checkbox);
@@ -235,11 +235,11 @@ public class EditPlayActionActivity extends SubsonicActivity {
 		
 		intent.putExtra(Constants.TASKER_EXTRA_BUNDLE, data);
 
-		setResult(Activity.RESULT_OK, intent);
+		setResult(AppCompatActivity.RESULT_OK, intent);
 		finish();
 	}
 	private void cancel() {
-		setResult(Activity.RESULT_CANCELED);
+		setResult(AppCompatActivity.RESULT_CANCELED);
 		finish();
 	}
 }

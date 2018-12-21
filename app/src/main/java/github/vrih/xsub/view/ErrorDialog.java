@@ -18,11 +18,11 @@
  */
 package github.vrih.xsub.view;
 
-import android.app.Activity;
-import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.R;
 import github.vrih.xsub.activity.SubsonicFragmentActivity;
 import github.vrih.xsub.util.Util;
@@ -32,11 +32,11 @@ import github.vrih.xsub.util.Util;
  */
 public class ErrorDialog {
 
-    public ErrorDialog(Activity activity, int messageId, boolean finishActivityOnCancel) {
+    public ErrorDialog(AppCompatActivity activity, int messageId, boolean finishActivityOnCancel) {
         this(activity, activity.getResources().getString(messageId), finishActivityOnCancel);
     }
 
-    public ErrorDialog(final Activity activity, String message, final boolean finishActivityOnClose) {
+    public ErrorDialog(final AppCompatActivity activity, String message, final boolean finishActivityOnClose) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -67,7 +67,7 @@ public class ErrorDialog {
 		}
     }
     
-	private void restart(Activity activity) {
+	private void restart(AppCompatActivity activity) {
 		Intent intent = new Intent(activity, SubsonicFragmentActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		Util.startActivityWithoutTransition(activity, intent);

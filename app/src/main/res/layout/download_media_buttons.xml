@@ -7,7 +7,7 @@
 	android:layout_height="wrap_content">
 
   <ImageButton
-      android:src="?attr/media_button_repeat_off"
+      app:srcCompat="?attr/media_button_repeat_off"
 			style="@style/PlaybackControl.Smaller"
 			android:id="@+id/download_repeat"
 			android:layout_alignParentStart="true"
@@ -32,7 +32,7 @@
   <ImageButton
 			style="@style/PlaybackControl.Large"
 			android:id="@+id/download_pause"
-			android:src="?attr/media_button_pause"
+			app:srcCompat="?attr/media_button_pause"
 			android:layout_centerInParent="true"
 			android:visibility="invisible"
 			android:contentDescription="@string/pause" />
@@ -40,7 +40,7 @@
   <ImageButton
 			style="@style/PlaybackControl.Large"
 			android:id="@+id/download_stop"
-			android:src="?attr/media_button_stop"
+			app:srcCompat="?attr/media_button_stop"
 			android:layout_centerInParent="true"
 			android:visibility="invisible"
 			android:contentDescription="@string/stop" />
@@ -48,7 +48,7 @@
   <ImageButton
 			style="@style/PlaybackControl.Large"
 			android:id="@+id/download_start"
-			android:src="?attr/media_button_start"
+			app:srcCompat="?attr/media_button_start"
 			android:layout_centerInParent="true"
 			android:contentDescription="@string/start" />
 	
@@ -72,6 +72,6 @@
 			style="@style/PlaybackControl.Smaller"
 			android:layout_alignParentEnd="true"
 			android:layout_centerVertical="true"
-			android:src="?attr/toggle_list"
+			app:srcCompat="?attr/toggle_list"
 			android:contentDescription="@string/playlist" />
 </RelativeLayout>

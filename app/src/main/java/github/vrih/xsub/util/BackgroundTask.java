@@ -18,7 +18,6 @@
  */
 package github.vrih.xsub.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,6 +35,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.R;
 import github.vrih.xsub.view.ErrorDialog;
 
@@ -87,8 +87,8 @@ public abstract class BackgroundTask<T> implements ProgressListener {
 		}
     }
 
-	private Activity getActivity() {
-        return (context instanceof Activity) ? ((Activity) context) : null;
+	private AppCompatActivity getActivity() {
+        return (context instanceof AppCompatActivity) ? ((AppCompatActivity) context) : null;
     }
 
 	Context getContext() {
@@ -106,7 +106,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
 
     protected void error(Throwable error) {
         Log.w(TAG, "Got exception: " + error, error);
-		Activity activity = getActivity();
+		AppCompatActivity activity = getActivity();
 		if(activity != null) {
         	new ErrorDialog(activity, getErrorMessage(error), true);
 		}

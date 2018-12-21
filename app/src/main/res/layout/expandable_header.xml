@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
 			  android:layout_height="wrap_content"
 				android:paddingLeft="16dp"
 				android:paddingRight="16dp"
@@ -20,7 +21,7 @@
 
 	<ImageView
 		android:id="@+id/item_select"
-		android:src="?attr/select_server"
+		app:srcCompat="?attr/select_server"
 		android:layout_gravity="center_vertical"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

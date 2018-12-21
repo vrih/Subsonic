@@ -4,9 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
 
-public class AutoRepeatButton extends ImageButton {
+import androidx.appcompat.widget.AppCompatImageButton;
+
+public class AutoRepeatButton extends AppCompatImageButton {
 
 	private static final long initialRepeatDelay = 1000;
 	private static final long repeatIntervalInMilliseconds = 300;

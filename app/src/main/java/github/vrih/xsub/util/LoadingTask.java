@@ -1,9 +1,9 @@
 package github.vrih.xsub.util;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.activity.SubsonicActivity;
 
 /**
@@ -12,16 +12,16 @@ import github.vrih.xsub.activity.SubsonicActivity;
  */
 public abstract class LoadingTask<T> extends BackgroundTask<T> {
 
-    private final Activity tabActivity;
+    private final AppCompatActivity tabActivity;
 	private ProgressDialog loading;
 	private final boolean cancellable;
 
-	public LoadingTask(Activity activity) {
+	public LoadingTask(AppCompatActivity activity) {
 		super(activity);
 		tabActivity = activity;
 		this.cancellable = true;
 	}
-    public LoadingTask(Activity activity, final boolean cancellable) {
+    public LoadingTask(AppCompatActivity activity, final boolean cancellable) {
         super(activity);
         tabActivity = activity;
 		this.cancellable = cancellable;

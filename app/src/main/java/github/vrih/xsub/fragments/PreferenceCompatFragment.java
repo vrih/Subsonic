@@ -19,7 +19,6 @@
 
 package github.vrih.xsub.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +35,7 @@ import android.widget.ListView;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.R;
 import github.vrih.xsub.util.Constants;
 
@@ -225,7 +225,7 @@ public abstract class PreferenceCompatFragment extends SubsonicFragment {
 
 	private PreferenceManager createPreferenceManager() {
 		try {
-			Constructor<PreferenceManager> c = PreferenceManager.class.getDeclaredConstructor(Activity.class, int.class);
+			Constructor<PreferenceManager> c = PreferenceManager.class.getDeclaredConstructor(AppCompatActivity.class, int.class);
 			c.setAccessible(true);
 			return c.newInstance(this.getActivity(), FIRST_REQUEST_CODE);
 		} catch (Exception e) {

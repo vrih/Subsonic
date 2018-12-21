@@ -16,7 +16,7 @@
         android:layout_gravity="center_vertical"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/appwidget_art_default"
+        app:srcCompat="@drawable/appwidget_art_default"
         android:contentDescription="@string/admin.role.coverArt" />
 
     <LinearLayout

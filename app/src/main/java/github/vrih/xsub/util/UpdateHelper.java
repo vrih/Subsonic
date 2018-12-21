@@ -19,10 +19,8 @@
 
 package github.vrih.xsub.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
@@ -31,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.Artist;
 import github.vrih.xsub.domain.MusicDirectory.Entry;
@@ -177,10 +177,10 @@ public final class UpdateHelper {
 		}.execute();
 	}
 
-	public static void setRating(Activity context, Entry entry) {
+	public static void setRating(AppCompatActivity context, Entry entry) {
 		setRating(context, entry, null);
 	}
-	public static void setRating(final Activity context, final Entry entry, final OnRatingChange onRatingChange) {
+	public static void setRating(final AppCompatActivity context, final Entry entry, final OnRatingChange onRatingChange) {
 		View layout = context.getLayoutInflater().inflate(R.layout.rating, null);
 		final RatingBar ratingBar = layout.findViewById(R.id.rating_bar);
 		ratingBar.setRating((float) entry.getRating());
