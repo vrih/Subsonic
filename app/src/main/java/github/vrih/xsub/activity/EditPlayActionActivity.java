@@ -16,11 +16,9 @@
 package github.vrih.xsub.activity;
 
 import android.app.Activity;
-import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,6 +33,8 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.drawerlayout.widget.DrawerLayout;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.Genre;
 import github.vrih.xsub.service.MusicService;
@@ -209,7 +209,7 @@ public class EditPlayActionActivity extends SubsonicActivity {
 		Intent intent = new Intent();
 
 		String blurb = getResources().getString(shuffleCheckbox.isChecked() ? R.string.tasker_start_playing_shuffled : R.string.tasker_start_playing);
-		intent.putExtra("com.twofortyfouram.locale.intent.extra.BLURB", blurb);
+		intent.putExtra("com.twofortyfouram.locale.3.extra.BLURB", blurb);
 
 		// Get settings user specified
 		Bundle data = new Bundle();
