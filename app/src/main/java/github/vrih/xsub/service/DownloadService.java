@@ -1237,6 +1237,12 @@ public class DownloadService extends Service {
 	}
 
 	public synchronized void previous() {
+		// If using Chromecast then rely on chromecast queue behaviour
+		if(remoteState == CHROMECAST) {
+			remoteController.previous();
+			return;
+		}
+
 		int index = getCurrentPlayingIndex();
 		if (index == -1) {
 			return;
@@ -1298,14 +1304,18 @@ public class DownloadService extends Service {
 			scrobbler.conditionalScrobble(this, currentPlaying, position, duration, cutoff);
 		}
 
-		int index = getCurrentPlayingIndex();
-		int nextPlayingIndex = getNextPlayingIndex();
-		// Make sure to actually go to next when repeat song is on
-		if(index == nextPlayingIndex) {
-			nextPlayingIndex++;
-		}
-		if (index != -1 && nextPlayingIndex < size()) {
-			play(nextPlayingIndex, playerState != PAUSED && playerState != STOPPED && playerState != IDLE || forceStart);
+		if(remoteState == CHROMECAST) {
+			remoteController.next();
+		} else {
+			int index = getCurrentPlayingIndex();
+			int nextPlayingIndex = getNextPlayingIndex();
+			// Make sure to actually go to next when repeat song is on
+			if (index == nextPlayingIndex) {
+				nextPlayingIndex++;
+			}
+			if (index != -1 && nextPlayingIndex < size()) {
+				play(nextPlayingIndex, playerState != PAUSED && playerState != STOPPED && playerState != IDLE || forceStart);
+			}
 		}
 	}
 

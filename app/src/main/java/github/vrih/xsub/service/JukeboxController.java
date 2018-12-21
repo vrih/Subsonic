@@ -84,7 +84,12 @@ public class JukeboxController extends RemoteController {
 		stopStatusUpdate();
 		tasks.add(new Stop());
 	}
-	@Override
+
+
+    public void next() {}
+    public void previous() {}
+
+    @Override
 	public void shutdown() {
 		running = false;
 	}

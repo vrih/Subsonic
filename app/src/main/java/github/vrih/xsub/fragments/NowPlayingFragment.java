@@ -557,18 +557,8 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(final SeekBar seekBar) {
-				new SilentBackgroundTask<Void>(context) {
-					@Override
-					protected Void doInBackground() {
-						getDownloadService().seekTo(progressBar.getProgress());
-						return null;
-					}
-
-					@Override
-					protected void done(Void result) {
-						seekInProgress = false;
-					}
-				}.execute();
+				getDownloadService().seekTo(progressBar.getProgress());
+				seekInProgress = false;
 			}
 
 			@Override

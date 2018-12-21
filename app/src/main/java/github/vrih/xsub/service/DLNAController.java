@@ -256,7 +256,11 @@ public class DLNAController extends RemoteController {
 		}
 	}
 
-	@Override
+    public void next() {}
+    public void previous() {}
+
+
+    @Override
 	public void shutdown() {
 		try {
 			controlPoint.execute(new Stop(getTransportService()) {

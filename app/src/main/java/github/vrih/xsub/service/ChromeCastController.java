@@ -15,12 +15,11 @@
 
 package github.vrih.xsub.service;
 
+import android.net.Uri;
 import android.util.Log;
 
-import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.CastStatusCodes;
 import com.google.android.gms.cast.MediaInfo;
-import com.google.android.gms.cast.MediaLoadOptions;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.gms.cast.MediaQueueItem;
 import com.google.android.gms.cast.MediaStatus;
@@ -30,6 +29,7 @@ import com.google.android.gms.cast.framework.media.RemoteMediaClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.images.WebImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,6 @@ import androidx.annotation.NonNull;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.MusicDirectory;
 import github.vrih.xsub.domain.PlayerState;
-import github.vrih.xsub.domain.RemoteControlState;
 import github.vrih.xsub.util.Util;
 
 /**
@@ -47,17 +46,12 @@ import github.vrih.xsub.util.Util;
 public class ChromeCastController extends RemoteController {
 	private static final String TAG = ChromeCastController.class.getSimpleName();
 
-	private boolean applicationStarted = false;
-	private boolean waitingForReconnect = false;
 	private boolean error = false;
-	private boolean ignoreNextPaused = false;
-	private String sessionId;
 	private boolean isStopping = false;
 	private Runnable afterUpdateComplete = null;
 
 	private RemoteMediaClient mediaPlayer;
 	private double gain = 0.5;
-	private CastSession mCastSession;
 	private int cachedProgress;
 	private int cachedDuration;
 
@@ -71,29 +65,6 @@ public class ChromeCastController extends RemoteController {
 
 		//ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks(playing, seconds);
 //		ConnectionFailedListener connectionFailedListener = new ConnectionFailedListener();
-		Cast.Listener castClientListener = new Cast.Listener() {
-			@Override
-			public void onApplicationStatusChanged() {
-			}
-
-			@Override
-			public void onVolumeChanged() {
-				if (applicationStarted) {
-					try {
-					    // TODO: Vol
-						//gain = Cast.CastApi.getVolume(apiClient);
-					} catch (Exception e) {
-						Log.w(TAG, "Failed to get volume");
-					}
-				}
-			}
-
-			@Override
-			public void onApplicationDisconnected(int errorCode) {
-				shutdownInternal();
-			}
-
-		};
 	}
 
 	@Override
@@ -138,6 +109,15 @@ public class ChromeCastController extends RemoteController {
 		}
 	}
 
+	@Override
+	public void next() {
+		mediaPlayer.queueNext(null);
+	}
+
+	@Override
+	public void previous() {
+		mediaPlayer.queuePrev(null);
+	}
 
 	@Override
 	public void shutdown() {
@@ -150,9 +130,7 @@ public class ChromeCastController extends RemoteController {
 		}
 
 		try {
-				mediaPlayer = null;
-				applicationStarted = false;
-
+			mediaPlayer = null;
 		} catch(Exception e) {
 			Log.e(TAG, "Failed to shutdown application", e);
 		}
@@ -161,11 +139,6 @@ public class ChromeCastController extends RemoteController {
 			proxy.stop();
 			proxy = null;
 		}
-	}
-
-	private void shutdownInternal() {
-		// This will call this.shutdown() indirectly
-		downloadService.setRemoteEnabled(RemoteControlState.LOCAL, null);
 	}
 
 	@Override
@@ -177,11 +150,7 @@ public class ChromeCastController extends RemoteController {
 
 	@Override
 	public void changePosition(int seconds) {
-		try {
-			mediaPlayer.seek(seconds * 1000L);
-		} catch(Exception e) {
-			Log.e(TAG, "FAiled to seek to " + seconds);
-		}
+		mediaPlayer.seek(seconds * 1000L);
 	}
 
 	@Override
@@ -304,24 +273,9 @@ public class ChromeCastController extends RemoteController {
 					meta.putString(MediaMetadata.KEY_ALBUM_ARTIST, song.getArtist());
 					meta.putString(MediaMetadata.KEY_ALBUM_TITLE, song.getAlbum());
 
-/*				if(castDevice.hasCapability(CastDevice.CAPABILITY_VIDEO_OUT)) {
-					if (proxy == null || proxy instanceof WebProxy) {
-						String coverArt = musicService.getCoverArtUrl(downloadService, song);
+					String coverArt = musicService.getCoverArtUrl(downloadService, song);
 
-						// If proxy is going, it is a web proxy
-						if (proxy != null) {
-							coverArt = proxy.getPublicAddress(coverArt);
-						}
-
-						meta.addImage(new WebImage(Uri.parse(coverArt)));
-					} else {
-						File coverArtFile = FileUtil.getAlbumArtFile(downloadService, song);
-						if (coverArtFile != null && coverArtFile.exists()) {
-							String coverArt = proxy.getPublicAddress(coverArtFile.getPath());
-							meta.addImage(new WebImage(Uri.parse(coverArt)));
-						}
-					}
-				}*/
+					meta.addImage(new WebImage(Uri.parse(coverArt)));
 				}
 
 				String contentType;
@@ -342,10 +296,6 @@ public class ChromeCastController extends RemoteController {
 						.setMetadata(meta)
 						.build();
 
-			if(autoStart) {
-				ignoreNextPaused = true;
-			}
-
 				MediaQueueItem mqi = new MediaQueueItem.Builder(mediaInfo)
 						.build();
 				queue.add(mqi);
@@ -365,16 +315,9 @@ public class ChromeCastController extends RemoteController {
 				}
 			};
 
-			Log.w("CAST", "CC start" + position * 1000L);
-            MediaLoadOptions mlo = new MediaLoadOptions.Builder()
-                    .setAutoplay(autoStart)
-                    .setPlayPosition(position * 1000L)
-                    .build();
-
-            //mediaPlayer.load(mediaInfo, mlo).setResultCallback(callback);
-			Log.w("CAST", "queue: " + queue);
+			//mediaPlayer.load(mediaInfo, mlo).setResultCallback(callback);
 			MediaQueueItem[] queueList = new MediaQueueItem[queue.size()];
-			PendingResult a = mediaPlayer.queueLoad(queue.toArray(queueList), index, MediaStatus.REPEAT_MODE_REPEAT_OFF, position, null);
+			PendingResult a = mediaPlayer.queueLoad(queue.toArray(queueList), index, MediaStatus.REPEAT_MODE_REPEAT_OFF, position * 1000, null);
 			a.setResultCallback(callback);
             RemoteMediaClient.ProgressListener rpl = new RemoteMediaClient.ProgressListener() {
                 @Override
@@ -384,6 +327,7 @@ public class ChromeCastController extends RemoteController {
                 }
             };
             mediaPlayer.addProgressListener(rpl, 1000);
+            mediaPlayer.registerCallback(rmcCallback);
 
         } catch (IllegalStateException e) {
 			Log.e(TAG, "Problem occurred with media during loading", e);
@@ -401,7 +345,6 @@ public class ChromeCastController extends RemoteController {
 	}
 
     public void setSession(CastSession mCastSession) {
-		this.mCastSession = mCastSession;
 		mediaPlayer = mCastSession.getRemoteMediaClient();
 	}
 
@@ -411,139 +354,11 @@ public class ChromeCastController extends RemoteController {
 			super.onQueueStatusUpdated();
 			MediaQueueItem mediaQueueItem = mediaPlayer.getCurrentItem();
 			MediaQueue mediaQueue = mediaPlayer.getMediaQueue();
-			int index = mediaQueue.indexOfItemWithId(mediaQueueItem.getItemId());
-			downloadService.setCurrentPlaying(index, false);
+			Log.w("CAST", "Callback " + mediaQueueItem + mediaQueue);
+			if(mediaQueueItem != null) {
+				int index = mediaQueue.indexOfItemWithId(mediaQueueItem.getItemId());
+				downloadService.setCurrentPlaying(index, false);
+			}
 		}
 	};
 }
-
-
-//    private class ConnectionCallbacks implements GoogleApiClient.ConnectionCallbacks {
-//		private boolean isPlaying;
-//		private int position;
-//		private ResultCallback<Cast.ApplicationConnectionResult> resultCallback;
-//
-//		ConnectionCallbacks(boolean isPlaying, int position) {
-//			this.isPlaying = isPlaying;
-//			this.position = position;
-//
-//			resultCallback = new ResultCallback<Cast.ApplicationConnectionResult>() {
-//				@Override
-//				public void onResult(Cast.ApplicationConnectionResult result) {
-//					Status status = result.getStatus();
-////					if (status.isSuccess()) {
-////						sessionId = result.getSessionId();
-////
-////						applicationStarted = true;
-//				//		setupChannel();
-////					} else {
-////						shutdownInternal();
-////					}
-//				}
-//			};
-//		}
-//
-//		@Override
-//		public void onConnected(Bundle connectionHint) {
-////			if (waitingForReconnect) {
-////				Log.i(TAG, "Reconnecting");
-//				//reconnectApplication();
-////			} else {
-////				launchApplication();
-////			}
-//		}
-//
-//		@Override
-//		public void onConnectionSuspended(int cause) {
-////			Log.w(TAG, "Connection suspended");
-////			isPlaying = downloadService.getPlayerState() == PlayerState.STARTED;
-////			position = getRemotePosition();
-////			waitingForReconnect = true;
-//		}
-//
-////		void launchApplication() {
-////			try {
-////				Cast.CastApi.launchApplication(apiClient, EnvironmentVariables.CAST_APPLICATION_ID, false).setResultCallback(resultCallback);
-////			} catch (Exception e) {
-////				Log.e(TAG, "Failed to launch application", e);
-////			}
-////		}
-////		void reconnectApplication() {
-////			try {
-////				Cast.CastApi.joinApplication(apiClient, EnvironmentVariables.CAST_APPLICATION_ID, sessionId).setResultCallback(resultCallback);
-////			} catch (Exception e) {
-////				Log.e(TAG, "Failed to reconnect application", e);
-////			}
-////		}
-////		void setupChannel() {
-////			if(!waitingForReconnect) {
-////				mediaPlayer = new RemoteMediaClient();
-////				mediaPlayer.setOnStatusUpdatedListener(new RemoteMediaPlayer.OnStatusUpdatedListener() {
-////					@Override
-////					public void onStatusUpdated() {
-////						MediaStatus mediaStatus = mediaPlayer.getMediaStatus();
-////						if (mediaStatus == null) {
-////							return;
-////						}
-////
-////						switch (mediaStatus.getPlayerState()) {
-////							case MediaStatus.PLAYER_STATE_PLAYING:
-////								if (ignoreNextPaused) {
-////									ignoreNextPaused = false;
-////								}
-////								downloadService.setPlayerState(PlayerState.STARTED);
-////								break;
-////							case MediaStatus.PLAYER_STATE_PAUSED:
-////								if (!ignoreNextPaused) {
-////									downloadService.setPlayerState(PlayerState.PAUSED);
-////								}
-////								break;
-////							case MediaStatus.PLAYER_STATE_BUFFERING:
-////								downloadService.setPlayerState(PlayerState.PREPARING);
-////								break;
-////							case MediaStatus.PLAYER_STATE_IDLE:
-////								if (mediaStatus.getIdleReason() == MediaStatus.IDLE_REASON_FINISHED) {
-////									if(downloadService.getPlayerState() != PlayerState.PREPARING) {
-////										downloadService.onSongCompleted();
-////									}
-////								} else if (mediaStatus.getIdleReason() == MediaStatus.IDLE_REASON_INTERRUPTED) {
-////									if (downloadService.getPlayerState() != PlayerState.PREPARING) {
-////										downloadService.setPlayerState(PlayerState.PREPARING);
-////									}
-////								} else if (mediaStatus.getIdleReason() == MediaStatus.IDLE_REASON_ERROR) {
-////									Log.e(TAG, "Idle due to unknown error");
-////									downloadService.onSongCompleted();
-////								} else {
-////									Log.w(TAG, "Idle reason: " + mediaStatus.getIdleReason());
-////									downloadService.setPlayerState(PlayerState.IDLE);
-////								}
-////								break;
-////						}
-////					}
-////				});
-////			}
-////
-////			try {
-////				Cast.CastApi.setMessageReceivedCallbacks(apiClient, mediaPlayer.getNamespace(), mediaPlayer);
-////			} catch (Exception e) {
-////				Log.e(TAG, "Exception while creating channel", e);
-////			}
-////
-////			if(!waitingForReconnect) {
-////				DownloadFile currentPlaying = downloadService.getCurrentPlaying();
-////				startSong(currentPlaying, isPlaying, position);
-////			}
-////			if(waitingForReconnect) {
-////				waitingForReconnect = false;
-////			}
-////		}
-//	}
-//
-////	private class ConnectionFailedListener implements GoogleApiClient.OnConnectionFailedListener {
-////		@Override
-////		public void onConnectionFailed(ConnectionResult result) {
-////			shutdownInternal();
-////		}
-
-
-

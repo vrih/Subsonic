@@ -50,6 +50,9 @@ public abstract class RemoteController {
 	public abstract void create(boolean playing, int seconds);
 	public abstract void start();
 	public abstract void stop();
+	public abstract void next();
+	public abstract void previous();
+
 	public abstract void shutdown();
 	
 	public abstract void updatePlaylist();
