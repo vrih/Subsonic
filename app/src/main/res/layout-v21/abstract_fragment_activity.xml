@@ -67,7 +67,8 @@
 					android:layout_gravity="center_vertical"
 					android:layout_weight="1"
 					android:orientation="vertical"
-					android:paddingStart="8dip">
+					android:paddingStart="8dp"
+					android:paddingEnd="8dp">
 
 					<TextView
 						android:id="@+id/track_name"

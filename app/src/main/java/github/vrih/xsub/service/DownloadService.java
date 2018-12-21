@@ -1815,7 +1815,7 @@ public class DownloadService extends Service {
 		if(remoteController != null) {
 			remoteController.create(isPlaying, position / 1000);
 		} else {
-			play(getCurrentPlayingIndex(), true, position);
+			play(getCurrentPlayingIndex(), isPlaying, position);
 		}
 
 		if (remoteState != LOCAL) {
