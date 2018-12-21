@@ -131,7 +131,8 @@
 		<item name="android:windowBackground">@android:color/black</item>
 	</style>
 	<style name="Theme.DSub.Black" parent="Theme.DSub.Black.Base">
-	</style>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_material_light</item>
+    </style>
 	<style name="Theme.DSub.Holo.Base" parent="Theme.DSub.Dark.Base">
 		<item name="android:windowBackground">@drawable/background</item>
 		<item name="colorPrimary">@color/holoPrimary</item>

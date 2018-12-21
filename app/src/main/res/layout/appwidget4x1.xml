@@ -16,7 +16,8 @@
         android:layout_gravity="center_vertical"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/appwidget_art_default" />
+        android:src="@drawable/appwidget_art_default"
+        android:contentDescription="@string/admin.role.coverArt" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +46,6 @@
                 android:paddingTop="4dip"
                 android:singleLine="true"
                 android:gravity="center_horizontal"
-                android:text="Title"
                 android:textColor="@color/appwidget_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -71,7 +71,6 @@
                 android:paddingRight="4dip"
                 android:singleLine="true"
                 android:gravity="center_horizontal"
-                android:text="Artist"
                 android:textColor="@color/appwidget_text"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -87,7 +86,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 style="@style/NotificationButton"
-                app:srcCompat="@drawable/widget_media_backward" />
+                app:srcCompat="@drawable/widget_media_backward"
+                android:contentDescription="@string/skip_backwards" />
 
             <ImageButton
                 android:id="@+id/control_play"
@@ -95,7 +95,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/widget_media_start"
-				style="@style/NotificationButton" />
+				style="@style/NotificationButton"
+                android:contentDescription="@string/pause" />
 
             <ImageButton
                 android:id="@+id/control_next"
@@ -103,7 +104,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/widget_media_forward"
-				style="@style/NotificationButton" />
+				style="@style/NotificationButton"
+                android:contentDescription="@string/skip_forwards" />
         </LinearLayout>
     </LinearLayout>
 

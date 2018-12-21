@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="NotificationText.Title" parent="@android:style/TextAppearance.Material.Notification.Title"></style>
+	<style name="NotificationText.Title" parent="@android:style/TextAppearance.Material.Notification.Title">
+	</style>
 	<style name="NotificationText.Content" parent="@android:style/TextAppearance.Material.Notification"></style>
 
 	<style name="NotificationButton" parent="NotificationButtonBase">

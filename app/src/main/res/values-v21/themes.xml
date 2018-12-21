@@ -9,7 +9,8 @@
 	</style>
 	<style name="Theme.DSub.Black" parent="Theme.DSub.Black.Base">
 		<item name="android:windowTranslucentStatus">true</item>
-	</style>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_material_light</item>
+    </style>
 	<style name="Theme.DSub.Holo" parent="Theme.DSub.Holo.Base">
 		<item name="android:windowTranslucentStatus">true</item>
 	</style>

@@ -628,6 +628,9 @@
 	<string name="pause">Pause</string>
 	<string name="stop">Stop</string>
 	<string name="start">Start</string>
+	<string name="skip_backwards">skip backwards</string>
+	<string name="skip_forwards">skip forwards</string>
+	<string name="divider">divider</string>
 
 	<plurals name="select_album_n_songs">
         <item quantity="zero">No songs</item>

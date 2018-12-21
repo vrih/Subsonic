@@ -23,5 +23,6 @@
 	<color name="darkPrimaryDark">#212121</color>
 	<color name="darkAccent">#78909c</color>
 	<color name="darkElement">#CCFFFFFF</color>
+    <color name="primary_text_material_light">#deb0b8ed</color>
 
 </resources>
