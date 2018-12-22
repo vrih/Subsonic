@@ -6,9 +6,92 @@
 		android:key="server"
 		android:title="@string/settings.servers_title">
 
-		<Preference
-			android:key="serverAdd"
-			android:order="1000000"
-			android:title="@string/settings.servers_add"/>
+		<EditTextPreference
+			android:key="serverName"
+			android:defaultValue="@string/settings.server_unused"
+			android:title="@string/settings.server_name"
+			android:dialogTitle="@string/settings.server_name"
+			></EditTextPreference>
+
+		<EditTextPreference
+			android:defaultValue="http://yourhost"
+			android:dialogTitle="@string/settings.server_address"
+			android:inputType="textUri"
+			android:key="serverUrl"
+			android:title="@string/settings.server_address" />
+
+<!--
+		val serverLocalNetworkSSIDPreference = object : EditTextPreference(context) {
+		protected fun onAddEditTextToDialogView(dialogView: View, editText: EditText) {
+		super.onAddEditTextToDialogView(dialogView, editText)
+		val root = (dialogView as ViewGroup).getChildAt(0) as ViewGroup
+
+		val defaultButton = Button(context)
+		defaultButton.setText(internalSSIDDisplay)
+		defaultButton.setOnClickListener(object : View.OnClickListener() {
+		fun onClick(v: View) {
+		editText.setText(internalSSID)
+		}
+		})
+		root.addView(defaultButton)
+		}
+		}
+		serverLocalNetworkSSIDPreference.key = Constants.PREFERENCES_KEY_SERVER_LOCAL_NETWORK_SSID + instance
+		serverLocalNetworkSSIDPreference.setTitle(R.string.settings_server_local_network_ssid)
+		serverLocalNetworkSSIDPreference.setDialogTitle(R.string.settings_server_local_network_ssid)-->
+
+		<EditTextPreference
+			android:dialogTitle="@string/settings.server_internal_address"
+			android:inputType="textUri"
+			android:key="serverInternalUrl"
+			android:title="@string/settings.server_internal_address" />
+
+		<EditTextPreference
+			android:key="username"
+			android:title="@string/settings.server_username"
+			android:dialogTitle="@string/settings.server_username" />
+
+		<EditTextPreference
+			android:dialogTitle="@string/settings.server_password"
+			android:inputType="textPassword"
+			android:key="password"
+			android:summary="***"
+			android:title="@string/settings.server_password" />
+
+		<SwitchPreference
+			android:key="browseTags"
+			android:summary="@string/settings.browse_by_tags_summary"
+			android:title="@string/settings.browse_by_tags" />
+
+		<SwitchPreference
+			android:key="serverSync"
+			android:summary="@string/settings.server_sync_summary"
+			android:title="@string/settings.server_sync" />
+
+<!--
+		val serverTestConnectionPreference = Preference(context)
+		serverTestConnectionPreference.key = Constants.PREFERENCES_KEY_TEST_CONNECTION + instance
+		serverTestConnectionPreference.isPersistent = false
+		serverTestConnectionPreference.setTitle(R.string.settings_test_connection_title)
+		serverTestConnectionPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+		testConnection(instance)
+		false
+		}
+
+		screen.addPreference(serverNamePreference)
+		screen.addPreference(serverUrlPreference)
+		screen.addPreference(serverInternalUrlPreference)
+		screen.addPreference(serverLocalNetworkSSIDPreference)
+		screen.addPreference(serverUsernamePreference)
+		screen.addPreference(serverPasswordPreference)
+		screen.addPreference(serverTagPreference)
+		screen.addPreference(serverSyncPreference)
+		screen.addPreference(serverTestConnectionPreference)
+		screen.addPreference(serverOpenBrowser)
+		screen.addPreference(serverRemoveServerPreference)
+
+		return screen
+
+-->
 	</PreferenceCategory>
 </PreferenceScreen>

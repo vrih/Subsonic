@@ -48,12 +48,9 @@ public class UserParser extends AbstractParser {
 			if (eventType == XmlPullParser.START_TAG) {
 				tagName = getElementName();
 				if ("user".equals(tagName)) {
-					user = new User();
-
-					user.setUsername(get("username"));
-					user.setEmail(get("email"));
+					user = new User(get("username"), get("email"));
 					parseSetting(user, User.SCROBBLING);
-					for(String role: User.ROLES) {
+					for(String role: User.Companion.getROLES()) {
 						parseSetting(user, role);
 					}
 					parseSetting(user, User.LASTFM);

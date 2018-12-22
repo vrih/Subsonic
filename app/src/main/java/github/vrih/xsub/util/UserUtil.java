@@ -387,7 +387,7 @@ public final class UserUtil {
 
 	public static void addNewUser(final AppCompatActivity context, final SubsonicFragment fragment, User sampleUser) {
 		final User user = new User();
-		for(String role: User.ROLES) {
+		for(String role: User.Companion.getROLES()) {
 			if(role.equals(User.SETTINGS) || role.equals(User.STREAM)) {
 				user.addSetting(role, true);
 			} else {

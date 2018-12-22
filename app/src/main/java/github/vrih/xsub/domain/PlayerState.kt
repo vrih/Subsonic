@@ -16,32 +16,22 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package github.vrih.xsub.domain;
+package github.vrih.xsub.domain
 
-import android.media.RemoteControlClient;
+import android.media.RemoteControlClient
 
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
-public enum PlayerState {
-	IDLE(RemoteControlClient.PLAYSTATE_STOPPED),
+enum class PlayerState private constructor(val remoteControlClientPlayState: Int) {
+    IDLE(RemoteControlClient.PLAYSTATE_STOPPED),
     DOWNLOADING(RemoteControlClient.PLAYSTATE_BUFFERING),
     PREPARING(RemoteControlClient.PLAYSTATE_BUFFERING),
     PREPARED(RemoteControlClient.PLAYSTATE_STOPPED),
     STARTED(RemoteControlClient.PLAYSTATE_PLAYING),
     STOPPED(RemoteControlClient.PLAYSTATE_STOPPED),
     PAUSED(RemoteControlClient.PLAYSTATE_PAUSED),
-	PAUSED_TEMP(RemoteControlClient.PLAYSTATE_PAUSED),
-    COMPLETED(RemoteControlClient.PLAYSTATE_STOPPED);
-    
-    private final int mRemoteControlClientPlayState;
-    
-    PlayerState(int playState) {
-    	mRemoteControlClientPlayState = playState;
-    }
-    
-    public int getRemoteControlClientPlayState() {
-    	return mRemoteControlClientPlayState;
-    }
+    PAUSED_TEMP(RemoteControlClient.PLAYSTATE_PAUSED),
+    COMPLETED(RemoteControlClient.PLAYSTATE_STOPPED)
 }

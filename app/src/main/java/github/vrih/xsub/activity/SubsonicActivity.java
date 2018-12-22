@@ -128,6 +128,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 
 	@Override
 	protected void onCreate(Bundle bundle) {
+
 		UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
 		if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
 			// tv = true;
@@ -218,7 +219,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 
 	private void createCustomActionBarView() {
 		actionBarSpinner = (Spinner) getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
-		if(this instanceof SubsonicFragmentActivity || this instanceof SettingsActivity){
+		if(this instanceof SubsonicFragmentActivity){
 			actionBarSpinner.setBackgroundDrawable(DrawableTint.getTintedDrawableFromColor(this, R.drawable.abc_spinner_mtrl_am_alpha, android.R.color.white));
 		}
 		spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
@@ -352,7 +353,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 					}
 				} else {
 					int activeServer = menuItem.getItemId() - MENU_ITEM_SERVER_BASE;
-					SubsonicActivity.this.setActiveServer(activeServer);
+					//SubsonicActivity.this.setActiveServer(activeServer);
 					populateTabs();
 					return true;
 				}

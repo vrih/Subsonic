@@ -186,64 +186,20 @@ public final class Util {
 		return prefs.getInt(Constants.PREFERENCES_KEY_SERVER_COUNT, 1);
 	}
 
-	public static void removeInstanceName(Context context, int instance, int activeInstance) {
-		SharedPreferences prefs = getPreferences(context);
-		SharedPreferences.Editor editor = prefs.edit();
-
-		int newInstance = instance + 1;
-
-		// Get what the +1 server details are
-		String server = prefs.getString(Constants.PREFERENCES_KEY_SERVER_KEY + newInstance, null);
-		String serverName = prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + newInstance, null);
-		String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + newInstance, null);
-		String userName = prefs.getString(Constants.PREFERENCES_KEY_USERNAME + newInstance, null);
-		String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD + newInstance, null);
-		String musicFolderId = prefs.getString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + newInstance, null);
-
-		// Store the +1 server details in the to be deleted instance
-		editor.putString(Constants.PREFERENCES_KEY_SERVER_KEY + instance, server);
-		editor.putString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, serverName);
-		editor.putString(Constants.PREFERENCES_KEY_SERVER_URL + instance, serverUrl);
-		editor.putString(Constants.PREFERENCES_KEY_USERNAME + instance, userName);
-		editor.putString(Constants.PREFERENCES_KEY_PASSWORD + instance, password);
-		editor.putString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + instance, musicFolderId);
-
-		// Delete the +1 server instance
-		// Calling method will loop up to fill this in if +2 server exists
-		editor.putString(Constants.PREFERENCES_KEY_SERVER_KEY + newInstance, null);
-		editor.putString(Constants.PREFERENCES_KEY_SERVER_NAME + newInstance, null);
-		editor.putString(Constants.PREFERENCES_KEY_SERVER_URL + newInstance, null);
-		editor.putString(Constants.PREFERENCES_KEY_USERNAME + newInstance, null);
-		editor.putString(Constants.PREFERENCES_KEY_PASSWORD + newInstance, null);
-		editor.putString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + newInstance, null);
-		editor.apply();
-
-		if (instance == activeInstance) {
-			if(instance != 1) {
-				Util.setActiveServer(context, 1);
-			} else {
-				Util.setOffline(context, true);
-			}
-		} else if (newInstance == activeInstance) {
-			Util.setActiveServer(context, instance);
-		}
-	}
-
 	public static String getServerName(Context context) {
 		SharedPreferences prefs = getPreferences(context);
-		int instance = prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
-        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
+        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME , null);
 	}
     public static String getServerName(Context context, int instance) {
         SharedPreferences prefs = getPreferences(context);
-        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
+        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME, null);
     }
 
     public static void setSelectedMusicFolderId(Context context, String musicFolderId) {
         int instance = getActiveServer(context);
         SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + instance, musicFolderId);
+        editor.putString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID , musicFolderId);
         editor.apply();
     }
 
@@ -252,7 +208,7 @@ public final class Util {
     }
 	public static String getSelectedMusicFolderId(Context context, int instance) {
 		SharedPreferences prefs = getPreferences(context);
-		return prefs.getString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + instance, null);
+		return prefs.getString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID , null);
 	}
 
 	public static boolean getAlbumListsPerFolder(Context context) {
@@ -260,13 +216,13 @@ public final class Util {
 	}
 	public static boolean getAlbumListsPerFolder(Context context, int instance) {
 		SharedPreferences prefs = getPreferences(context);
-		return prefs.getBoolean(Constants.PREFERENCES_KEY_ALBUMS_PER_FOLDER + instance, false);
+		return prefs.getBoolean(Constants.PREFERENCES_KEY_ALBUMS_PER_FOLDER, false);
 	}
 	public static void setAlbumListsPerFolder(Context context, boolean perFolder) {
 		int instance = getActiveServer(context);
 		SharedPreferences prefs = getPreferences(context);
 		SharedPreferences.Editor editor = prefs.edit();
-		editor.putBoolean(Constants.PREFERENCES_KEY_ALBUMS_PER_FOLDER + instance, perFolder);
+		editor.putBoolean(Constants.PREFERENCES_KEY_ALBUMS_PER_FOLDER, perFolder);
 		editor.apply();
 	}
 	
@@ -341,15 +297,15 @@ public final class Util {
     private static String getRestUrl(Context context, String method, SharedPreferences prefs, int instance, boolean allowAltAddress) {
 		StringBuilder builder = new StringBuilder();
 
-		String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + instance, null);
+		String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
 		if(allowAltAddress && Util.isWifiConnected(context)) {
-			String SSID = prefs.getString(Constants.PREFERENCES_KEY_SERVER_LOCAL_NETWORK_SSID + instance, "");
+			String SSID = prefs.getString(Constants.PREFERENCES_KEY_SERVER_LOCAL_NETWORK_SSID, "");
 			if(!SSID.isEmpty()) {
 				String currentSSID = Util.getSSID(context);
 
 				String[] ssidParts = SSID.split(",");
 				if ("".equals(SSID) || SSID.equals(currentSSID) || Arrays.asList(ssidParts).contains(currentSSID)) {
-					String internalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INTERNAL_URL + instance, null);
+					String internalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INTERNAL_URL, null);
 					if (internalUrl != null && !"".equals(internalUrl) && !"http://".equals(internalUrl)) {
 						serverUrl = internalUrl;
 					}
@@ -357,8 +313,8 @@ public final class Util {
 			}
 		}
 
-		String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME + instance, null);
-		String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD + instance, null);
+		String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME, null);
+		String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD, null);
 
 		builder.append(serverUrl);
 		if (builder.charAt(builder.length() - 1) != '/') {
@@ -406,8 +362,8 @@ public final class Util {
 		StringBuilder builder = new StringBuilder();
 
 		SharedPreferences prefs = Util.getPreferences(context);
-		builder.append(prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + instance, null));
-		builder.append(prefs.getString(Constants.PREFERENCES_KEY_USERNAME + instance, null));
+		builder.append(prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null));
+		builder.append(prefs.getString(Constants.PREFERENCES_KEY_USERNAME, null));
 
 		return builder.toString().hashCode();
 	}
@@ -429,9 +385,9 @@ public final class Util {
 		if(url.contains("https")) {
 			SharedPreferences prefs = Util.getPreferences(context);
 			int instance = prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
-			String internalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INTERNAL_URL + instance, null);
+			String internalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INTERNAL_URL, null);
 			if(internalUrl != null && !"".equals(internalUrl)) {
-				String externalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + instance, null);
+				String externalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
 				url = url.replace(internalUrl, externalUrl);
 			}
 		}
@@ -445,12 +401,12 @@ public final class Util {
 	}
 	public static boolean isTagBrowsing(Context context, int instance) {
 		SharedPreferences prefs = getPreferences(context);
-		return prefs.getBoolean(Constants.PREFERENCES_KEY_BROWSE_TAGS + instance, false);
+		return prefs.getBoolean(Constants.PREFERENCES_KEY_BROWSE_TAGS, false);
 	}
 	
 	public static boolean isSyncEnabled(Context context, int instance) {
 		SharedPreferences prefs = getPreferences(context);
-		return prefs.getBoolean(Constants.PREFERENCES_KEY_SERVER_SYNC + instance, true);
+		return prefs.getBoolean(Constants.PREFERENCES_KEY_SERVER_SYNC, true);
 	}
 
     public static String openToTab(Context context) {
