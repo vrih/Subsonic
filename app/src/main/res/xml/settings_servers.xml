@@ -10,8 +10,7 @@
 			android:key="serverName"
 			android:defaultValue="@string/settings.server_unused"
 			android:title="@string/settings.server_name"
-			android:dialogTitle="@string/settings.server_name"
-			></EditTextPreference>
+			android:dialogTitle="@string/settings.server_name" />
 
 		<EditTextPreference
 			android:defaultValue="http://yourhost"
@@ -19,26 +18,6 @@
 			android:inputType="textUri"
 			android:key="serverUrl"
 			android:title="@string/settings.server_address" />
-
-<!--
-		val serverLocalNetworkSSIDPreference = object : EditTextPreference(context) {
-		protected fun onAddEditTextToDialogView(dialogView: View, editText: EditText) {
-		super.onAddEditTextToDialogView(dialogView, editText)
-		val root = (dialogView as ViewGroup).getChildAt(0) as ViewGroup
-
-		val defaultButton = Button(context)
-		defaultButton.setText(internalSSIDDisplay)
-		defaultButton.setOnClickListener(object : View.OnClickListener() {
-		fun onClick(v: View) {
-		editText.setText(internalSSID)
-		}
-		})
-		root.addView(defaultButton)
-		}
-		}
-		serverLocalNetworkSSIDPreference.key = Constants.PREFERENCES_KEY_SERVER_LOCAL_NETWORK_SSID + instance
-		serverLocalNetworkSSIDPreference.setTitle(R.string.settings_server_local_network_ssid)
-		serverLocalNetworkSSIDPreference.setDialogTitle(R.string.settings_server_local_network_ssid)-->
 
 		<EditTextPreference
 			android:dialogTitle="@string/settings.server_internal_address"

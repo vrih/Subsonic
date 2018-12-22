@@ -126,12 +126,12 @@ class SubsonicSyncAdapter extends AbstractThreadedSyncAdapter {
 				try {
 					throwIfNetworkInvalid();
 
-					if (isValidServer(context, i) && Util.isSyncEnabled(context, i)) {
-						tagBrowsing = Util.isTagBrowsing(context, i);
+					if (isValidServer(context, i) && Util.isSyncEnabled(context)) {
+						tagBrowsing = Util.isTagBrowsing(context);
 						musicService.setInstance(i);
 						onExecuteSync(context, i);
 					} else {
-						Log.i(TAG, "Skipped sync for " + i);
+						Log.i(TAG, "Skipped sync");
 					}
 				} catch (Exception e) {
 					Log.e(TAG, "Failed sync for " + className + "(" + i + ")", e);

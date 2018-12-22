@@ -2859,7 +2859,7 @@ public class DownloadService extends Service {
 
 		if (!onSongChangedListeners.isEmpty()) {
 			onSongProgress();
-		};
+		}
 	}
 
 	private void onSongsChanged() {

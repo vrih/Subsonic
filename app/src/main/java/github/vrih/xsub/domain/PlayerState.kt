@@ -24,7 +24,7 @@ import android.media.RemoteControlClient
  * @author Sindre Mehus
  * @version $Id$
  */
-enum class PlayerState private constructor(val remoteControlClientPlayState: Int) {
+enum class PlayerState(val remoteControlClientPlayState: Int) {
     IDLE(RemoteControlClient.PLAYSTATE_STOPPED),
     DOWNLOADING(RemoteControlClient.PLAYSTATE_BUFFERING),
     PREPARING(RemoteControlClient.PLAYSTATE_BUFFERING),

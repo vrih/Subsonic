@@ -38,7 +38,7 @@ public final class ThemeUtil {
 	public static int getThemeRes(Context context) {
 		return getThemeRes(context, getTheme(context));
 	}
-	private static int getThemeRes(Context context, String theme) {
+	public static int getThemeRes(Context context, String theme) {
 		if(context instanceof SubsonicFragmentActivity || context instanceof SettingsActivity) {
 			if (THEME_DARK.equals(theme)) {
 				return R.style.Theme_DSub_Dark_No_Actionbar;

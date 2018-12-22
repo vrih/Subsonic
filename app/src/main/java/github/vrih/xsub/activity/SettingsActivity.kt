@@ -20,6 +20,7 @@ package github.vrih.xsub.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import github.vrih.xsub.R
@@ -29,9 +30,16 @@ import github.vrih.xsub.util.ThemeUtil
 class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ThemeUtil.getThemeRes(this, ThemeUtil.getTheme(this)))
+        ThemeUtil.setTheme(this, ThemeUtil.getTheme(this))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        ThemeUtil.setTheme(this, ThemeUtil.getTheme(this))
+        val toolbar: Toolbar = findViewById(R.id.main_toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ("Title")
+
+        // enabling action bar app icon and behaving it as toggle button
+
 
         if(savedInstanceState == null) {
             var fragment = supportFragmentManager.findFragmentByTag(SettingsFragment.FRAGMENT_TAG)
@@ -60,6 +68,14 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
+        val settingsActionBar = actionBar
+        settingsActionBar?.setDisplayShowTitleEnabled(true)
+        settingsActionBar?.setDisplayHomeAsUpEnabled(true)
+        settingsActionBar?.setDisplayShowHomeEnabled(true)
         return true
+    }
+
+    fun updateActionBarTitle(title: String) {
+        supportActionBar!!.title = title
     }
 }

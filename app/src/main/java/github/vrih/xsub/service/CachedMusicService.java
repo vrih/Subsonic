@@ -151,7 +151,7 @@ public class CachedMusicService implements MusicService {
 		}
 
         if (result == null) {
-			String name = Util.isTagBrowsing(context, musicService.getInstance(context)) ? "artists" : "indexes";
+			String name = Util.isTagBrowsing(context) ? "artists" : "indexes";
 			name = getCacheName(context, name, musicFolderId);
 			if(!refresh) {
 				result = FileUtil.deserialize(context, name, Indexes.class);
@@ -342,7 +342,7 @@ public class CachedMusicService implements MusicService {
 			updateAllSongs(context, dir);
 			FileUtil.serialize(context, dir, getCacheName(context, "playlist", id));
 
-			File playlistFile = FileUtil.getPlaylistFile(context, Util.getServerName(context, musicService.getInstance(context)), dir.getName());
+			File playlistFile = FileUtil.getPlaylistFile(context, Util.getServerName(context), dir.getName());
 			if(cachedPlaylist == null || !playlistFile.exists() || !cachedPlaylist.getChildren().equals(dir.getChildren())) {
 				FileUtil.writePlaylistFile(context, playlistFile, dir);
 			}
@@ -535,8 +535,7 @@ public class CachedMusicService implements MusicService {
 				}
 
 				// Add any new items
-				final int instance = musicService.getInstance(context);
-				isTagBrowsing = Util.isTagBrowsing(context, instance);
+				isTagBrowsing = Util.isTagBrowsing(context);
 				for (final Entry album : dir.getChildren()) {
 					if (!recents.contains(album.getId())) {
 						recents.add(album.getId());
@@ -1433,7 +1432,7 @@ public class CachedMusicService implements MusicService {
 		void execute() {
 			String cacheName, parent;
 			// Make sure it is up to date
-			isTagBrowsing = Util.isTagBrowsing(context, musicService.getInstance(context));
+			isTagBrowsing = Util.isTagBrowsing(context);
 			
 			// Run through each entry, trying to update the directory it is in
 			final List<Entry> songs = new ArrayList<>();
@@ -1598,7 +1597,7 @@ public class CachedMusicService implements MusicService {
 		Indexes indexes;
 
 		IndexesUpdater(Context context, String name) {
-			super(context, name, Util.getSelectedMusicFolderId(context, musicService.getInstance(context)));
+			super(context, name, Util.getSelectedMusicFolderId(context));
 		}
 
 		@Override
@@ -1624,14 +1623,14 @@ public class CachedMusicService implements MusicService {
 	private void updateAllSongs(Context context, MusicDirectory dir) {
 		List<Entry> songs = dir.getSongs();
 		if(!songs.isEmpty()) {
-			SongDBHandler.getHandler(context).addSongs(musicService.getInstance(context), songs);
+			SongDBHandler.getHandler(context).addSongs(songs);
 		}
 	}
 
     private void checkSettingsChanged(Context context) {
 		int instance = musicService.getInstance(context);
         String newUrl = musicService.getRestUrl(context, null, false);
-		boolean newIsTagBrowsing = Util.isTagBrowsing(context, instance);
+		boolean newIsTagBrowsing = Util.isTagBrowsing(context);
         if (!Util.equals(newUrl, restUrl) || isTagBrowsing != newIsTagBrowsing) {
             cachedMusicFolders.clear();
             cachedLicenseValid.clear();
@@ -1642,7 +1641,7 @@ public class CachedMusicService implements MusicService {
 			isTagBrowsing = newIsTagBrowsing;
         }
 
-		String newMusicFolderId = Util.getSelectedMusicFolderId(context, instance);
+		String newMusicFolderId = Util.getSelectedMusicFolderId(context);
 		if(!Util.equals(newMusicFolderId, musicFolderId)) {
 			cachedIndexes.clear();
 			musicFolderId = newMusicFolderId;

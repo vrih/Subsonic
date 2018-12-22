@@ -98,10 +98,10 @@ public class PodcastSyncAdapter extends SubsonicSyncAdapter {
 				}  catch(SubsonicRESTException e) {
 					if(e.getCode() == 70) {
 						SyncUtil.removeSyncedPodcast(context, id, instance);
-						Log.i(TAG, "Unsync deleted podcasts for " + id + " on " + Util.getServerName(context, instance));
+						Log.i(TAG, "Unsync deleted podcasts for " + id + " on " + Util.getServerName(context));
 					}
 				} catch (Exception e) {
-					Log.w(TAG, "Failed to get podcasts for " + id + " on " + Util.getServerName(context, instance));
+					Log.w(TAG, "Failed to get podcasts for " + id + " on " + Util.getServerName(context));
 				}
 			}
 
@@ -111,7 +111,7 @@ public class PodcastSyncAdapter extends SubsonicSyncAdapter {
 				Notifications.showSyncNotification(context, R.string.sync_new_podcasts, SyncUtil.joinNames(updated), updatedId);
 			}
 		} catch(Exception e) {
-			Log.w(TAG, "Failed to get podcasts for " + Util.getServerName(context, instance));
+			Log.w(TAG, "Failed to get podcasts for " + Util.getServerName(context));
 		}
 	}
 }

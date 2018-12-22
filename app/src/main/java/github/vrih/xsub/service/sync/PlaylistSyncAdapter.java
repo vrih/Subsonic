@@ -57,7 +57,7 @@ public class PlaylistSyncAdapter extends SubsonicSyncAdapter {
 
 	@Override
 	public void onExecuteSync(Context context, int instance) throws NetworkNotValidException {
-		String serverName = Util.getServerName(context, instance);
+		String serverName = Util.getServerName(context);
 
 		List<Playlist> remainder = null;
 		try {

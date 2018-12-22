@@ -39,7 +39,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -164,14 +163,7 @@ public final class Util {
         return prefs.getBoolean(Constants.PREFERENCES_KEY_SCROBBLE, true) && (isOffline(context) || UserUtil.canScrobble());
     }
 
-    public static void setActiveServer(Context context, int instance) {
-        SharedPreferences prefs = getPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
-        editor.apply();
-    }
-
-    public static int getActiveServer(Context context) {
+	public static int getActiveServer(Context context) {
         SharedPreferences prefs = getPreferences(context);
 		// Don't allow the SERVER_INSTANCE to ever be 0
         return prefs.getBoolean(Constants.PREFERENCES_KEY_OFFLINE, false) ? 0 : Math.max(1, prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1));
@@ -186,40 +178,28 @@ public final class Util {
 		return prefs.getInt(Constants.PREFERENCES_KEY_SERVER_COUNT, 1);
 	}
 
-	public static String getServerName(Context context) {
-		SharedPreferences prefs = getPreferences(context);
-        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME , null);
-	}
-    public static String getServerName(Context context, int instance) {
+    public static String getServerName(Context context) {
         SharedPreferences prefs = getPreferences(context);
         return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME, null);
     }
 
     public static void setSelectedMusicFolderId(Context context, String musicFolderId) {
-        int instance = getActiveServer(context);
-        SharedPreferences prefs = getPreferences(context);
+		SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID , musicFolderId);
         editor.apply();
     }
 
-    public static String getSelectedMusicFolderId(Context context) {
-        return getSelectedMusicFolderId(context, getActiveServer(context));
-    }
-	public static String getSelectedMusicFolderId(Context context, int instance) {
+	public static String getSelectedMusicFolderId(Context context) {
 		SharedPreferences prefs = getPreferences(context);
 		return prefs.getString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID , null);
 	}
 
 	public static boolean getAlbumListsPerFolder(Context context) {
-		return getAlbumListsPerFolder(context, getActiveServer(context));
-	}
-	public static boolean getAlbumListsPerFolder(Context context, int instance) {
 		SharedPreferences prefs = getPreferences(context);
 		return prefs.getBoolean(Constants.PREFERENCES_KEY_ALBUMS_PER_FOLDER, false);
 	}
 	public static void setAlbumListsPerFolder(Context context, boolean perFolder) {
-		int instance = getActiveServer(context);
 		SharedPreferences prefs = getPreferences(context);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putBoolean(Constants.PREFERENCES_KEY_ALBUMS_PER_FOLDER, perFolder);
@@ -355,10 +335,8 @@ public final class Util {
 
 		return builder.toString();
 	}
+
 	public static int getRestUrlHash(Context context) {
-		return getRestUrlHash(context, Util.getMostRecentActiveServer(context));
-	}
-	public static int getRestUrlHash(Context context, int instance) {
 		StringBuilder builder = new StringBuilder();
 
 		SharedPreferences prefs = Util.getPreferences(context);
@@ -384,7 +362,6 @@ public final class Util {
 		// Only change to internal when using https
 		if(url.contains("https")) {
 			SharedPreferences prefs = Util.getPreferences(context);
-			int instance = prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
 			String internalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INTERNAL_URL, null);
 			if(internalUrl != null && !"".equals(internalUrl)) {
 				String externalUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
@@ -397,14 +374,11 @@ public final class Util {
 	}
 
 	public static boolean isTagBrowsing(Context context) {
-		return isTagBrowsing(context, Util.getActiveServer(context));
-	}
-	public static boolean isTagBrowsing(Context context, int instance) {
 		SharedPreferences prefs = getPreferences(context);
 		return prefs.getBoolean(Constants.PREFERENCES_KEY_BROWSE_TAGS, false);
 	}
 	
-	public static boolean isSyncEnabled(Context context, int instance) {
+	public static boolean isSyncEnabled(Context context) {
 		SharedPreferences prefs = getPreferences(context);
 		return prefs.getBoolean(Constants.PREFERENCES_KEY_SERVER_SYNC, true);
 	}
@@ -1086,24 +1060,6 @@ public final class Util {
 		
 		((TextView)dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
     }
-	public static void showHTMLDialog(Context context, int title, int message) {
-		showHTMLDialog(context, title, context.getResources().getString(message));
-	}
-	private static void showHTMLDialog(Context context, int title, String message) {
-		AlertDialog dialog = new AlertDialog.Builder(context)
-			.setIcon(android.R.drawable.ic_dialog_info)
-			.setTitle(title)
-			.setMessage(Html.fromHtml(message))
-			.setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int i) {
-					dialog.dismiss();
-				}
-			})
-			.show();
-
-		((TextView)dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-	}
 
 	public static void showDetailsDialog(Context context, @StringRes int title, List<Integer> headers, List<String> details) {
 		List<String> headerStrings = new ArrayList<>();
@@ -1212,19 +1168,6 @@ public final class Util {
         }
     }
 
-    public static void unregisterMediaButtonEventReceiver(Context context) {
-        // AudioManager.unregisterMediaButtonEventReceiver() was introduced in Android 2.2.
-        // Use reflection to maintain compatibility with 1.5.
-        try {
-            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            ComponentName componentName = new ComponentName(context.getPackageName(), MediaButtonIntentReceiver.class.getName());
-            Method method = AudioManager.class.getMethod("unregisterMediaButtonEventReceiver", ComponentName.class);
-            method.invoke(audioManager, componentName);
-        } catch (Throwable x) {
-            // Ignored.
-        }
-    }
-    
     @TargetApi(8)
 	public static void requestAudioFocus(final Context context, final AudioManager audioManager) {
     	if(Build.VERSION.SDK_INT >= 26) {

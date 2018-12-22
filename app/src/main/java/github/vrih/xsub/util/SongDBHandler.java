@@ -67,22 +67,6 @@ public class SongDBHandler extends SQLiteOpenHelper {
 		this.onCreate(db);
 	}
 
-	public synchronized void addSong(DownloadFile downloadFile) {
-		addSong(Util.getMostRecentActiveServer(context), downloadFile);
-	}
-	private synchronized void addSong(int instance, DownloadFile downloadFile) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		addSong(db, instance, downloadFile);
-		db.close();
-	}
-
-	private synchronized void addSong(SQLiteDatabase db, int instance, DownloadFile downloadFile) {
-		addSong(db, instance, downloadFile.getSong().getId(), downloadFile.getSaveFile().getAbsolutePath());
-	}
-
-	private synchronized void addSong(SQLiteDatabase db, int instance, String id, String absolutePath) {
-		addSongImpl(db, Util.getRestUrlHash(context, instance), id, absolutePath);
-	}
 	private synchronized void addSongImpl(SQLiteDatabase db, int serverKey, String id, String absolutePath) {
 		ContentValues values = new ContentValues();
 		values.put(SONGS_SERVER_KEY, serverKey);
@@ -92,19 +76,19 @@ public class SongDBHandler extends SQLiteOpenHelper {
 		db.insertWithOnConflict(TABLE_SONGS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 	}
 
-	public synchronized void addSongs(int instance, List<MusicDirectory.Entry> entries) {
+	public synchronized void addSongs(List<MusicDirectory.Entry> entries) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		List<Pair<String, String>> pairs = new ArrayList<>();
 		for(MusicDirectory.Entry entry: entries) {
 			pairs.add(new Pair<>(entry.getId(), FileUtil.getSongFile(context, entry).getAbsolutePath()));
 		}
-		addSongs(db, instance, pairs);
+		addSongs(db, pairs);
 
 		db.close();
 	}
-	private synchronized void addSongs(SQLiteDatabase db, int instance, List<Pair<String, String>> entries) {
-		addSongsImpl(db, Util.getRestUrlHash(context, instance), entries);
+	private synchronized void addSongs(SQLiteDatabase db, List<Pair<String, String>> entries) {
+		addSongsImpl(db, Util.getRestUrlHash(context), entries);
 	}
 	private synchronized void addSongsImpl(SQLiteDatabase db, int serverKey, List<Pair<String, String>> entries) {
 		db.beginTransaction();

@@ -70,7 +70,7 @@ public class MostRecentSyncAdapter extends SubsonicSyncAdapter {
 									updated.add(album.getTitle());
 								}
 							} catch(Exception e) {
-								Log.w(TAG, "Failed to get songs for " + album.getId() + " on " + Util.getServerName(context, instance));
+								Log.w(TAG, "Failed to get songs for " + album.getId() + " on " + Util.getServerName(context));
 							}
 						}
 						syncedList.add(album.getId());
@@ -95,7 +95,7 @@ public class MostRecentSyncAdapter extends SubsonicSyncAdapter {
 				FileUtil.serialize(context, syncedList, SyncUtil.getMostRecentSyncFile(context, instance));
 			}
 		} catch(Exception e) {
-			Log.e(TAG, "Failed to get most recent list for " + Util.getServerName(context, instance));
+			Log.e(TAG, "Failed to get most recent list for " + Util.getServerName(context));
 		}
 	}
 }

@@ -24,5 +24,7 @@
 
 	<item 
 		android:id="@+id/menu_check"
+		android:icon="?attr/refresh"
+		compat:showAsAction="ifRoom|withText"
 		android:title="@string/menu.check_podcasts"/>
 </menu>

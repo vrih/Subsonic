@@ -92,11 +92,9 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	private static ImageLoader IMAGE_LOADER;
 	private static String theme;
 	private static boolean fullScreen;
-	private static boolean actionbarColored;
 	private static final int MENU_GROUP_SERVER = 10;
 	private static final int MENU_ITEM_SERVER_BASE = 100;
 	private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
-	public static final int PERMISSIONS_REQUEST_LOCATION = 2;
 
 	private final List<Runnable> afterServiceAvailable = new ArrayList<>();
 	private boolean drawerIdle = true;
@@ -352,8 +350,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 							return true;
 					}
 				} else {
-					int activeServer = menuItem.getItemId() - MENU_ITEM_SERVER_BASE;
-					//SubsonicActivity.this.setActiveServer(activeServer);
 					populateTabs();
 					return true;
 				}
@@ -647,7 +643,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 		int serverCount = Util.getServerCount(this);
 		int activeServer = Util.getActiveServer(this);
 		for(int i = 1; i <= serverCount; i++) {
-			MenuItem item = drawerList.getMenu().add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_BASE + i, MENU_ITEM_SERVER_BASE + i, Util.getServerName(this, i));
+			MenuItem item = drawerList.getMenu().add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_BASE + i, MENU_ITEM_SERVER_BASE + i, Util.getServerName(this));
 			if(activeServer == i) {
 				item.setChecked(true);
 			}
@@ -1024,25 +1020,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 
 	}
 
-	private void setActiveServer(int instance) {
-		if (Util.getActiveServer(this) != instance) {
-			final DownloadService service = getDownloadService();
-			if (service != null) {
-				new SilentBackgroundTask<Void>(this) {
-					@Override
-					protected Void doInBackground() {
-						service.clearIncomplete();
-						return null;
-					}
-				}.execute();
-
-			}
-			Util.setActiveServer(this, instance);
-			invalidate();
-			UserUtil.refreshCurrentUser(this, false, true);
-			updateDrawerHeader();
-		}
-	}
 	private void updateDrawerHeader() {
 		if(Util.isOffline(this)) {
 			drawerServerName.setText(R.string.select_album_offline);

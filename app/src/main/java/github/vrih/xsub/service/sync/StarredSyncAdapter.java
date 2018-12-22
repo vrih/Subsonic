@@ -73,7 +73,7 @@ public class StarredSyncAdapter extends SubsonicSyncAdapter {
 				Notifications.showSyncNotification(context, R.string.sync_new_starred, null);
 			}
 		} catch(Exception e) {
-			Log.e(TAG, "Failed to get starred list for " + Util.getServerName(context, instance));
+			Log.e(TAG, "Failed to get starred list for " + Util.getServerName(context));
 		}
 	}
 }

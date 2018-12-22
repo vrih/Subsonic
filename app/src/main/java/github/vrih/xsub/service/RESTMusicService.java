@@ -240,7 +240,7 @@ public class RESTMusicService implements MusicService {
             parameterValues.add(musicFolderId);
         }
 
-        Reader reader = getReader(context, progressListener, Util.isTagBrowsing(context, getInstance(context)) ? "getArtists" : "getIndexes", parameterNames, parameterValues);
+        Reader reader = getReader(context, progressListener, Util.isTagBrowsing(context) ? "getArtists" : "getIndexes", parameterNames, parameterValues);
         try {
             return new IndexesParser(context, getInstance(context)).parse(reader, progressListener);
         } finally {
@@ -350,13 +350,13 @@ public class RESTMusicService implements MusicService {
 		int instance = getInstance(context);
 		String method;
 		if(ServerInfo.isMadsonic(context, instance) && ServerInfo.checkServerVersion(context, "2.0", instance)) {
-			if(Util.isTagBrowsing(context, instance)) {
+			if(Util.isTagBrowsing(context)) {
 				method = "searchID3";
 			} else {
 				method = "search";
 			}
 		} else {
-			if(Util.isTagBrowsing(context, instance)) {
+			if(Util.isTagBrowsing(context)) {
 				method = "search3";
 			} else {
 				method = "search2";
@@ -546,8 +546,8 @@ public class RESTMusicService implements MusicService {
 
 		// Add folder if it was set and is non null
 		int instance = getInstance(context);
-		if(Util.getAlbumListsPerFolder(context, instance)) {
-			String folderId = Util.getSelectedMusicFolderId(context, instance);
+		if(Util.getAlbumListsPerFolder(context)) {
+			String folderId = Util.getSelectedMusicFolderId(context);
 			if(folderId != null) {
 				names.add("musicFolderId");
 				values.add(folderId);
@@ -555,7 +555,7 @@ public class RESTMusicService implements MusicService {
 		}
 
 		String method;
-		if(Util.isTagBrowsing(context, instance)) {
+		if(Util.isTagBrowsing(context)) {
 			if(ServerInfo.isMadsonic6(context, instance)) {
 				method = "getAlbumListID3";
 			} else {
@@ -612,8 +612,8 @@ public class RESTMusicService implements MusicService {
 		}
 
 		// Add folder if it was set and is non null
-		if(Util.getAlbumListsPerFolder(context, instance)) {
-			String folderId = Util.getSelectedMusicFolderId(context, instance);
+		if(Util.getAlbumListsPerFolder(context)) {
+			String folderId = Util.getSelectedMusicFolderId(context);
 			if(folderId != null) {
 				names.add("musicFolderId");
 				values.add(folderId);
@@ -621,7 +621,7 @@ public class RESTMusicService implements MusicService {
 		}
 
 		String method;
-		if(Util.isTagBrowsing(context, instance)) {
+		if(Util.isTagBrowsing(context)) {
 			if(ServerInfo.isMadsonic6(context, instance)) {
 				method = "getAlbumListID3";
 			} else {
@@ -691,7 +691,7 @@ public class RESTMusicService implements MusicService {
 		int instance = getInstance(context);
 		String method;
 		if(ServerInfo.isMadsonic6(context, instance)) {
-			if (Util.isTagBrowsing(context, instance)) {
+			if (Util.isTagBrowsing(context)) {
 				method = "getSimilarSongsID3";
 			} else {
 				method = "getSimilarSongs";
@@ -699,7 +699,7 @@ public class RESTMusicService implements MusicService {
 		} else if(ServerInfo.isMadsonic(context, instance)) {
 			method = "getPandoraSongs";
 		} else {
-			if (Util.isTagBrowsing(context, instance)) {
+			if (Util.isTagBrowsing(context)) {
 				method = "getSimilarSongs2";
 			} else {
 				method = "getSimilarSongs";
@@ -721,8 +721,8 @@ public class RESTMusicService implements MusicService {
 
 		// Add folder if it was set and is non null
 		int instance = getInstance(context);
-		if(Util.getAlbumListsPerFolder(context, instance)) {
-			String folderId = Util.getSelectedMusicFolderId(context, instance);
+		if(Util.getAlbumListsPerFolder(context)) {
+			String folderId = Util.getSelectedMusicFolderId(context);
 			if(folderId != null) {
 				names.add("musicFolderId");
 				values.add(folderId);
@@ -730,7 +730,7 @@ public class RESTMusicService implements MusicService {
 		}
 
 		String method;
-		if(Util.isTagBrowsing(context, instance)) {
+		if(Util.isTagBrowsing(context)) {
 			if(ServerInfo.isMadsonic6(context, instance)) {
 				method = "getStarredID3";
 			} else {
@@ -756,7 +756,7 @@ public class RESTMusicService implements MusicService {
         names.add("size");
         values.add(size);
 
-        if (musicFolderId != null && !"".equals(musicFolderId) && !Util.isTagBrowsing(context, getInstance(context))) {
+        if (musicFolderId != null && !"".equals(musicFolderId) && !Util.isTagBrowsing(context)) {
             names.add("musicFolderId");
             values.add(musicFolderId);
         }
@@ -1152,8 +1152,8 @@ public class RESTMusicService implements MusicService {
 
 		// Add folder if it was set and is non null
 		int instance = getInstance(context);
-		if(Util.getAlbumListsPerFolder(context, instance)) {
-			String folderId = Util.getSelectedMusicFolderId(context, instance);
+		if(Util.getAlbumListsPerFolder(context)) {
+			String folderId = Util.getSelectedMusicFolderId(context);
 			if(folderId != null) {
 				parameterNames.add("musicFolderId");
 				parameterValues.add(folderId);
@@ -1200,7 +1200,7 @@ public class RESTMusicService implements MusicService {
 				content.append(channel.getName()).append("\t").append(channel.getUrl()).append("\n");
 			}
 
-			File file = FileUtil.getPodcastFile(context, Util.getServerName(context, getInstance(context)));
+			File file = FileUtil.getPodcastFile(context, Util.getServerName(context));
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 			bw.write(content.toString());
 			bw.close();
@@ -1490,7 +1490,7 @@ public class RESTMusicService implements MusicService {
 
 		int instance = getInstance(context);
 		String method;
-		if(Util.isTagBrowsing(context, instance)) {
+		if(Util.isTagBrowsing(context)) {
 			if(ServerInfo.isMadsonic6(context, instance)) {
 				method = "getArtistInfoID3";
 			} else {
@@ -1636,7 +1636,7 @@ public class RESTMusicService implements MusicService {
 					} else if(result.getAlbums().size() == 1) {
 						MusicDirectory.Entry album = result.getAlbums().get(0);
 						Log.i(TAG, "Query '" + search + "' returned album " + album.getTitle() + " by " + album.getArtist() + " with id " + album.getId());
-						if(Util.isTagBrowsing(context, getInstance(context))) {
+						if(Util.isTagBrowsing(context)) {
 							setStarred(null, null, Collections.singletonList(album), starred, progressListener, context);
 						} else {
 							setStarred(Collections.singletonList(album), null, null, starred, progressListener, context);
@@ -1663,7 +1663,7 @@ public class RESTMusicService implements MusicService {
 		SharedPreferences prefs = Util.getPreferences(context);
 		String cacheLocn = prefs.getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, null);
 		if(id.contains(cacheLocn)) {
-			Pair<Integer, String> cachedSongId = SongDBHandler.getHandler(context).getIdFromPath(Util.getRestUrlHash(context, getInstance(context)), id);
+			Pair<Integer, String> cachedSongId = SongDBHandler.getHandler(context).getIdFromPath(Util.getRestUrlHash(context), id);
 			if(cachedSongId != null) {
 				id = cachedSongId.getSecond();
 			} else {
