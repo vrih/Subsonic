@@ -9,7 +9,7 @@ class ArtistTest {
 
     @Before
     fun setUp(){
-        subject = Artist("ID", "Name");
-        subject.rating = 5;
+        subject = Artist("ID", "Name")
+        subject.rating = 5
     }
 }

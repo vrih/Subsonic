@@ -82,7 +82,7 @@ public class MusicDirectoryParser extends MusicDirectoryEntryParser {
                 } else if ("directory".equals(name) || "artist".equals(name) || ("album".equals(name) && !isArtist)) {
                     dir.setName(get("name"));
 					dir.setId(get("id"));
-					if(Util.isTagBrowsing(context, instance)) {
+					if(Util.isTagBrowsing(context)) {
 						dir.setParent(get("artistId"));
 					} else {
 						dir.setParent(get("parent"));
