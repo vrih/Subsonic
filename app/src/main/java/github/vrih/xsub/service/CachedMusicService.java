@@ -127,7 +127,7 @@ public class CachedMusicService implements MusicService {
             	FileUtil.serialize(context, new ArrayList<>(result), getCacheName(context, "musicFolders"));
         	}
 
-			MusicFolder.sort(result);
+			MusicFolder.Companion.sort(result);
             cachedMusicFolders.set(result);
         }
         return result;
@@ -218,7 +218,7 @@ public class CachedMusicService implements MusicService {
 			// If a cached copy exists to check against, look for removes
 			deleteRemovedEntries(context, dir, cached);
 		}
-		dir.sortChildren(context, musicService.getInstance(context));
+		dir.sortChildren(context);
 
 		return dir;
     }
@@ -266,7 +266,7 @@ public class CachedMusicService implements MusicService {
 			// If a cached copy exists to check against, look for removes
 			deleteRemovedEntries(context, dir, cached);
 		}
-		dir.sortChildren(context, musicService.getInstance(context));
+		dir.sortChildren(context);
 
 		return dir;
 	}
@@ -320,7 +320,7 @@ public class CachedMusicService implements MusicService {
 			// If a cached copy exists to check against, look for removes
 			deleteRemovedEntries(context, dir, cached);
 		}
-		dir.sortChildren(context, musicService.getInstance(context));
+		dir.sortChildren(context);
 
 		return dir;
 	}

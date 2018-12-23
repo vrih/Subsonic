@@ -324,13 +324,13 @@ public class DLNAController extends RemoteController {
 	public void setVolume(int volume) {
 		if(volume < 0) {
 			volume = 0;
-		} else if(volume > device.volumeMax) {
-			volume = device.volumeMax;
+		} else if(volume > device.getVolumeMax()) {
+			volume = device.getVolumeMax();
 		}
 
-		device.volume = volume;
+		device.setVolume(volume);
 		try {
-			controlPoint.execute(new SetVolume(device.renderer.findService(new ServiceType("schemas-upnp-org", "RenderingControl")), volume) {
+			controlPoint.execute(new SetVolume(device.getRenderer().findService(new ServiceType("schemas-upnp-org", "RenderingControl")), volume) {
 				@SuppressWarnings("rawtypes")
 				@Override
 				public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMessage) {
@@ -344,13 +344,13 @@ public class DLNAController extends RemoteController {
 
 	@Override
 	public void updateVolume(boolean up) {
-		int increment = device.volumeMax / 10;
-		setVolume(device.volume + (up ? increment : -increment));
+		int increment = device.getVolumeMax() / 10;
+		setVolume(device.getVolume() + (up ? increment : -increment));
 	}
 
 	@Override
 	public double getVolume() {
-		return device.volume;
+		return device.getVolume();
 	}
 
 	@Override
@@ -559,7 +559,7 @@ public class DLNAController extends RemoteController {
 	}
 
 	private Service getTransportService() {
-		return device.renderer.findService(new ServiceType("schemas-upnp-org", "AVTransport"));
+		return device.getRenderer().findService(new ServiceType("schemas-upnp-org", "AVTransport"));
 	}
 
 	private void getUpdatedStatus() {

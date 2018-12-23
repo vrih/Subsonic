@@ -674,11 +674,11 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 
 	private void loadSession() {
 		loadSettings();
-		if(!Util.isOffline(this) && ServerInfo.canBookmark(this)) {
+		if(!Util.isOffline(this) && ServerInfo.Companion.canBookmark()) {
 			loadBookmarks();
 		}
 		// If we are on Subsonic 5.2+, save play queue
-		if(ServerInfo.canSavePlayQueue(this) && !Util.isOffline(this)) {
+		if(ServerInfo.Companion.canSavePlayQueue(this) && !Util.isOffline(this)) {
 			loadRemotePlayQueue();
 		}
 
@@ -765,9 +765,9 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 					}
 
 					// If we had a remote state and it's changed is more recent than our existing state
-					if(remoteState != null && remoteState.changed != null) {
+					if(remoteState != null && remoteState.getChanged() != null) {
 						// Check if changed + 30 seconds since some servers have slight skew
-						Date remoteChange = new Date(remoteState.changed.getTime() - ALLOWED_SKEW);
+						Date remoteChange = new Date(remoteState.getChanged().getTime() - ALLOWED_SKEW);
 						Date localChange = downloadService.getLastStateChanged();
 						if(localChange == null || localChange.before(remoteChange)) {
 							playerQueue = remoteState;
@@ -790,7 +790,7 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 	}
 	private void promptRestoreFromRemoteQueue(final PlayerQueue remoteState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String message = getResources().getString(R.string.common_confirm_message, getResources().getString(R.string.download_restore_play_queue).toLowerCase(), Util.formatDate(remoteState.changed));
+		String message = getResources().getString(R.string.common_confirm_message, getResources().getString(R.string.download_restore_play_queue).toLowerCase(), Util.formatDate(remoteState.getChanged()));
 		builder.setIcon(android.R.drawable.ic_dialog_alert)
 				.setTitle(R.string.common_confirm)
 				.setMessage(message)
@@ -802,7 +802,7 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 							protected Void doInBackground() {
 								DownloadService downloadService = getDownloadService();
 								downloadService.clear();
-								downloadService.download(remoteState.songs, false, false, false, false, remoteState.currentPlayingIndex, remoteState.currentPlayingPosition);
+								downloadService.download(remoteState.getSongs(), false, false, false, false, remoteState.getCurrentPlayingIndex(), remoteState.getCurrentPlayingPosition());
 								return null;
 							}
 						}.execute();

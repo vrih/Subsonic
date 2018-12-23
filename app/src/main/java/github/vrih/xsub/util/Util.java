@@ -300,14 +300,14 @@ public final class Util {
 		if (builder.charAt(builder.length() - 1) != '/') {
 			builder.append("/");
 		}
-		if(method != null && ServerInfo.isMadsonic6(context, instance)) {
+		if(method != null && ServerInfo.Companion.isMadsonic6(context)) {
 			builder.append("rest2/");
 		} else {
 			builder.append("rest/");
 		}
 		builder.append(method).append(".view");
 		builder.append("?u=").append(username);
-		if(method != null && ServerInfo.canUseToken(context, instance)) {
+		if(method != null && ServerInfo.Companion.canUseToken(context)) {
 			int hash = (username + password).hashCode();
 			Pair<String, String> values = tokens.get(hash);
 			if(values == null) {
@@ -326,7 +326,7 @@ public final class Util {
 			builder.append("&p=").append(password);
 		}
 
-		if(method != null && ServerInfo.isMadsonic6(context, instance)) {
+		if(method != null && ServerInfo.Companion.isMadsonic6(context)) {
 			builder.append("&v=").append(Constants.REST_PROTOCOL_VERSION_MADSONIC);
 		} else {
 			builder.append("&v=").append(Constants.REST_PROTOCOL_VERSION_SUBSONIC);
@@ -346,15 +346,15 @@ public final class Util {
 		return builder.toString().hashCode();
 	}
 
-	private static String getBlockTokenUsePref(Context context, int instance) {
-		return Constants.CACHE_BLOCK_TOKEN_USE + Util.getRestUrl(context, null, instance, false);
+	private static String getBlockTokenUsePref(Context context) {
+		return Constants.CACHE_BLOCK_TOKEN_USE + Util.getRestUrl(context, null, false);
 	}
-	public static boolean getBlockTokenUse(Context context, int instance) {
-		return getPreferences(context).getBoolean(getBlockTokenUsePref(context, instance), false);
+	public static boolean getBlockTokenUse(Context context) {
+		return getPreferences(context).getBoolean(getBlockTokenUsePref(context), false);
 	}
-	public static void setBlockTokenUse(Context context, int instance, boolean block) {
+	public static void setBlockTokenUse(Context context, boolean block) {
 		SharedPreferences.Editor editor = getPreferences(context).edit();
-		editor.putBoolean(getBlockTokenUsePref(context, instance), block);
+		editor.putBoolean(getBlockTokenUsePref(context), block);
 		editor.apply();
 	}
 
@@ -580,12 +580,10 @@ public final class Util {
     private static void copy(InputStream input, OutputStream output)
             throws IOException {
         byte[] buffer = new byte[1024 * 4];
-        long count = 0;
-        int n;
+		int n;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
-            count += n;
-        }
+		}
 	}
 
 	public static void renameFile(File from, File to) {
@@ -767,7 +765,7 @@ public final class Util {
 
 		try {
 			dateString = dateString.replace(' ', 'T');
-			boolean isDateNormalized = ServerInfo.checkServerVersion(context, "1.11");
+			boolean isDateNormalized = ServerInfo.checkServerVersion("1.11");
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
 			if (isDateNormalized) {
 				dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

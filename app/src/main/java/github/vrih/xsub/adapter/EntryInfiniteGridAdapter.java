@@ -127,7 +127,7 @@ public class EntryInfiniteGridAdapter extends EntryGridAdapter {
 		MusicService service = MusicServiceFactory.getMusicService(context);
 		MusicDirectory result;
 		int offset = sections.get(0).size();
-		if(("genres".equals(type) && ServerInfo.checkServerVersion(context, "1.10.0")) || "years".equals(type)) {
+		if(("genres".equals(type) && ServerInfo.checkServerVersion("1.10.0")) || "years".equals(type)) {
 			result = service.getAlbumList(type, extra, size, offset, false, context, null);
 		} else if("genres".equals(type) || "genres-songs".equals(type)) {
 			result = service.getSongsByGenre(extra, size, offset, context, null);

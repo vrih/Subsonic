@@ -132,7 +132,7 @@ public class SettingsAdapter extends SectionAdapter<Setting> {
 	}
 
 	public static SettingsAdapter getSettingsAdapter(Context context, User user, ImageLoader imageLoader, OnItemClickedListener<Setting> onItemClickedListener) {
-		return getSettingsAdapter(context, user, imageLoader, UserUtil.isCurrentAdmin() && ServerInfo.checkServerVersion(context, "1.10"), onItemClickedListener);
+		return getSettingsAdapter(context, user, imageLoader, UserUtil.isCurrentAdmin() && ServerInfo.checkServerVersion("1.10"), onItemClickedListener);
 	}
 	public static SettingsAdapter getSettingsAdapter(Context context, User user, ImageLoader imageLoader, boolean isEditable, OnItemClickedListener<Setting> onItemClickedListener) {
 		List<String> headers = new ArrayList<>();

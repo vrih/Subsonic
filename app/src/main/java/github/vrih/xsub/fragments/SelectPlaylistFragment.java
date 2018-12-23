@@ -62,7 +62,7 @@ public class SelectPlaylistFragment extends SelectRecyclerFragment<Playlist> {
 				menu.removeItem(R.id.playlist_menu_stop_sync);
 			}
 
-			if(!ServerInfo.checkServerVersion(context, "1.8")) {
+			if(!ServerInfo.checkServerVersion("1.8")) {
 				menu.removeItem(R.id.playlist_update_info);
 			} else if(playlist.getPublic() != null && playlist.getPublic() && !playlist.getId().contains(".m3u") && !UserUtil.getCurrentUsername(context).equals(playlist.getOwner())) {
 				menu.removeItem(R.id.playlist_update_info);
@@ -176,7 +176,7 @@ public class SelectPlaylistFragment extends SelectRecyclerFragment<Playlist> {
 		Bundle args = new Bundle();
 		args.putString(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, playlist.getId());
 		args.putString(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, playlist.getName());
-		if(ServerInfo.checkServerVersion(context, "1.8") && (playlist.getOwner() != null && playlist.getOwner().equals(UserUtil.getCurrentUsername(context)) || playlist.getId().contains(".m3u"))) {
+		if(ServerInfo.checkServerVersion("1.8") && (playlist.getOwner() != null && playlist.getOwner().equals(UserUtil.getCurrentUsername(context)) || playlist.getId().contains(".m3u"))) {
 			args.putBoolean(Constants.INTENT_EXTRA_NAME_PLAYLIST_OWNER, true);
 		}
 		fragment.setArguments(args);

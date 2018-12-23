@@ -294,25 +294,25 @@ public class DownloadServiceLifecycleSupport {
 	private void serializeDownloadQueueNow(List<DownloadFile> songs, boolean serializeRemote) {
 		final PlayerQueue state = new PlayerQueue();
 		for (DownloadFile downloadFile : songs) {
-			state.songs.add(downloadFile.getSong());
+			state.getSongs().add(downloadFile.getSong());
 		}
 		for (DownloadFile downloadFile : downloadService.getToDelete()) {
-			state.toDelete.add(downloadFile.getSong());
+			state.getToDelete().add(downloadFile.getSong());
 		}
-		state.currentPlayingIndex = downloadService.getCurrentPlayingIndex();
-		state.currentPlayingPosition = downloadService.getPlayerPosition();
+		state.setCurrentPlayingIndex(downloadService.getCurrentPlayingIndex());
+		state.setCurrentPlayingPosition(downloadService.getPlayerPosition());
 
 		DownloadFile currentPlaying = downloadService.getCurrentPlaying();
 		if(currentPlaying != null) {
-			state.renameCurrent = currentPlaying.isWorkDone() && !currentPlaying.isCompleteFileAvailable();
+			state.setRenameCurrent(currentPlaying.isWorkDone() && !currentPlaying.isCompleteFileAvailable());
 		}
-		state.changed = lastChange = new Date();
+		state.setChanged(lastChange = new Date());
 
-		Log.i(TAG, "Serialized currentPlayingIndex: " + state.currentPlayingIndex + ", currentPlayingPosition: " + state.currentPlayingPosition);
+		Log.i(TAG, "Serialized currentPlayingIndex: " + state.getCurrentPlayingIndex() + ", currentPlayingPosition: " + state.getCurrentPlayingPosition());
 		FileUtil.serialize(downloadService, state, FILENAME_DOWNLOADS_SER);
 
 		// If we are on Subsonic 5.2+, save play queue
-		if(serializeRemote && ServerInfo.canSavePlayQueue(downloadService) && !Util.isOffline(downloadService) && state.songs.size() > 0 && !(state.songs.get(0) instanceof InternetRadioStation)) {
+		if(serializeRemote && ServerInfo.Companion.canSavePlayQueue(downloadService) && !Util.isOffline(downloadService) && state.getSongs().size() > 0 && !(state.getSongs().get(0) instanceof InternetRadioStation)) {
 			// Cancel any currently running tasks
 			if(currentSavePlayQueueTask != null) {
 				currentSavePlayQueueTask.cancel();
@@ -322,18 +322,18 @@ public class DownloadServiceLifecycleSupport {
 				@Override
 				protected Void doInBackground() {
 					try {
-						int index = state.currentPlayingIndex;
-						int position = state.currentPlayingPosition;
+						int index = state.getCurrentPlayingIndex();
+						int position = state.getCurrentPlayingPosition();
 						if(index == -1) {
 							index = 0;
 							position = 0;
 						}
 
-						MusicDirectory.Entry currentPlaying = state.songs.get(index);
+						MusicDirectory.Entry currentPlaying = state.getSongs().get(index);
 						List<MusicDirectory.Entry> songs = new ArrayList<>();
 
 						SongDBHandler dbHandler = SongDBHandler.getHandler(downloadService);
-						for(MusicDirectory.Entry song: state.songs) {
+						for(MusicDirectory.Entry song: state.getSongs()) {
 							Pair<Integer, String> onlineSongIds = dbHandler.getOnlineSongId(song);
 							if(onlineSongIds != null && onlineSongIds.getSecond() != null) {
 								song.setId(onlineSongIds.getSecond());
@@ -371,18 +371,18 @@ public class DownloadServiceLifecycleSupport {
 		if (state == null) {
 			return;
 		}
-		Log.i(TAG, "Deserialized currentPlayingIndex: " + state.currentPlayingIndex + ", currentPlayingPosition: " + state.currentPlayingPosition);
+		Log.i(TAG, "Deserialized currentPlayingIndex: " + state.getCurrentPlayingIndex() + ", currentPlayingPosition: " + state.getCurrentPlayingPosition());
 
 		// Rename first thing before anything else starts
-		if(state.renameCurrent && state.currentPlayingIndex != -1 && state.currentPlayingIndex < state.songs.size()) {
-			DownloadFile currentPlaying = new DownloadFile(downloadService, state.songs.get(state.currentPlayingIndex), false);
+		if(state.getRenameCurrent() && state.getCurrentPlayingIndex() != -1 && state.getCurrentPlayingIndex() < state.getSongs().size()) {
+			DownloadFile currentPlaying = new DownloadFile(downloadService, state.getSongs().get(state.getCurrentPlayingIndex()), false);
 			currentPlaying.renamePartial();
 		}
 
-		downloadService.restore(state.songs, state.toDelete, state.currentPlayingIndex, state.currentPlayingPosition);
+		downloadService.restore(state.getSongs(), state.getToDelete(), state.getCurrentPlayingIndex(), state.getCurrentPlayingPosition());
 
 		if(state != null) {
-			lastChange = state.changed;
+			lastChange = state.getChanged();
 		}
 	}
 

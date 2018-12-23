@@ -771,7 +771,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 		final String oldGenre = prefs.getString(Constants.PREFERENCES_KEY_SHUFFLE_GENRE, "");
 
 		boolean _useCombo = false;
-		if(ServerInfo.checkServerVersion(context, "1.9.0")) {
+		if(ServerInfo.checkServerVersion("1.9.0")) {
 			genreBox.setVisibility(View.GONE);
 			genreCombo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -1127,7 +1127,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 				playlistNameView.setText(playlistName);
 				if(playlistId != null) {
 					try {
-						if (ServerInfo.checkServerVersion(context, "1.8.0") && Integer.parseInt(playlistId) != -1) {
+						if (ServerInfo.checkServerVersion("1.8.0") && Integer.parseInt(playlistId) != -1) {
 							overwriteCheckBox.setChecked(true);
 							overwriteCheckBox.setVisibility(View.VISIBLE);
 						}

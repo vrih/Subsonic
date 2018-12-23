@@ -34,7 +34,7 @@ public class ScanStatusParser extends AbstractParser {
 		init(reader);
 
 		String scanName, scanningName;
-		if(ServerInfo.isMadsonic(context, instance)) {
+		if(ServerInfo.Companion.isMadsonic(context)) {
 			scanName = "status";
 			scanningName = "started";
 		} else {

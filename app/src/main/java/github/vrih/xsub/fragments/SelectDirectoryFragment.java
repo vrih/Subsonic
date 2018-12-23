@@ -280,13 +280,13 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 		} else if(artist && !showAll) {
 			menuInflater.inflate(R.menu.select_album, menu);
 
-			if(!ServerInfo.hasTopSongs(context)) {
+			if(!ServerInfo.Companion.hasTopSongs(context)) {
 				menu.removeItem(R.id.menu_top_tracks);
 			}
-			if(!ServerInfo.checkServerVersion(context, "1.11")) {
+			if(!ServerInfo.checkServerVersion("1.11")) {
 				menu.removeItem(R.id.menu_radio);
 				menu.removeItem(R.id.menu_similar_artists);
-			} else if(!ServerInfo.hasSimilarArtists(context)) {
+			} else if(!ServerInfo.Companion.hasSimilarArtists(context)) {
 				menu.removeItem(R.id.menu_similar_artists);
 			}
 		} else {
@@ -617,7 +617,7 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 				MusicDirectory result;
 				if ("starred".equals(albumListType)) {
 					result = service.getStarredList(context, this);
-				} else if(("genres".equals(albumListType) && ServerInfo.checkServerVersion(context, "1.10.0")) || "years".equals(albumListType)) {
+				} else if(("genres".equals(albumListType) && ServerInfo.checkServerVersion("1.10.0")) || "years".equals(albumListType)) {
 					result = service.getAlbumList(albumListType, albumListExtra, size, 0, refresh, context, this);
 					if(result.getChildrenSize() == 0 && "genres".equals(albumListType)) {
 						SelectDirectoryFragment.this.albumListType = "genres-songs";
@@ -662,7 +662,7 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			}
 
 			// If artist, we want to load the artist info to use later
-			if(artist && ServerInfo.hasArtistInfo(context)  && !Util.isOffline(context)) {
+			if(artist && ServerInfo.Companion.hasArtistInfo(context)  && !Util.isOffline(context)) {
 				try {
 					String artistId;
 					if(id.indexOf(';') == -1) {

@@ -65,7 +65,7 @@ public class PlaylistsParser extends AbstractParser {
 
         validate();
 
-        return Playlist.PlaylistComparator.sort(result);
+        return Playlist.PlaylistComparator.Companion.sort(result);
     }
 
 }

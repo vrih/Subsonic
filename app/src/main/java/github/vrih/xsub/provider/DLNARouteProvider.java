@@ -168,19 +168,19 @@ public class DLNARouteProvider extends MediaRouteProvider {
 			DLNADevice device = deviceEntry.getValue();
 
 			int volume;
-			if(device.volumeMax <= 0) {
+			if(device.getVolumeMax() <= 0) {
 				volume = 5;
 			} else {
-				int increments = (int) Math.ceil(device.volumeMax / 10.0);
-				volume = controller == null ? device.volume : (int) controller.getVolume();
+				int increments = (int) Math.ceil(device.getVolumeMax() / 10.0);
+				volume = controller == null ? device.getVolume() : (int) controller.getVolume();
 				volume = volume / increments;
 			}
 
-			MediaRouteDescriptor.Builder routeBuilder = new MediaRouteDescriptor.Builder(device.id, device.name);
+			MediaRouteDescriptor.Builder routeBuilder = new MediaRouteDescriptor.Builder(device.getId(), device.getName());
 			routeBuilder.addControlFilter(routeIntentFilter)
 					.setPlaybackStream(AudioManager.STREAM_MUSIC)
 					.setPlaybackType(MediaRouter.RouteInfo.PLAYBACK_TYPE_REMOTE)
-					.setDescription(device.description)
+					.setDescription(device.getDescription())
 					.setVolume(volume)
 					.setVolumeMax(10)
 					.setVolumeHandling(MediaRouter.RouteInfo.PLAYBACK_VOLUME_VARIABLE);

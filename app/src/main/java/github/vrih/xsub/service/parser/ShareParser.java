@@ -59,7 +59,7 @@ public class ShareParser extends MusicDirectoryEntryParser {
 		}
 		serverUrl += "share/";
 
-		boolean isDateNormalized = ServerInfo.checkServerVersion(context, "1.11");
+		boolean isDateNormalized = ServerInfo.checkServerVersion("1.11");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
 		if(isDateNormalized) {
 			dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

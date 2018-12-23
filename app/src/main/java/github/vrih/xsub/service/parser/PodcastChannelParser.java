@@ -63,6 +63,6 @@ public class PodcastChannelParser extends AbstractParser {
 		} while (eventType != XmlPullParser.END_DOCUMENT);
 
 		validate();
-		return PodcastChannel.PodcastComparator.sort(channels, context);
+		return PodcastChannel.PodcastComparator.Companion.sort(channels, context);
 	}
 }

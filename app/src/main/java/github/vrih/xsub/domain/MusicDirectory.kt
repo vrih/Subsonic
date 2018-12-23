@@ -96,9 +96,9 @@ class MusicDirectory : Serializable {
         Collections.shuffle(this.children)
     }
 
-    fun sortChildren(context: Context, instance: Int) {
+    fun sortChildren(context: Context) {
         // Only apply sorting on server version 4.7 and greater, where disc is supported
-        if (ServerInfo.checkServerVersion(context, "1.8", instance)) {
+        if (ServerInfo.checkServerVersion("1.8")) {
             sortChildren(Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_CUSTOM_SORT_ENABLED, true))
         }
     }
@@ -182,7 +182,7 @@ class MusicDirectory : Serializable {
         }
 
         if (resort) {
-            this.sortChildren(context, instance)
+            this.sortChildren(context)
         }
 
         return changed

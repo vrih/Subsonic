@@ -49,7 +49,7 @@ public class BookmarkParser extends MusicDirectoryEntryParser {
         Bookmark bookmark = null;
         int eventType;
 
-		boolean isDateNormalized = ServerInfo.checkServerVersion(context, "1.11");
+		boolean isDateNormalized = ServerInfo.checkServerVersion("1.11");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
 		if(isDateNormalized) {
 			dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

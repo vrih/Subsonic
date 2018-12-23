@@ -167,8 +167,8 @@ public class DSubWidgetProvider extends AppWidgetProvider {
         	// Deserialize from playling list to setup
             try {
                 PlayerQueue state = FileUtil.deserialize(context, DownloadServiceLifecycleSupport.FILENAME_DOWNLOADS_SER, PlayerQueue.class);
-                if (state != null && state.currentPlayingIndex != -1) {
-                    currentPlaying = state.songs.get(state.currentPlayingIndex);
+                if (state != null && state.getCurrentPlayingIndex() != -1) {
+                    currentPlaying = state.getSongs().get(state.getCurrentPlayingIndex());
                 }
             } catch(Exception e) {
                 Log.e(TAG, "Failed to grab current playing", e);

@@ -14,18 +14,26 @@
 */
 package github.vrih.xsub.fragments;
 
-import android.content.res.Resources;
-import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
 import github.vrih.xsub.R;
+import github.vrih.xsub.adapter.PodcastChannelAdapter;
 import github.vrih.xsub.adapter.SectionAdapter;
 import github.vrih.xsub.domain.MusicDirectory;
 import github.vrih.xsub.domain.PodcastChannel;
@@ -35,22 +43,15 @@ import github.vrih.xsub.service.MusicService;
 import github.vrih.xsub.service.MusicServiceFactory;
 import github.vrih.xsub.service.OfflineException;
 import github.vrih.xsub.service.ServerTooOldException;
-import github.vrih.xsub.util.FileUtil;
-import github.vrih.xsub.util.ProgressListener;
-import github.vrih.xsub.util.SyncUtil;
 import github.vrih.xsub.util.Constants;
+import github.vrih.xsub.util.FileUtil;
 import github.vrih.xsub.util.LoadingTask;
+import github.vrih.xsub.util.ProgressListener;
 import github.vrih.xsub.util.SilentBackgroundTask;
+import github.vrih.xsub.util.SyncUtil;
 import github.vrih.xsub.util.UserUtil;
 import github.vrih.xsub.util.Util;
-import github.vrih.xsub.adapter.PodcastChannelAdapter;
 import github.vrih.xsub.view.UpdateView;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class SelectPodcastsFragment extends SelectRecyclerFragment<Serializable> {
 	private static final String TAG = SelectPodcastsFragment.class.getSimpleName();
@@ -61,7 +62,7 @@ public class SelectPodcastsFragment extends SelectRecyclerFragment<Serializable>
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		hasCoverArt = ServerInfo.checkServerVersion(context, "1.13") || Util.isOffline(context);
+		hasCoverArt = ServerInfo.checkServerVersion("1.13") || Util.isOffline(context);
 		if (Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_LARGE_ALBUM_ART, true) && hasCoverArt) {
 			largeAlbums = true;
 		}
@@ -166,7 +167,7 @@ public class SelectPodcastsFragment extends SelectRecyclerFragment<Serializable>
 			sections.add(serializableEpisodes);
 			sections.add(channels);
 
-			return new PodcastChannelAdapter(context, headers, sections, ServerInfo.checkServerVersion(context, "1.13") ? getImageLoader() : null, this, largeAlbums);
+			return new PodcastChannelAdapter(context, headers, sections, ServerInfo.checkServerVersion("1.13") ? getImageLoader() : null, this, largeAlbums);
 		}
 	}
 
@@ -174,7 +175,7 @@ public class SelectPodcastsFragment extends SelectRecyclerFragment<Serializable>
 	public List<Serializable> getObjects(MusicService musicService, boolean refresh, ProgressListener listener) throws Exception {
 		List<PodcastChannel> channels = musicService.getPodcastChannels(refresh, context, listener);
 
-		if(!Util.isOffline(context) && ServerInfo.hasNewestPodcastEpisodes(context)) {
+		if(!Util.isOffline(context) && ServerInfo.Companion.hasNewestPodcastEpisodes()) {
 			try {
 				newestEpisodes = musicService.getNewestPodcastEpisodes(refresh, context, listener, 10);
 

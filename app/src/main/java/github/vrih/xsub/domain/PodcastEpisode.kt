@@ -16,39 +16,18 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package github.vrih.xsub.domain;
+package github.vrih.xsub.domain
 
 /**
  *
  * @author Scott
  */
-public class PodcastEpisode extends MusicDirectory.Entry {
-	private String episodeId;
-	private String date;
-	private String status;
-	
-	public PodcastEpisode() {
-		setDirectory(false);
-	}
-	
-	public String getEpisodeId() {
-		return episodeId;
-	}
-	public void setEpisodeId(String episodeId) {
-		this.episodeId = episodeId;
-	}
-	
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
-	
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
+class PodcastEpisode : MusicDirectory.Entry() {
+    var episodeId: String? = null
+    var date: String? = null
+    var status: String? = null
+
+    init {
+        isDirectory = false
+    }
 }

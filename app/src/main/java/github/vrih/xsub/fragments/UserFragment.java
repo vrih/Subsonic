@@ -67,7 +67,7 @@ public class UserFragment extends SelectRecyclerFragment<User.Setting>{
 
 	@Override
 	public int getOptionsMenu() {
-		if(UserUtil.isCurrentAdmin() && ServerInfo.checkServerVersion(context, "1.10")) {
+		if(UserUtil.isCurrentAdmin() && ServerInfo.checkServerVersion("1.10")) {
 			return R.menu.user;
 		} else if(UserUtil.isCurrentRole(User.SETTINGS)) {
 			return R.menu.user_user;

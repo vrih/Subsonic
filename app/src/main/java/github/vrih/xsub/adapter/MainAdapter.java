@@ -85,7 +85,7 @@ public class MainAdapter extends SectionAdapter<Integer> {
 		if ("albums".equals(header)) {
 			display = context.getResources().getString(R.string.main_albums_title);
 
-			if(!Util.isOffline(context) && ServerInfo.canAlbumListPerFolder(context)) {
+			if(!Util.isOffline(context) && ServerInfo.Companion.canAlbumListPerFolder(context)) {
 				checkBox.setVisibility(View.VISIBLE);
 				checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 					@Override

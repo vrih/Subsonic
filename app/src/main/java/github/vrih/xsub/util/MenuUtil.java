@@ -35,14 +35,14 @@ public final class MenuUtil {
 	private final static String TAG = MenuUtil.class.getSimpleName();
 
 	public static void hideMenuItems(Context context, Menu menu, UpdateView updateView) {
-		if(!ServerInfo.checkServerVersion(context, "1.8")) {
+		if(!ServerInfo.checkServerVersion("1.8")) {
 			menu.setGroupVisible(R.id.server_1_8, false);
 			menu.setGroupVisible(R.id.hide_star, false);
 		}
-		if(!ServerInfo.checkServerVersion(context, "1.9")) {
+		if(!ServerInfo.checkServerVersion("1.9")) {
 			menu.setGroupVisible(R.id.server_1_9, false);
 		}
-		if(!ServerInfo.checkServerVersion(context, "1.10.1")) {
+		if(!ServerInfo.checkServerVersion("1.10.1")) {
 			menu.setGroupVisible(R.id.server_1_10, false);
 		}
 

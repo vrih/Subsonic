@@ -195,7 +195,7 @@ public class RESTMusicService implements MusicService {
 	public void startRescan(Context context, ProgressListener listener) throws Exception {
 		String startMethod;
 		String refreshMethod;
-		if(ServerInfo.isMadsonic(context, getInstance(context))) {
+		if(ServerInfo.Companion.isMadsonic(context)) {
 			startMethod = "startRescan";
 			refreshMethod = "scanstatus";
 		} else {
@@ -349,7 +349,7 @@ public class RESTMusicService implements MusicService {
 
 		int instance = getInstance(context);
 		String method;
-		if(ServerInfo.isMadsonic(context, instance) && ServerInfo.checkServerVersion(context, "2.0", instance)) {
+		if(ServerInfo.Companion.isMadsonic(context) && ServerInfo.Companion.checkServerVersion("2.0")) {
 			if(Util.isTagBrowsing(context)) {
 				method = "searchID3";
 			} else {
@@ -556,7 +556,7 @@ public class RESTMusicService implements MusicService {
 
 		String method;
 		if(Util.isTagBrowsing(context)) {
-			if(ServerInfo.isMadsonic6(context, instance)) {
+			if(ServerInfo.Companion.isMadsonic6(context)) {
 				method = "getAlbumListID3";
 			} else {
 				method = "getAlbumList2";
@@ -602,7 +602,7 @@ public class RESTMusicService implements MusicService {
 
 			int decade = Integer.parseInt(extra);
 			// Reverse chronological order only supported in 5.3+
-			if(ServerInfo.checkServerVersion(context, "1.13", instance) && !ServerInfo.isMadsonic(context, instance)) {
+			if(ServerInfo.Companion.checkServerVersion("1.13") && !ServerInfo.Companion.isMadsonic(context)) {
 				values.add(decade + 9);
 				values.add(decade);
 			} else {
@@ -622,7 +622,7 @@ public class RESTMusicService implements MusicService {
 
 		String method;
 		if(Util.isTagBrowsing(context)) {
-			if(ServerInfo.isMadsonic6(context, instance)) {
+			if(ServerInfo.Companion.isMadsonic6(context)) {
 				method = "getAlbumListID3";
 			} else {
 				method = "getAlbumList2";
@@ -690,13 +690,13 @@ public class RESTMusicService implements MusicService {
 
 		int instance = getInstance(context);
 		String method;
-		if(ServerInfo.isMadsonic6(context, instance)) {
+		if(ServerInfo.Companion.isMadsonic6(context)) {
 			if (Util.isTagBrowsing(context)) {
 				method = "getSimilarSongsID3";
 			} else {
 				method = "getSimilarSongs";
 			}
-		} else if(ServerInfo.isMadsonic(context, instance)) {
+		} else if(ServerInfo.Companion.isMadsonic(context)) {
 			method = "getPandoraSongs";
 		} else {
 			if (Util.isTagBrowsing(context)) {
@@ -731,7 +731,7 @@ public class RESTMusicService implements MusicService {
 
 		String method;
 		if(Util.isTagBrowsing(context)) {
-			if(ServerInfo.isMadsonic6(context, instance)) {
+			if(ServerInfo.Companion.isMadsonic6(context)) {
 				method = "getStarredID3";
 			} else {
 				method = "getStarred2";
@@ -798,7 +798,7 @@ public class RESTMusicService implements MusicService {
     }
 
 	private void checkServerVersion(Context context, String version, String text) throws ServerTooOldException {
-        Version serverVersion = ServerInfo.getServerVersion(context);
+        Version serverVersion = ServerInfo.Companion.getServerVersion();
         Version requiredVersion = new Version(version);
         boolean ok = serverVersion == null || serverVersion.compareTo(requiredVersion) >= 0;
 
@@ -888,7 +888,12 @@ public class RESTMusicService implements MusicService {
 		builder.append("&id=").append(song.getId());
 
 		// Allow user to specify to stream raw formats if available
-		if(Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_CAST_STREAM_ORIGINAL, true) && ("mp3".equals(song.getSuffix()) || "flac".equals(song.getSuffix()) || "wav".equals(song.getSuffix()) || "aac".equals(song.getSuffix())) && ServerInfo.checkServerVersion(context, "1.9", getInstance(context))) {
+		if(Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_CAST_STREAM_ORIGINAL, true) &&
+				("mp3".equals(song.getSuffix()) ||
+						"flac".equals(song.getSuffix()) ||
+						"wav".equals(song.getSuffix()) ||
+						"aac".equals(song.getSuffix())) &&
+				ServerInfo.Companion.checkServerVersion("1.9")) {
 			builder.append("&format=raw");
 		} else {
 			builder.append("&maxBitRate=").append(maxBitrate);
@@ -1178,7 +1183,7 @@ public class RESTMusicService implements MusicService {
 		parameterNames.add("size");
 		parameterValues.add(size);
 
-		String method = ServerInfo.isMadsonic(context, getInstance(context)) ? "getTopTrackSongs" : "getTopSongs";
+		String method = ServerInfo.Companion.isMadsonic(context) ? "getTopTrackSongs" : "getTopSongs";
 		Reader reader = getReader(context, progressListener, method, parameterNames, parameterValues);
 		try {
 			return new TopSongsParser(context, getInstance(context)).parse(reader);
@@ -1469,7 +1474,7 @@ public class RESTMusicService implements MusicService {
 	@Override
 	public Bitmap getAvatar(String username, int size, Context context, ProgressListener progressListener, SilentBackgroundTask task) throws Exception {
 		// Return silently if server is too old
-		if (!ServerInfo.checkServerVersion(context, "1.8")) {
+		if (!ServerInfo.checkServerVersion("1.8")) {
 			return null;
 		}
 
@@ -1491,7 +1496,7 @@ public class RESTMusicService implements MusicService {
 		int instance = getInstance(context);
 		String method;
 		if(Util.isTagBrowsing(context)) {
-			if(ServerInfo.isMadsonic6(context, instance)) {
+			if(ServerInfo.Companion.isMadsonic6(context)) {
 				method = "getArtistInfoID3";
 			} else {
 				method = "getArtistInfo2";

@@ -101,7 +101,7 @@ public class SelectArtistFragment extends SelectRecyclerFragment<Serializable> i
 				args.putString(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
 				args.putString(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
 
-				if (ServerInfo.checkServerVersion(context, "1.13") && !Util.isOffline(context)) {
+				if (ServerInfo.checkServerVersion("1.13") && !Util.isOffline(context)) {
 					args.putSerializable(Constants.INTENT_EXTRA_NAME_DIRECTORY, new Entry(artist));
 				}
 				args.putBoolean(Constants.INTENT_EXTRA_NAME_ARTIST, true);
@@ -113,7 +113,7 @@ public class SelectArtistFragment extends SelectRecyclerFragment<Serializable> i
 				args.putString(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
 				args.putString(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
 				args.putBoolean(Constants.INTENT_EXTRA_NAME_ARTIST, true);
-				if (ServerInfo.checkServerVersion(context, "1.13") && !Util.isOffline(context)) {
+				if (ServerInfo.checkServerVersion("1.13") && !Util.isOffline(context)) {
 					args.putSerializable(Constants.INTENT_EXTRA_NAME_DIRECTORY, new Entry(artist));
 				}
 
@@ -173,7 +173,7 @@ public class SelectArtistFragment extends SelectRecyclerFragment<Serializable> i
 	public List<Serializable> getObjects(MusicService musicService, boolean refresh, ProgressListener listener) throws Exception {
 		List<Serializable> items;
 		if(groupId == null) {
-			if (!Util.isOffline(context) && (!Util.isTagBrowsing(context) || ServerInfo.checkServerVersion(context, "1.14"))) {
+			if (!Util.isOffline(context) && (!Util.isTagBrowsing(context) || ServerInfo.checkServerVersion("1.14"))) {
 				musicFolders = musicService.getMusicFolders(refresh, context, listener);
 
 				// Hide folders option if there is only one

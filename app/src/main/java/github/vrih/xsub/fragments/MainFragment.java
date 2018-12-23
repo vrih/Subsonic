@@ -46,7 +46,7 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 		onFinishSetupOptionsMenu(menu);
 
 		try {
-			if (!ServerInfo.canRescanServer(context) || !UserUtil.isCurrentAdmin()) {
+			if (!ServerInfo.Companion.canRescanServer(context) || !UserUtil.isCurrentAdmin()) {
 				menu.setGroupVisible(R.id.rescan_server, false);
 			}
 		} catch(Exception e) {
@@ -82,7 +82,7 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 		List<Integer> albums = new ArrayList<>();
 		albums.add(R.string.main_albums_newest);
 		albums.add(R.string.main_albums_random);
-		if(ServerInfo.checkServerVersion(context, "1.8")) {
+		if(ServerInfo.checkServerVersion("1.8")) {
 			albums.add(R.string.main_albums_alphabetical);
 		}
 		if(!Util.isTagBrowsing(context)) {
@@ -101,11 +101,11 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 			List<Integer> songs = new ArrayList<>();
 
 			songs.add(R.string.main_songs_newest);
-			if(ServerInfo.checkServerVersion(context, "2.0.1")) {
+			if(ServerInfo.checkServerVersion("2.0.1")) {
 				songs.add(R.string.main_songs_top_played);
 			}
 			songs.add(R.string.main_songs_recent);
-			if(ServerInfo.checkServerVersion(context, "2.0.1")) {
+			if(ServerInfo.checkServerVersion("2.0.1")) {
 				songs.add(R.string.main_songs_frequent);
 			}
 
@@ -113,7 +113,7 @@ public class MainFragment extends SelectRecyclerFragment<Integer> {
 			headers.add("songs");
 		}
 
-		if(ServerInfo.checkServerVersion(context, "1.8")) {
+		if(ServerInfo.checkServerVersion("1.8")) {
 			List<Integer> videos = Collections.singletonList(R.string.main_videos);
 			sections.add(videos);
 			headers.add("videos");

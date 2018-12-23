@@ -2570,7 +2570,7 @@ public class DownloadService extends Service {
 	}
 	private void checkAddBookmark(final boolean updateMetadata) {
 		// Don't do anything if no current playing
-		if(currentPlaying == null || !ServerInfo.canBookmark(this)) {
+		if(currentPlaying == null || !ServerInfo.Companion.canBookmark()) {
 			return;
 		}
 		

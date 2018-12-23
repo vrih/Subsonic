@@ -75,7 +75,7 @@ abstract class AbstractParser {
                 message = context.getResources().getString(R.string.parser_not_authenticated);
                 break;
 			case 41:
-				Util.setBlockTokenUse(context, instance, true);
+				Util.setBlockTokenUse(context, true);
 
 				// Throw IOException so RESTMusicService knows to retry
 				throw new IOException();
@@ -154,12 +154,12 @@ abstract class AbstractParser {
             	server.setRestVersion(new Version(version));
 
             	if(MADSONIC.equals(get("type")) || MADSONIC_RESPONSE.equals(name)) {
-					server.setRestType(ServerInfo.TYPE_MADSONIC);
+					server.setRestType(ServerInfo.Companion.getTYPE_MADSONIC());
             	} if(AMPACHE.equals(get("type"))) {
-                    server.setRestType(ServerInfo.TYPE_AMPACHE);
-                } else if(SUBSONIC.equals(get("type")) && server.checkServerVersion(context, "1.13")) {
+                    server.setRestType(ServerInfo.Companion.getTYPE_AMPACHE());
+                } else if(SUBSONIC.equals(get("type")) && ServerInfo.checkServerVersion("1.13")) {
                     // Oh am I going to regret this
-                    server.setRestType(ServerInfo.TYPE_MADSONIC);
+                    server.setRestType(ServerInfo.Companion.getTYPE_MADSONIC());
                     server.setRestVersion(new Version("2.0.0"));
                 }
             	server.saveServerInfo(context, instance);
@@ -170,7 +170,7 @@ abstract class AbstractParser {
 
     void validate() throws Exception {
         if (!rootElementFound) {
-			if(ServerInfo.isMadsonic6(context, instance)) {
+			if(ServerInfo.Companion.isMadsonic6(context)) {
 				ServerInfo overrideInfo = new ServerInfo();
 				overrideInfo.saveServerInfo(context, instance);
 			}

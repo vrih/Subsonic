@@ -46,19 +46,19 @@ public class PlayQueueParser extends MusicDirectoryEntryParser {
 				String name = getElementName();
 				if("playQueue".equals(name)) {
 					currentId = get("current");
-					state.currentPlayingPosition = getInteger("position");
+					state.setCurrentPlayingPosition(getInteger("position"));
 					try {
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
 						dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-						state.changed = dateFormat.parse(get("changed"));
+						state.setChanged(dateFormat.parse(get("changed")));
 					} catch (ParseException e) {
-						state.changed = null;
+						state.setChanged(null);
 					}
 				} else if ("entry".equals(name)) {
 					MusicDirectory.Entry entry = parseEntry("");
 					// Only add songs
 					if(!entry.isVideo()) {
-						state.songs.add(entry);
+						state.getSongs().add(entry);
 					}
 				} else if ("error".equals(name)) {
 					handleError();
@@ -67,14 +67,14 @@ public class PlayQueueParser extends MusicDirectoryEntryParser {
 		} while (eventType != XmlPullParser.END_DOCUMENT);
 
 		if(currentId != null) {
-			for (MusicDirectory.Entry entry : state.songs) {
+			for (MusicDirectory.Entry entry : state.getSongs()) {
 				if (entry.getId().equals(currentId)) {
-					state.currentPlayingIndex = state.songs.indexOf(entry);
+					state.setCurrentPlayingIndex(state.getSongs().indexOf(entry));
 				}
 			}
 		} else {
-			state.currentPlayingIndex = 0;
-			state.currentPlayingPosition = 0;
+			state.setCurrentPlayingIndex(0);
+			state.setCurrentPlayingPosition(0);
 		}
 
 		validate();
