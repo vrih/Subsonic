@@ -5,7 +5,7 @@ import org.junit.Before
 
 class ArtistTest {
 
-    private lateinit var subject: Artist;
+    private lateinit var subject: Artist
 
     @Before
     fun setUp(){

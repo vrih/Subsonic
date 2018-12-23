@@ -104,7 +104,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 	@Override
 	protected View onCreateDialogView()
 	{
-		View view = super.onCreateDialogView();
+		return super.onCreateDialogView();
 
 //		mValueText = view.findViewById(R.id.value);
 //		mValueText.setText(getSummary(mValue));
@@ -117,8 +117,6 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 //			seekBar.setProgress(0);
 //		}
 //		seekBar.setOnSeekBarChangeListener(this);
-
-		return view;
 	}
 
 	@Override

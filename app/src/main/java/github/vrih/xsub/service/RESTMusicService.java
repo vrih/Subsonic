@@ -1751,10 +1751,7 @@ public class RESTMusicService implements MusicService {
         return getReaderForURL(context, url, parameterNames, parameterValues, minNetworkTimeout, progressListener, throwErrors);
     }
 
-    private Reader getReaderForURL(Context context, String url, List<String> parameterNames, List<Object> parameterValues, ProgressListener progressListener, boolean throwErrors) throws Exception {
-		return getReaderForURL(context, url, parameterNames, parameterValues, 0, progressListener, throwErrors);
-	}
-    private Reader getReaderForURL(Context context, String url, List<String> parameterNames, List<Object> parameterValues, int minNetworkTimeout, ProgressListener progressListener, boolean throwErrors) throws Exception {
+	private Reader getReaderForURL(Context context, String url, List<String> parameterNames, List<Object> parameterValues, int minNetworkTimeout, ProgressListener progressListener, boolean throwErrors) throws Exception {
 		InputStream in = getInputStream(context, url, parameterNames, parameterValues, minNetworkTimeout, progressListener, throwErrors);
 		return new InputStreamReader(in, Constants.UTF_8);
     }

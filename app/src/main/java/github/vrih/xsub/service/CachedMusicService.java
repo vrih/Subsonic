@@ -1628,8 +1628,7 @@ public class CachedMusicService implements MusicService {
 	}
 
     private void checkSettingsChanged(Context context) {
-		int instance = musicService.getInstance(context);
-        String newUrl = musicService.getRestUrl(context, null, false);
+		String newUrl = musicService.getRestUrl(context, null, false);
 		boolean newIsTagBrowsing = Util.isTagBrowsing(context);
         if (!Util.equals(newUrl, restUrl) || isTagBrowsing != newIsTagBrowsing) {
             cachedMusicFolders.clear();

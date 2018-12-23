@@ -1,33 +1,15 @@
 package github.vrih.xsub.fragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StatFs;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import github.vrih.xsub.R;
 import github.vrih.xsub.adapter.MainAdapter;
@@ -36,8 +18,6 @@ import github.vrih.xsub.domain.ServerInfo;
 import github.vrih.xsub.service.MusicService;
 import github.vrih.xsub.service.MusicServiceFactory;
 import github.vrih.xsub.util.Constants;
-import github.vrih.xsub.util.EnvironmentVariables;
-import github.vrih.xsub.util.FileUtil;
 import github.vrih.xsub.util.LoadingTask;
 import github.vrih.xsub.util.ProgressListener;
 import github.vrih.xsub.util.UserUtil;

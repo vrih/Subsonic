@@ -18,7 +18,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.EditTextPreference;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,14 +35,6 @@ public class CacheLocationPreference extends EditTextPreference {
 	private static final String TAG = CacheLocationPreference.class.getSimpleName();
 	private final Context context;
 
-	private CacheLocationPreference(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		this.context = context;
-	}
-	private CacheLocationPreference(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		this.context = context;
-	}
 	private CacheLocationPreference(Context context) {
 		super(context);
 		this.context = context;

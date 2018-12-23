@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Genre implements Serializable {
 	private String name;
-    private String index;
 	private Integer albumCount;
 	private Integer songCount;
 
@@ -20,8 +19,7 @@ public class Genre implements Serializable {
     }
 
 	public void setIndex(String index) {
-        this.index = index;
-    }
+	}
     
     @Override
     public String toString() {

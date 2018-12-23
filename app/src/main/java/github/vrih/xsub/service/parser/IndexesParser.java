@@ -57,8 +57,7 @@ public class IndexesParser extends MusicDirectoryEntryParser {
 		List<MusicDirectory.Entry> entries = new ArrayList<>();
         Long lastModified = null;
         int eventType;
-        String index = "#";
-		String ignoredArticles = null;
+        String ignoredArticles = null;
         boolean changed = false;
 		Map<String, Artist> artistList = new HashMap<>();
 
@@ -71,7 +70,6 @@ public class IndexesParser extends MusicDirectoryEntryParser {
                     lastModified = getLong("lastModified");
 					ignoredArticles = get("ignoredArticles");
                 } else if ("index".equals(name)) {
-                    index = get("name");
 
                 } else if ("artist".equals(name)) {
                     Artist artist = new Artist(get("id"), get("name"));

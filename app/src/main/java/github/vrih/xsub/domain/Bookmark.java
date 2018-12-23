@@ -29,7 +29,6 @@ import java.util.Locale;
  */
 public class Bookmark implements Serializable {
 	private int position;
-	private String username;
 	private String comment;
 	private Date created;
 	private Date changed;
@@ -50,7 +49,6 @@ public class Bookmark implements Serializable {
 	}
 
     public void setUsername(String username) {
-		this.username = username;
 	}
 	
 	public String getComment() {

@@ -69,19 +69,14 @@ public final class Constants {
 	public static final String INTENT_EXTRA_ENTRY = "passedEntry";
 	public static final String INTENT_EXTRA_ENTRY_BYTES = "passedEntryBytes";
 
-    // Preferences keys.
-	public static final String PREFERENCES_KEY_SERVER_KEY = "server";
 	public static final String PREFERENCES_KEY_SERVER_COUNT = "serverCount";
-	public static final String PREFERENCES_KEY_SERVER_ADD = "serverAdd";
-	public static final String PREFERENCES_KEY_SERVER_REMOVE = "serverRemove";
     public static final String PREFERENCES_KEY_SERVER_INSTANCE = "serverInstanceId";
     public static final String PREFERENCES_KEY_SERVER_NAME = "serverName";
     public static final String PREFERENCES_KEY_SERVER_URL = "serverUrl";
 	public static final String PREFERENCES_KEY_SERVER_INTERNAL_URL = "serverInternalUrl";
 	public static final String PREFERENCES_KEY_SERVER_LOCAL_NETWORK_SSID = "serverLocalNetworkSSID";
 	public static final String PREFERENCES_KEY_TEST_CONNECTION = "serverTestConnection";
-	public static final String PREFERENCES_KEY_OPEN_BROWSER = "openBrowser";
-    public static final String PREFERENCES_KEY_MUSIC_FOLDER_ID = "musicFolderId";
+	public static final String PREFERENCES_KEY_MUSIC_FOLDER_ID = "musicFolderId";
     public static final String PREFERENCES_KEY_USERNAME = "username";
     public static final String PREFERENCES_KEY_PASSWORD = "password";
     public static final String PREFERENCES_KEY_INSTALL_TIME = "installTime";
@@ -167,7 +162,6 @@ public final class Constants {
 	public static final String PREFERENCES_KEY_RENAME_DUPLICATES = "renameDuplicates";
 	public static final String PREFERENCES_KEY_FIRST_LEVEL_ARTIST = "firstLevelArtist";
 	public static final String PREFERENCES_KEY_START_ON_HEADPHONES = "startOnHeadphones";
-	public static final String PREFERENCES_KEY_COLOR_ACTION_BAR = "colorActionBar";
 	public static final String PREFERENCES_KEY_SHUFFLE_BY_ALBUM = "shuffleByAlbum";
 	public static final String PREFERENCES_KEY_RESUME_PLAY_QUEUE_NEVER = "neverResumePlayQueue";
 	public static final String PREFERENCES_KEY_BATCH_MODE = "batchMode";

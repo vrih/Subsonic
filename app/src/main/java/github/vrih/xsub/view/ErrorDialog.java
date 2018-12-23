@@ -32,10 +32,6 @@ import github.vrih.xsub.util.Util;
  */
 public class ErrorDialog {
 
-    public ErrorDialog(AppCompatActivity activity, int messageId, boolean finishActivityOnCancel) {
-        this(activity, activity.getResources().getString(messageId), finishActivityOnCancel);
-    }
-
     public ErrorDialog(final AppCompatActivity activity, String message, final boolean finishActivityOnClose) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

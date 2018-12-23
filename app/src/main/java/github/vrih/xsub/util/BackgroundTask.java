@@ -307,8 +307,4 @@ public abstract class BackgroundTask<T> implements ProgressListener {
 			threads.remove(currentThread);
 		}
 	}
-
-	protected interface OnCancelListener {
-		void onCancel();
-	}
 }
