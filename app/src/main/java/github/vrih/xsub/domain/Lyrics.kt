@@ -16,42 +16,13 @@
 
  Copyright 2010 (C) Sindre Mehus
  */
-package github.vrih.xsub.domain;
+package github.vrih.xsub.domain
 
-import java.io.Serializable;
+import java.io.Serializable
 
-/**
- * Song lyrics.
- *
- * @author Sindre Mehus
- */
-public class Lyrics  implements Serializable {
+class Lyrics : Serializable {
 
-    private String artist;
-    private String title;
-    private String text;
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
+    var artist: String? = null
+    var title: String? = null
+    var text: String? = null
 }

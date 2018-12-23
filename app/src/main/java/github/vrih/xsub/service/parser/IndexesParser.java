@@ -122,6 +122,6 @@ public class IndexesParser extends MusicDirectoryEntryParser {
         String msg = getContext().getResources().getString(R.string.parser_artist_count, artists.size());
         updateProgress(progressListener, msg);
 
-        return new Indexes(lastModified == null ? 0L : lastModified, shortcuts, artists, entries);
+        return new Indexes(shortcuts, artists, entries);
     }
 }

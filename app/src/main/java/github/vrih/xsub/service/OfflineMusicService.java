@@ -98,7 +98,7 @@ public class OfflineMusicService implements MusicService {
 			}
         }
 
-		return new Indexes(0L, Collections.<Artist>emptyList(), artists, entries);
+		return new Indexes(Collections.<Artist>emptyList(), artists, entries);
     }
 
     @Override

@@ -17,27 +17,9 @@
 	Copyright 2016 (C) Scott Jackson
 */
 
-package github.vrih.xsub.domain;
+package github.vrih.xsub.domain
 
-public class InternetRadioStation extends MusicDirectory.Entry {
-	private String streamUrl;
-	private String homePageUrl;
-
-	public InternetRadioStation() {}
-
-	public String getStreamUrl() {
-		return streamUrl;
-	}
-
-	public void setStreamUrl(String streamUrl) {
-		this.streamUrl = streamUrl;
-	}
-
-	public String getHomePageUrl() {
-		return homePageUrl;
-	}
-
-	public void setHomePageUrl(String homePageUrl) {
-		this.homePageUrl = homePageUrl;
-	}
+class InternetRadioStation : MusicDirectory.Entry() {
+    var streamUrl: String? = null
+    var homePageUrl: String? = null
 }

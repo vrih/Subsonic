@@ -588,7 +588,7 @@ public class RemoteControlClientLP extends RemoteControlClientBase {
 			Entry entry = (Entry) extras.getSerializable(Constants.INTENT_EXTRA_ENTRY);
 			if(extras.containsKey(Constants.INTENT_EXTRA_ENTRY_BYTES)) {
 				try {
-					entry = Entry.fromByteArray(extras.getByteArray(Constants.INTENT_EXTRA_ENTRY_BYTES));
+					entry = Entry.Companion.fromByteArray(extras.getByteArray(Constants.INTENT_EXTRA_ENTRY_BYTES));
 				} catch(Exception e) {
 					Log.e(TAG, "Failed to deserialize from entry: ", e);
 				}
