@@ -1743,7 +1743,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 		downloadService.clear();
 		downloadService.download(entries, false, true, true, false, entries.indexOf(song), position);
-		downloadService.setSuggestedPlaylistName(null, null);
+		downloadService.setSuggestedPlaylistName("Current", "0");
 	}
 
 	void deleteBookmark(final MusicDirectory.Entry entry, final SectionAdapter adapter) {

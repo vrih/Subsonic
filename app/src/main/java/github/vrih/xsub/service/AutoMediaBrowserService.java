@@ -22,9 +22,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
 import android.support.v4.media.MediaBrowserCompat;
-import androidx.media.MediaBrowserServiceCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.util.Log;
 
@@ -32,6 +30,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.media.MediaBrowserServiceCompat;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.Artist;
 import github.vrih.xsub.domain.Indexes;
@@ -519,7 +519,7 @@ public class AutoMediaBrowserService extends MediaBrowserServiceCompat {
 
 	private void getDownloadService() {
 		if(DownloadService.getInstance() == null) {
-			DownloadService.startService(this);
+			DownloadService.startService(this, null);
 		}
 
 		waitForDownloadService();

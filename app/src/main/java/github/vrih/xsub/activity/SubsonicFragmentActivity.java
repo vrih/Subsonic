@@ -38,6 +38,8 @@ import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -945,7 +947,7 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 	}
 
 	@Override
-	public void onSongsChanged(List<DownloadFile> songs, DownloadFile currentPlaying, int currentPlayingIndex, boolean shouldFastForward) {
+	public void onSongsChanged(@Nullable List<? extends DownloadFile> songs, @Nullable DownloadFile currentPlaying, @Nullable Integer currentPlayingIndex, @Nullable Boolean shouldFastForward) {
 		if(this.currentPlaying != currentPlaying || this.currentPlaying == null) {
 			onSongChanged(currentPlaying, currentPlayingIndex, shouldFastForward);
 		} else {

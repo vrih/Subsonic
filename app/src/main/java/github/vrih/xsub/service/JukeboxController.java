@@ -215,7 +215,7 @@ public class JukeboxController extends RemoteController {
 		int currentPlayingIndex = downloadService.getCurrentPlayingIndex();
 		if (index != null && index != -1 && index != downloadService.getCurrentPlayingIndex()) {
 			downloadService.setPlayerState(PlayerState.COMPLETED);
-			downloadService.setCurrentPlaying(index, true);
+			downloadService.setCurrentPlaying(index);
 			if(jukeboxStatus.isPlaying()) {
 				downloadService.setPlayerState(PlayerState.STARTED);
 			} else if(index == 0 && currentPlayingIndex == downloadService.size() - 1 && downloadService.getRepeatMode() == RepeatMode.ALL) {

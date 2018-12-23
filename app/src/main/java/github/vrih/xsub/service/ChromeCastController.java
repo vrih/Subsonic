@@ -357,7 +357,7 @@ public class ChromeCastController extends RemoteController {
 			Log.w("CAST", "Callback " + mediaQueueItem + mediaQueue);
 			if(mediaQueueItem != null) {
 				int index = mediaQueue.indexOfItemWithId(mediaQueueItem.getItemId());
-				downloadService.setCurrentPlaying(index, false);
+				downloadService.setCurrentPlaying(index);
 			}
 		}
 	};

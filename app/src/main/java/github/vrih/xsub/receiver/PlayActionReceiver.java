@@ -38,7 +38,7 @@ public class PlayActionReceiver extends BroadcastReceiver {
 			start.putExtra(Constants.PREFERENCES_KEY_SHUFFLE_END_YEAR, data.getString(Constants.PREFERENCES_KEY_SHUFFLE_END_YEAR));
 			start.putExtra(Constants.PREFERENCES_KEY_SHUFFLE_GENRE, data.getString(Constants.PREFERENCES_KEY_SHUFFLE_GENRE));
 			start.putExtra(Constants.PREFERENCES_KEY_OFFLINE, data.getInt(Constants.PREFERENCES_KEY_OFFLINE));
-			DownloadService.startService(context, start);
+			DownloadService.Companion.startService(context, start);
 		}
 	}
 }

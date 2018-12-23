@@ -53,6 +53,8 @@ import com.shehabic.droppy.DroppyClickCallbackInterface;
 import com.shehabic.droppy.DroppyMenuPopup;
 import com.shehabic.droppy.animations.DroppyFadeInAnimation;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -1398,7 +1400,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 	}
 
 	@Override
-	public void onSongsChanged(List<DownloadFile> songs, DownloadFile currentPlaying, int currentPlayingIndex, boolean shouldFastForward) {
+	public void onSongsChanged(@Nullable List<? extends DownloadFile> songs, @Nullable DownloadFile currentPlaying, @Nullable Integer currentPlayingIndex, @Nullable Boolean shouldFastForward) {
 		currentPlayingSize = songs.size();
 
 		DownloadService downloadService = getDownloadService();
