@@ -264,7 +264,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             starButton.visibility = View.GONE
         }
 
-        val touchListener = View.OnTouchListener { v, me -> gestureScanner.onTouchEvent(me) }
+        val touchListener = View.OnTouchListener { _, me -> gestureScanner.onTouchEvent(me) }
         pauseButton.setOnTouchListener(touchListener)
         stopButton.setOnTouchListener(touchListener)
         startButton.setOnTouchListener(touchListener)
@@ -273,7 +273,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         rateGoodButton.setOnTouchListener(touchListener)
         playbackSpeedButton!!.setOnTouchListener(touchListener)
         emptyTextView!!.setOnTouchListener(touchListener)
-        albumArtImageView!!.setOnTouchListener { v, me ->
+        albumArtImageView!!.setOnTouchListener { _, me ->
             if (me.action == MotionEvent.ACTION_DOWN) {
                 lastY = me.rawY.toInt()
             }
@@ -561,7 +561,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                 return true
             }
             R.id.menu_remove_all -> {
-                Util.confirmDialog(context, R.string.download_menu_remove_all, "") { dialog, which ->
+                Util.confirmDialog(context, R.string.download_menu_remove_all, "") { _, _ ->
                     object : SilentBackgroundTask<Void>(context) {
                         override fun doInBackground(): Void? {
                             downloadService!!.isShufflePlayEnabled = false
@@ -856,7 +856,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         val builder = AlertDialog.Builder(context)
         builder.setTitle(R.string.menu_set_timer)
                 .setView(dialogView)
-                .setPositiveButton(R.string.common_ok) { dialog, id ->
+                .setPositiveButton(R.string.common_ok) { _, _ ->
                     val length = getMinutes(lengthBar.progress)
 
                     val editor = prefs.edit()
@@ -946,7 +946,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         val builder = AlertDialog.Builder(context)
         builder.setTitle(R.string.download_save_bookmark_title)
                 .setView(dialogView)
-                .setPositiveButton(R.string.common_ok) { dialog, id ->
+                .setPositiveButton(R.string.common_ok) { _, _ ->
                     val comment = commentBox.text.toString()
 
                     createBookmark(currentDownload, comment)
