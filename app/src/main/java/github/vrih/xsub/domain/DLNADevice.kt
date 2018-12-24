@@ -63,4 +63,14 @@ class DLNADevice : Parcelable {
         dest.writeInt(volume)
         dest.writeInt(volumeMax)
     }
+
+    companion object CREATOR : Parcelable.Creator<DLNADevice> {
+        override fun createFromParcel(parcel: Parcel): DLNADevice {
+            return DLNADevice(parcel)
+        }
+
+        override fun newArray(size: Int): Array<DLNADevice?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
