@@ -3,15 +3,7 @@ package github.vrih.xsub.domain
 import java.io.Serializable
 import java.util.*
 
-class Genre : Serializable {
-    var name: String? = null
-    var albumCount: Int? = null
-    var songCount: Int? = null
-
-    override fun toString(): String {
-        return name ?: "Unknown genre"
-    }
-
+data class Genre(val name: String, val albumCount: Int, val songCount: Int) : Serializable {
     class GenreComparator : Comparator<Genre> {
         override fun compare(genre1: Genre, genre2: Genre): Int {
             val genre1Name = if (genre1.name != null) genre1.name else ""

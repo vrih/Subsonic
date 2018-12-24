@@ -36,7 +36,7 @@ import github.vrih.xsub.util.Util;
 /**
  * @author Sindre Mehus
  */
-abstract class AbstractParser {
+public abstract class AbstractParser {
     private static final String TAG = AbstractParser.class.getSimpleName();
 	private static final String SUBSONIC_RESPONSE = "subsonic-response";
 	private static final String MADSONIC_RESPONSE = "madsonic-response";

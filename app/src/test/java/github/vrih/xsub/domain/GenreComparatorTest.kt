@@ -11,10 +11,8 @@ class GenreComparatorTest {
      */
     @Test
     fun testSortGenreWithoutNameComparator() {
-        val g1 = Genre()
-        g1.name = "Genre"
-
-        val g2 = Genre()
+        val g1 = Genre("Genre", 1, 1)
+        val g2 = Genre("", 1, 1)
 
         val genres = ArrayList<Genre>()
         genres.add(g1)
@@ -29,11 +27,8 @@ class GenreComparatorTest {
      */
     @Test
     fun testSortGenreWithSameName() {
-        val g1 = Genre()
-        g1.name = "Genre"
-
-        val g2 = Genre()
-        g2.name = "genre"
+        val g1 = Genre("Genre", 1, 1)
+        val g2 = Genre("genre", 1, 1)
 
         val genres = ArrayList<Genre>()
         genres.add(g1)
@@ -48,14 +43,9 @@ class GenreComparatorTest {
      */
     @Test
     fun testSortGenre() {
-        val g1 = Genre()
-        g1.name = "Rock"
-
-        val g2 = Genre()
-        g2.name = "Pop"
-
-        val g3 = Genre()
-        g3.name = "Rap"
+        val g1 = Genre("Rock", 1, 1)
+        val g2 = Genre("Pop", 1, 1)
+        val g3 = Genre("Rap", 1, 1)
 
         val genres = ArrayList<Genre>()
         genres.add(g1)

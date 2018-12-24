@@ -17,25 +17,25 @@ class BookmarkTest {
     fun testSetCreated() {
         val bookmark = Bookmark()
         bookmark.setCreated(null as String?)
-        assertThat(bookmark.created).isNotNull()
+        assertThat(bookmark.getCreated()).isNotNull()
 
         bookmark.setCreated("")
-        assertThat(bookmark.created).isNotNull()
+        assertThat(bookmark.getCreated()).isNotNull()
 
         bookmark.setCreated("2014-04-04")
-        assertThat(bookmark.created).isNotNull()
+        assertThat(bookmark.getCreated()).isNotNull()
 
         bookmark.setCreated("2014/0404")
-        assertThat(bookmark.created).isNotNull()
+        assertThat(bookmark.getCreated()).isNotNull()
 
         bookmark.setCreated("18/03/1988")
-        assertThat(bookmark.created).isNotNull()
+        assertThat(bookmark.getCreated()).isNotNull()
 
         bookmark.setCreated("18/03/88")
-        assertThat(bookmark.created).isNotNull()
+        assertThat(bookmark.getCreated()).isNotNull()
 
         val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH).parse("2013-10-20T00:00:00")
         bookmark.setCreated("2013-10-20T00:00:00")
-        assertThat(bookmark.created).isEqualTo(date)
+        assertThat(bookmark.getCreated()).isEqualTo(date)
     }
 }
