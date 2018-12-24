@@ -106,23 +106,14 @@ class ServerInfo : Serializable {
             return server.restType
         }
 
-        private fun isStockSubsonic(context: Context): Boolean {
-            return getServerType(context) == TYPE_SUBSONIC
-        }
+        private fun isStockSubsonic(context: Context): Boolean = getServerType(context) == TYPE_SUBSONIC
 
         @JvmStatic
-        fun isMadsonic(context: Context): Boolean {
-            return getServerType(context) == TYPE_MADSONIC
-        }
+        fun isMadsonic(context: Context): Boolean = getServerType(context) == TYPE_MADSONIC
 
         @JvmStatic
-        fun isMadsonic6(context: Context): Boolean {
-            return getServerType(context) == TYPE_MADSONIC && checkServerVersion("2.0")
-        }
-
-        fun isAmpache(context: Context): Boolean {
-            return getServerType(context) == TYPE_AMPACHE
-        }
+        fun isMadsonic6(context: Context): Boolean = getServerType(context) == TYPE_MADSONIC && checkServerVersion("2.0")
+        fun isAmpache(context: Context): Boolean = getServerType(context) == TYPE_AMPACHE
 
         private fun getCacheName(context: Context, instance: Int): String {
             return "server-" + Util.getRestUrl(context, null, instance, false).hashCode() + ".ser"
@@ -138,20 +129,19 @@ class ServerInfo : Serializable {
             }
         }
 
-        fun canBookmark(): Boolean {
-            return checkServerVersion("1.9")
-        }
-
-        fun canInternetRadio(): Boolean {
-            return checkServerVersion("1.9")
-        }
-
+        fun canBookmark(): Boolean = checkServerVersion("1.9")
+        fun canInternetRadio(): Boolean = checkServerVersion("1.9")
         fun canSavePlayQueue(context: Context): Boolean {
-            return ServerInfo.checkServerVersion("1.12") && (!ServerInfo.isMadsonic(context) || checkServerVersion("2.0"))
+            return ServerInfo.checkServerVersion("1.12")
+                    && (!ServerInfo.isMadsonic(context)
+                    || checkServerVersion("2.0"))
         }
 
         fun canAlbumListPerFolder(context: Context): Boolean {
-            return ServerInfo.checkServerVersion("1.11") && (!ServerInfo.isMadsonic(context) || checkServerVersion("2.0")) && !Util.isTagBrowsing(context)
+            return ServerInfo.checkServerVersion("1.11")
+                    && (!ServerInfo.isMadsonic(context)
+                    || checkServerVersion("2.0"))
+                    && !Util.isTagBrowsing(context)
         }
 
         fun hasTopSongs(context: Context): Boolean {
@@ -170,9 +160,7 @@ class ServerInfo : Serializable {
             return !ServerInfo.isMadsonic(context) || ServerInfo.checkServerVersion("2.0")
         }
 
-        fun hasNewestPodcastEpisodes(): Boolean {
-            return ServerInfo.checkServerVersion("1.13")
-        }
+        fun hasNewestPodcastEpisodes(): Boolean = ServerInfo.checkServerVersion("1.13")
 
         fun canRescanServer(context: Context): Boolean {
             return ServerInfo.isMadsonic(context) || ServerInfo.isStockSubsonic(context) && ServerInfo.checkServerVersion("1.15")

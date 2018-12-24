@@ -1898,7 +1898,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 				getSongsRecursively(entries, songs);
 
 				downloadService.download(songs, false, autoplay, playNext, shuffle);
-				downloadService.setSuggestedPlaylistName(null, null);
+				downloadService.setSuggestedPlaylistName("Default", "0");
 				return null;
 			}
 

@@ -6,10 +6,7 @@ import java.util.*
 data class Genre(val name: String, val albumCount: Int, val songCount: Int) : Serializable {
     class GenreComparator : Comparator<Genre> {
         override fun compare(genre1: Genre, genre2: Genre): Int {
-            val genre1Name = if (genre1.name != null) genre1.name else ""
-            val genre2Name = if (genre2.name != null) genre2.name else ""
-
-            return genre1Name!!.compareTo(genre2Name!!, ignoreCase = true)
+            return genre1.name.compareTo(genre2.name, ignoreCase = true)
         }
 
         companion object {
