@@ -32,11 +32,9 @@ class Playlist : Serializable {
     var name: String? = null
     var owner: String? = null
     var comment: String? = null
-    var songCount: String? = null
-    var public: Boolean? = null
+    var songCount: Int = 0
+    var public: Boolean = true
     private var created: Date? = null
-    var changed: Date? = null
-        private set
     var duration: Int? = null
 
     constructor()
@@ -46,15 +44,14 @@ class Playlist : Serializable {
         this.name = name
     }
 
-    constructor(id: String, name: String, owner: String?, comment: String?, songCount: String?, pub: String?, created: String, changed: String, duration: Int?) {
+    constructor(id: String, name: String, owner: String?, comment: String?, songCount: Int, pub: Boolean?, created: String, duration: Int?) {
         this.id = id
         this.name = name
         this.owner = owner ?: ""
         this.comment = comment ?: ""
-        this.songCount = songCount ?: ""
-        this.public = if (pub == null) null else pub == "true"
+        this.songCount = songCount
+        this.public = pub ?: true
         setCreated(created)
-        setChanged(changed)
         this.duration = duration
     }
 
@@ -72,19 +69,6 @@ class Playlist : Serializable {
 
         } else {
             this.created = null
-        }
-    }
-
-    private fun setChanged(changed: String?) {
-        if (changed != null) {
-            try {
-                this.changed = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH).parse(changed)
-            } catch (e: ParseException) {
-                this.changed = null
-            }
-
-        } else {
-            this.changed = null
         }
     }
 

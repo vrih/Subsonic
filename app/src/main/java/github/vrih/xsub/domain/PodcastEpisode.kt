@@ -22,10 +22,10 @@ package github.vrih.xsub.domain
  *
  * @author Scott
  */
-class PodcastEpisode : MusicDirectory.Entry() {
-    var episodeId: String? = null
+data class PodcastEpisode(val episodeId: String?,
+                          var status: String?
+) : MusicDirectory.Entry() {
     var date: String? = null
-    var status: String? = null
 
     init {
         isDirectory = false

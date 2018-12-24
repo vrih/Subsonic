@@ -22,7 +22,6 @@ import android.content.Context
 import github.vrih.xsub.util.FileUtil
 import github.vrih.xsub.util.Util
 import java.io.Serializable
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Information about the Subsonic server.
@@ -58,9 +57,9 @@ class ServerInfo : Serializable {
     }
 
     fun saveServerInfo(context: Context, instance: Int) {
-        val current = SERVERS[instance]
+        val current = SERVER
         if (this != current) {
-            SERVERS[instance] = this
+            SERVER = this
             FileUtil.serialize(context, this, getCacheName(context, instance))
         }
     }
@@ -72,13 +71,14 @@ class ServerInfo : Serializable {
     }
 
     companion object {
-        private val TYPE_SUBSONIC = 1
-        val TYPE_MADSONIC = 2
-        val TYPE_AMPACHE = 3
-        private val SERVERS = ConcurrentHashMap<Int, ServerInfo>()
+        private const val TYPE_SUBSONIC = 1
+        const val TYPE_MADSONIC = 2
+        const val TYPE_AMPACHE = 3
+        @JvmStatic
+        private var SERVER: ServerInfo? = null
 
         private fun getServerInfo(): ServerInfo? {
-            return SERVERS[0]
+            return SERVER
         }
 
         fun getServerVersion(): Version? {
@@ -92,9 +92,8 @@ class ServerInfo : Serializable {
             val server = getServerInfo() ?: return false
 
             val version = server.restVersion ?: return false
-
             val required = Version(requiredVersion)
-            return version.compareTo(required) >= 0
+            return version >= required
         }
 
         private fun getServerType(context: Context): Int {

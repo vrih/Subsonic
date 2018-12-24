@@ -159,14 +159,13 @@ public class OfflineMusicService implements MusicService {
 	private Entry createEntry(Context context, File file, String name, boolean load, boolean isPodcast) {
 		Entry entry;
 		if(isPodcast) {
-			PodcastEpisode episode = new PodcastEpisode();
-			episode.setStatus("completed");
+			PodcastEpisode episode = new PodcastEpisode(file.getPath(), "completed");
 			entry = episode;
 		} else {
 			entry = new Entry();
+			entry.setId(file.getPath());
 		}
 		entry.setDirectory(file.isDirectory());
-		entry.setId(file.getPath());
 		entry.setParent(file.getParent());
 		entry.setSize(file.length());
 		String root = FileUtil.getMusicDirectory(context).getPath();
@@ -393,7 +392,7 @@ public class OfflineMusicService implements MusicService {
 								}
 							}
 
-							playlist.setSongCount(Integer.toString(songCount));
+							playlist.setSongCount(songCount);
 						} catch(Exception e) {
 							Log.w(TAG, "Failed to count songs in playlist", e);
 						} finally {

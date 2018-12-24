@@ -64,7 +64,7 @@ public class SelectPlaylistFragment extends SelectRecyclerFragment<Playlist> {
 
 			if(!ServerInfo.checkServerVersion("1.8")) {
 				menu.removeItem(R.id.playlist_update_info);
-			} else if(playlist.getPublic() != null && playlist.getPublic() && !playlist.getId().contains(".m3u") && !UserUtil.getCurrentUsername(context).equals(playlist.getOwner())) {
+			} else if(playlist.getPublic() && !playlist.getId().contains(".m3u") && !UserUtil.getCurrentUsername(context).equals(playlist.getOwner())) {
 				menu.removeItem(R.id.playlist_update_info);
 				menu.removeItem(R.id.playlist_menu_delete);
 			}
@@ -253,25 +253,19 @@ public class SelectPlaylistFragment extends SelectRecyclerFragment<Playlist> {
 		}
 
 		headers.add(R.string.details_song_count);
-		details.add(playlist.getSongCount());
+		details.add(Integer.toString(playlist.getSongCount()));
 
 		if(playlist.getDuration() != null) {
 			headers.add(R.string.details_length);
 			details.add(Util.formatDuration(playlist.getDuration()));
 		}
 
-		if(playlist.getPublic() != null) {
-			headers.add(R.string.details_public);
-			details.add(Util.formatBoolean(context, playlist.getPublic()));
-		}
+		headers.add(R.string.details_public);
+		details.add(Util.formatBoolean(context, playlist.getPublic()));
 
 		if(playlist.getCreated() != null) {
 			headers.add(R.string.details_created);
 			details.add(Util.formatDate(playlist.getCreated()));
-		}
-		if(playlist.getChanged() != null) {
-			headers.add(R.string.details_updated);
-			details.add(Util.formatDate(playlist.getChanged()));
 		}
 
 		Util.showDetailsDialog(context, R.string.details_title_playlist, headers, details);
@@ -286,11 +280,7 @@ public class SelectPlaylistFragment extends SelectRecyclerFragment<Playlist> {
 		nameBox.setText(playlist.getName());
 		commentBox.setText(playlist.getComment());
 		Boolean pub = playlist.getPublic();
-		if(pub == null) {
-			publicBox.setEnabled(false);
-		} else {
-			publicBox.setChecked(pub);
-		}
+		publicBox.setChecked(pub);
 
 		new AlertDialog.Builder(context)
 			.setIcon(android.R.drawable.ic_dialog_alert)

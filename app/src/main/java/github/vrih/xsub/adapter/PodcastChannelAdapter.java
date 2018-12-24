@@ -15,9 +15,14 @@
 package github.vrih.xsub.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ViewGroup;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.PodcastChannel;
@@ -28,10 +33,6 @@ import github.vrih.xsub.view.FastScroller;
 import github.vrih.xsub.view.PodcastChannelView;
 import github.vrih.xsub.view.SongView;
 import github.vrih.xsub.view.UpdateView;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 
 public class PodcastChannelAdapter extends ExpandableSectionAdapter<Serializable> implements FastScroller.BubbleTextGetter {
 	public static final int VIEW_TYPE_PODCAST_LEGACY = 1;
