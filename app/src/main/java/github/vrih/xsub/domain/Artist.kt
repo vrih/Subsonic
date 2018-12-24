@@ -26,30 +26,10 @@ import java.util.*
 /**
  * @author Sindre Mehus
  */
-class Artist(val id: String, val name: String) : Serializable{
+data class Artist(val id: String, val name: String) : Serializable{
     var isStarred: Boolean = false
     var rating: Int = 0
     var closeness: Int = 0
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-
-        val entry = other as Artist?
-        return id == entry!!.id
-    }
-
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
-
-    override fun toString(): String {
-        return name
-    }
 
     internal class ArtistComparator(private val ignoredArticles: Array<String>) : Comparator<Artist> {
         private val collator: Collator = Collator.getInstance(Locale.US)
