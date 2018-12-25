@@ -1825,11 +1825,8 @@ class DownloadService:Service() {
 
         Log.i(TAG, this.playerState.name + " -> " + PlayerState.COMPLETED + " (" + currentPlaying + ")")
         this.playerState = PlayerState.COMPLETED
-        if (positionCache != null)
-        {
-            positionCache!!.stop()
-            positionCache = null
-        }
+        positionCache?.stop()
+        positionCache = null
         scrobbler.scrobble(this, currentPlaying, true, true)
 
         onStateUpdate()

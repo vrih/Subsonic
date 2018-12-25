@@ -11,7 +11,7 @@ android {
         versionCode 14
         versionName '14'
 				// multiDex needs to be commented for tests but uncommented for build				
-//        multiDexEnabled true
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "XSub $versionName")
 //		resConfigs "de", "es", "fr", "hu", "nl", "pt-rPT", "ru", "sv"

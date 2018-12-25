@@ -1249,49 +1249,49 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
 
     override fun onMetadataUpdate(entry: Entry?, fieldChange: Int) {
         if (entry != null && entry.isStarred) {
-            starButton!!.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_toggle_star))
+            starButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_toggle_star))
         } else {
             if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                starButton!!.setImageResource(DrawableTint.getDrawableRes(context, R.attr.star_outline))
+                starButton.setImageResource(DrawableTint.getDrawableRes(context, R.attr.star_outline))
             } else {
-                starButton!!.setImageResource(R.drawable.ic_toggle_star_outline_dark)
+                starButton.setImageResource(R.drawable.ic_toggle_star_outline_dark)
             }
         }
 
         val badRating: Int
         val goodRating: Int
         val bookmark: Int
-        if (entry != null && entry.getRating() == 1) {
-            rateBadButton!!.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_bad_selected))
+        if (entry?.getRating() == 1) {
+            rateBadButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_bad_selected))
         } else {
             if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 badRating = R.drawable.ic_action_rating_bad
             } else {
                 badRating = DrawableTint.getDrawableRes(context, R.attr.rating_bad)
             }
-            rateBadButton!!.setImageResource(badRating)
+            rateBadButton.setImageResource(badRating)
         }
 
-        if (entry != null && entry.getRating() == 5) {
-            rateGoodButton!!.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_good_selected))
+        if (entry?.getRating() == 5) {
+            rateGoodButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_good_selected))
         } else {
             if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 goodRating = R.drawable.ic_action_rating_good
             } else {
                 goodRating = DrawableTint.getDrawableRes(context, R.attr.rating_good)
             }
-            rateGoodButton!!.setImageResource(goodRating)
+            rateGoodButton.setImageResource(goodRating)
         }
 
-        if (entry != null && entry.bookmark != null) {
-            bookmarkButton!!.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_menu_bookmark_selected))
+        if (entry?.bookmark != null) {
+            bookmarkButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_menu_bookmark_selected))
         } else {
-            if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                bookmark = R.drawable.ic_action_bookmark
+            bookmark = if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                R.drawable.ic_action_bookmark
             } else {
-                bookmark = DrawableTint.getDrawableRes(context, R.attr.bookmark)
+                DrawableTint.getDrawableRes(context, R.attr.bookmark)
             }
-            bookmarkButton!!.setImageResource(bookmark)
+            bookmarkButton.setImageResource(bookmark)
         }
 
         if (entry != null && albumArtImageView != null && fieldChange == DownloadService.METADATA_UPDATED_COVER_ART) {
@@ -1357,13 +1357,13 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         playbackSpeed = if (downloadService != null) downloadService!!.playbackSpeed else 1.0f
 
         val popup = builder.triggerOnAnchorClick(true).addMenuItem(speed).setPopupAnimation(DroppyFadeInAnimation()).build()
-        speed!!.setOnSeekBarChangeListener(context, { v, id ->
+        speed!!.setOnSeekBarChangeListener(context, { v, _ ->
             val playbackSpeedBar = v as SeekBar
             val playbackSpeed = playbackSpeedBar.progress + 5
             setPlaybackSpeed(playbackSpeed / 10f)
         }, R.id.playback_speed_bar, R.id.playback_speed_label, playbackSpeed)
         speed!!.setOnClicks(context,
-                DroppyClickCallbackInterface { v, id ->
+                DroppyClickCallbackInterface { _, id ->
                     var playbackSpeed = 1.0f
                     when (id) {
                         R.id.playback_speed_one_half -> playbackSpeed = 1.5f

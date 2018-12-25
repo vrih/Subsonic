@@ -159,7 +159,7 @@ class MusicDirectory : Serializable {
     }
 
     @Synchronized
-    fun updateEntriesList(context: Context, instance: Int, refreshedDirectory: MusicDirectory): Boolean {
+    fun updateEntriesList(context: Context, refreshedDirectory: MusicDirectory): Boolean {
         var changed = false
         val it = children.iterator()
         while (it.hasNext()) {

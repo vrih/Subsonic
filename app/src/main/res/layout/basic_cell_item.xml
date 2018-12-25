@@ -2,32 +2,45 @@
 <github.vrih.xsub.view.CardView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="match_parent"
 	android:layout_margin="2dp">
 
-	<RelativeLayout
+	<LinearLayout
+		android:orientation="vertical"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="?attr/selectableItemBackground"
-		android:orientation="vertical">
+		android:layout_height="match_parent"
+		android:background="?attr/selectableItemBackground">
 
 		<github.vrih.xsub.view.SquareImageView
 			android:id="@+id/item_art"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentBottom="true"
-			android:layout_marginBottom="0dp" />
+			android:layout_height="match_parent"/>
 
-		<TextView
-			android:id="@+id/item_name"
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:ellipsize="marquee"
-			android:paddingStart="@dimen/Card.TextLeftPadding"
-			android:paddingEnd="@dimen/Card.TextLeftPadding"
-			android:singleLine="true"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:textColor="?android:textColorPrimary" />
-	</RelativeLayout>
+			android:orientation="horizontal"
+			android:paddingTop="4dp"
+			android:paddingStart="2dp">
+
+			<TextView
+				android:id="@+id/item_name"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:singleLine="true"
+				android:ellipsize="marquee"
+				android:textColor="?android:textColorPrimary"
+				android:paddingStart="@dimen/Card.TextLeftPadding"/>
+
+			<ImageView
+				android:id="@+id/item_more"
+				app:srcCompat="?attr/download_none"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end|center_vertical"
+				style="@style/MoreButton"/>
+		</LinearLayout>
+	</LinearLayout>
 </github.vrih.xsub.view.CardView>

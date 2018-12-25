@@ -194,7 +194,7 @@ public class CachedMusicService implements MusicService {
 				@Override
 				public void done(Void result) {
 					if(progressListener != null) {
-						if(cached.updateEntriesList(context, musicService.getInstance(context), refreshed)) {
+						if(cached.updateEntriesList(context, refreshed)) {
 							progressListener.updateCache(CACHE_UPDATE_LIST);
 						}
 						if(metadataUpdated) {
@@ -246,7 +246,7 @@ public class CachedMusicService implements MusicService {
 				@Override
 				public void done(Void result) {
 					if(progressListener != null) {
-						if(cached.updateEntriesList(context, musicService.getInstance(context), refreshed)) {
+						if(cached.updateEntriesList(context, refreshed)) {
 							progressListener.updateCache(CACHE_UPDATE_LIST);
 						}
 					}
@@ -296,7 +296,7 @@ public class CachedMusicService implements MusicService {
 				@Override
 				public void done(Void result) {
 					if(progressListener != null) {
-						if(cached.updateEntriesList(context, musicService.getInstance(context), refreshed)) {
+						if(cached.updateEntriesList(context, refreshed)) {
 							progressListener.updateCache(CACHE_UPDATE_LIST);
 						}
 						if(metadataUpdated) {
