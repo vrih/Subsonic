@@ -261,7 +261,7 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 				this.moreImage = moreImage;
 			}
 		} else if(this.moreImage != R.drawable.download_none) {
-			moreButton.setImageResource(DrawableTint.getDrawableRes(context, R.attr.download_none));
+			moreButton.setImageResource(R.drawable.download_none);
 			this.moreImage = R.drawable.download_none;
 		}
 
@@ -332,7 +332,7 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 
 				ratingBar.setNumStars(isRated);
 				ratingBar.setRating(isRated);
-			} else if(isRated <= 1) {
+			} else {
 				if(rating > 1) {
 					ratingBar.setVisibility(View.GONE);
 				}

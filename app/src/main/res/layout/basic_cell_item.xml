@@ -36,7 +36,7 @@
 
 			<ImageView
 				android:id="@+id/item_more"
-				app:srcCompat="?attr/download_none"
+				app:srcCompat="@drawable/download_none"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="end|center_vertical"

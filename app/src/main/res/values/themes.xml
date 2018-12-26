@@ -21,7 +21,6 @@
 		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
 		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
 		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
-		<item name="download_none">@drawable/download_none</item>
 		<item name="shuffle">@drawable/actionbar_shuffle</item>
 		<item name="shuffle_button">@drawable/ic_menu_shuffle</item>
 		<item name="refresh">@drawable/actionbar_refresh</item>
@@ -44,9 +43,6 @@
 		<item name="download">@drawable/actionbar_download</item>
 		<item name="playback_speed">@drawable/ic_action_playback_speed</item>
 		<item name="drawerArrowStyle">@style/DSub.DrawerArrow</item>
-		<item name="colorPrimary">@color/lightPrimary</item>
-		<item name="colorPrimaryDark">@color/lightPrimaryDark</item>
-		<item name="colorAccent">@color/lightAccent</item>
 		<item name="actionbarBackgroundColor">@color/lightPrimary</item>
 		<item name="actionbarTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
 		<item name="actionbarSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
@@ -55,10 +51,6 @@
 		<item name="android:spinnerItemStyle">@style/DarkSpinnerItem</item>
 		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
 		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
-		<item name="windowActionModeOverlay">true</item>
-		<item name="actionModeBackground">?attr/colorPrimary</item>
-		<item name="card_background">@android:color/white</item>
-		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
 		<item name="drawerHeaderBackground">@drawable/drawer_header_light</item>
 	</style>
 	<style name="Theme.DSub.Dark.Base" parent="@style/Theme.MaterialComponents">
@@ -82,7 +74,6 @@
 		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
 		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
 		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
-		<item name="download_none">@drawable/download_none</item>
 		<item name="shuffle">@drawable/actionbar_shuffle</item>
 		<item name="shuffle_button">@drawable/ic_menu_shuffle</item>
 		<item name="refresh">@drawable/actionbar_refresh</item>
@@ -105,9 +96,6 @@
 		<item name="download">@drawable/actionbar_download</item>
 		<item name="playback_speed">@drawable/ic_action_playback_speed</item>
 		<item name="drawerArrowStyle">@style/DSub.DrawerArrow</item>
-		<item name="colorPrimary">@color/darkPrimary</item>
-		<item name="colorPrimaryDark">@color/darkPrimaryDark</item>
-		<item name="colorAccent">@color/darkAccent</item>
 		<item name="actionbarBackgroundColor">@color/darkPrimary</item>
 		<item name="actionbarTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
 		<item name="actionbarSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
@@ -115,10 +103,6 @@
 		<item name="actionbarThemeStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
 		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
 		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
-		<item name="windowActionModeOverlay">true</item>
-		<item name="actionModeBackground">?attr/colorPrimary</item>
-		<item name="card_background">@android:color/black</item>
-		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
 		<item name="drawerHeaderBackground">@drawable/drawer_header_dark</item>
 	</style>
 	<style name="Theme.DSub.Light" parent="Theme.DSub.Light.Base">

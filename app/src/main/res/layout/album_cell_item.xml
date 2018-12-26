@@ -52,7 +52,7 @@
 					android:singleLine="true"
 					android:text="@string/search.albums"
 					android:textAppearance="?android:attr/textAppearanceSmall"
-					android:textColor="?android:textColorPrimary" />
+					android:textColor="@android:color/white" />
 
 				<LinearLayout
 					android:layout_width="fill_parent"
@@ -66,7 +66,7 @@
 						android:paddingStart="@dimen/Card.TextLeftPadding"
 						android:singleLine="true"
 						android:text="@string/search.artists"
-						android:textColor="?android:textColorSecondary"
+						android:textColor="@android:color/white"
 						android:textSize="12sp" />
 
 					<ImageButton
@@ -76,6 +76,7 @@
 						android:layout_gravity="end|center_vertical"
 						android:background="@android:color/transparent"
 						android:focusable="false"
+						android:tint="@android:color/white"
 						android:scaleType="fitCenter"
 						android:visibility="gone" />
 				</LinearLayout>
@@ -83,8 +84,9 @@
 
 			<ImageView
 				android:id="@+id/item_more"
-				app:srcCompat="?attr/download_none"
+				app:srcCompat="@drawable/download_none"
 				android:layout_width="wrap_content"
+				android:tint="@android:color/white"
 				android:layout_height="wrap_content"
 				android:layout_gravity="end|center_vertical"
 				style="@style/MoreButton"/>

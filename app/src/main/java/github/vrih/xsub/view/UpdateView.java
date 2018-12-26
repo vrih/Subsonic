@@ -244,7 +244,7 @@ public abstract class UpdateView<T> extends LinearLayout {
 				}
 			} else {
 				if(shaded) {
-					moreButton.setImageResource(DrawableTint.getDrawableRes(context, R.attr.download_none));
+					moreButton.setImageResource(DrawableTint.getDrawableRes(context, R.drawable.download_none));
 					shaded = false;
 				}
 			}
