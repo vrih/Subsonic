@@ -17,7 +17,6 @@
 	<attr name="actionbar_backward" format="reference"/>
 	<attr name="actionbar_forward" format="reference"/>
 	<attr name="actionbar_pause" format="reference"/>
-	<attr name="actionbar_start" format="reference"/>
 	<attr name="actionbar_stop" format="reference"/>
 	<attr name="actionbar_rewind" format="reference"/>
 	<attr name="actionbar_fastforward" format="reference"/>

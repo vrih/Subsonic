@@ -105,7 +105,8 @@
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:scaleType="fitCenter"
-				app:srcCompat="?attr/share"
+				app:srcCompat="@drawable/share"
+				android:tint="?attr/element_color"
 				style="@style/BasicButton"
 				android:layout_gravity="center_vertical"/>
 		</LinearLayout>

@@ -3,8 +3,9 @@
 		xmlns:compat="http://schemas.android.com/apk/res-auto">
 	<item 
 		android:id="@+id/menu_play_now"
-		android:icon="?attr/actionbar_start"
+		android:icon="@drawable/start"
 		android:title="@string/menu.play"
+		compat:iconTint="?attr/actionbar_element_color"
 		compat:showAsAction="always|withText"/>
 		
 	<item 

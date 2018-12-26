@@ -3,40 +3,49 @@
 	<group android:checkableBehavior="single">
 		<item
 			android:id="@+id/drawer_home"
-			android:icon="@drawable/main_offline"
+			android:icon="@drawable/cloud"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.home"/>
 		<item
 			android:id="@+id/drawer_library"
-			android:icon="@drawable/ic_menu_library"
+			android:icon="@drawable/library"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.browse"/>
 		<item
 			android:id="@+id/drawer_playlists"
-			android:icon="@drawable/ic_menu_playlist"
+			android:icon="@drawable/playlist"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.playlists"/>
 		<item
 			android:id="@+id/drawer_podcasts"
-			android:icon="@drawable/ic_menu_podcast"
+			android:icon="@drawable/podcast"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.podcasts"/>
 		<item
 			android:id="@+id/drawer_bookmarks"
-			android:icon="@drawable/ic_menu_bookmark"
+			android:icon="@drawable/bookmark"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.bookmarks"/>
 		<item
 			android:id="@+id/drawer_internet_radio_stations"
-			android:icon="@drawable/ic_menu_radio"
+			android:icon="@drawable/radio"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.internet_radio"/>
 		<item
 			android:id="@+id/drawer_shares"
-			android:icon="@drawable/ic_menu_share"
+			android:icon="@drawable/share"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.shares"/>
 		<item
 			android:id="@+id/drawer_admin"
-			android:icon="@drawable/ic_menu_admin"
+			android:icon="@drawable/people"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.admin"/>
 		<item
 			android:id="@+id/drawer_downloading"
-			android:icon="@drawable/ic_menu_download"
+			android:icon="@drawable/download"
 			android:title="@string/button_bar.downloading"
+			android:tint="?attr/element_color"
 			android:visible="false"/>
 	</group>
 
@@ -44,12 +53,14 @@
 
 		<item
 			android:id="@+id/drawer_offline"
-			android:icon="@drawable/ic_menu_offline"
+			android:icon="@drawable/offline"
+			android:tint="?attr/element_color"
 			android:title="@string/button_bar.offline"/>
 
 		<item
 			android:id="@+id/drawer_settings"
-			android:icon="@drawable/ic_menu_settings"
+			android:icon="@drawable/settings"
+			android:tint="?attr/element_color"
 			android:title="@string/menu.settings"/>
 	</group>
 </menu>

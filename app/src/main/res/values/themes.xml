@@ -3,7 +3,6 @@
 	<style name="Theme.DSub.Light.Base" parent="@style/Theme.MaterialComponents.Light.DarkActionBar">
 		<item name="element_color">@color/lightElement</item>
 		<item name="actionbar_element_color">@color/darkElement</item>
-		<item name="offline_icon">@drawable/main_offline</item>
 		<item name="media_button_backward">@drawable/media_backward</item>
 		<item name="media_button_forward">@drawable/media_forward</item>
 		<item name="media_button_rewind">@drawable/media_rewind</item>
@@ -17,7 +16,6 @@
 		<item name="actionbar_backward">@drawable/actionbar_media_backward</item>
 		<item name="actionbar_forward">@drawable/actionbar_media_forward</item>
 		<item name="actionbar_pause">@drawable/actionbar_media_pause</item>
-		<item name="actionbar_start">@drawable/actionbar_media_start</item>
 		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
 		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
 		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
@@ -34,11 +32,10 @@
 		<item name="playing">@drawable/playing</item>
 		<item name="downloading">@drawable/downloading</item>
 		<item name="bookmark">@drawable/ic_action_bookmark</item>
-		<item name="share">@drawable/ic_menu_share</item>
+		<item name="share">@drawable/share</item>
 		<item name="add_person">@drawable/ic_menu_add_person</item>
 		<item name="rating_bad">@drawable/ic_action_rating_bad</item>
 		<item name="rating_good">@drawable/ic_action_rating_good</item>
-		<item name="radio">@drawable/actionbar_radio</item>
 		<item name="star_outline">@drawable/ic_toggle_star_outline_light</item>
 		<item name="download">@drawable/actionbar_download</item>
 		<item name="playback_speed">@drawable/ic_action_playback_speed</item>
@@ -56,7 +53,6 @@
 	<style name="Theme.DSub.Dark.Base" parent="@style/Theme.MaterialComponents">
 		<item name="element_color">@color/darkElement</item>
 		<item name="actionbar_element_color">@color/darkElement</item>
-		<item name="offline_icon">@drawable/main_offline</item>
 		<item name="media_button_backward">@drawable/media_backward</item>
 		<item name="media_button_forward">@drawable/media_forward</item>
 		<item name="media_button_rewind">@drawable/media_rewind</item>
@@ -70,7 +66,6 @@
 		<item name="actionbar_backward">@drawable/actionbar_media_backward</item>
 		<item name="actionbar_forward">@drawable/actionbar_media_forward</item>
 		<item name="actionbar_pause">@drawable/actionbar_media_pause</item>
-		<item name="actionbar_start">@drawable/actionbar_media_start</item>
 		<item name="actionbar_stop">@drawable/actionbar_media_stop</item>
 		<item name="actionbar_rewind">@drawable/actionbar_media_rewind</item>
 		<item name="actionbar_fastforward">@drawable/actionbar_media_fastforward</item>
@@ -87,11 +82,10 @@
 		<item name="playing">@drawable/playing</item>
 		<item name="downloading">@drawable/downloading</item>
 		<item name="bookmark">@drawable/ic_action_bookmark</item>
-		<item name="share">@drawable/ic_menu_share</item>
+		<item name="share">@drawable/share</item>
 		<item name="add_person">@drawable/ic_menu_add_person</item>
 		<item name="rating_bad">@drawable/ic_action_rating_bad</item>
 		<item name="rating_good">@drawable/ic_action_rating_good</item>
-		<item name="radio">@drawable/actionbar_radio</item>
 		<item name="star_outline">@drawable/ic_toggle_star_outline_dark</item>
 		<item name="download">@drawable/actionbar_download</item>
 		<item name="playback_speed">@drawable/ic_action_playback_speed</item>

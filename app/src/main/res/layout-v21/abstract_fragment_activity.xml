@@ -121,8 +121,9 @@
 					<ImageButton
 						style="@style/PlaybackControl.BottomBar"
 						android:id="@+id/download_start"
-						sothree:srcCompat="?attr/actionbar_start"
-						android:contentDescription="@string/start" />
+						sothree:srcCompat="@drawable/start"
+						android:tint="?attr/actionbar_element_color"
+					android:contentDescription="@string/start" />
 
 					<ImageButton
 						style="@style/PlaybackControl.BottomBar"

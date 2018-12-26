@@ -63,7 +63,7 @@
                         android:id="@+id/download_bookmark"
                         android:contentDescription="@string/bookmark"
                         style="@style/DownloadActionImageButton"
-                        app:srcCompat="@drawable/ic_menu_bookmark"/>
+                        app:srcCompat="@drawable/bookmark"/>
 
                     <ImageButton
                         android:id="@+id/download_rating_good"
