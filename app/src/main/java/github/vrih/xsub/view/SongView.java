@@ -20,6 +20,7 @@ package github.vrih.xsub.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 
 import java.io.File;
 
+import androidx.core.content.ContextCompat;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.MusicDirectory;
 import github.vrih.xsub.domain.PodcastEpisode;
@@ -283,8 +285,10 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		if (playing) {
 			if(!this.playing) {
 				this.playing = true;
-				// TODO: Add playing icon back in
-			//	playingTextView.setCompoundDrawablesWithIntrinsicBounds(DrawableTint.getDrawableRes(context, R.drawable.media_start), 0, 0, 0);
+				// TODO: Match colour to text colour
+				Drawable startIcon = ContextCompat.getDrawable(context, R.drawable.media_start);
+				startIcon.setTint(ContextCompat.getColor(context, R.color.design_default_color_on_secondary));
+				playingTextView.setCompoundDrawablesWithIntrinsicBounds(startIcon, null, null, null);
 			}
 		} else {
 			if(this.playing) {

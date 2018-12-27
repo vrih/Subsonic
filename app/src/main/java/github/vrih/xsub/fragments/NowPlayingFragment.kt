@@ -929,7 +929,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                 return null
             }
 
-            override fun done(result: Void) {
+            override fun done(result: Void?) {
                 progressBar!!.progress = seekTo
             }
         }.execute()
