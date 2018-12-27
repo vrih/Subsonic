@@ -46,6 +46,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import github.vrih.xsub.R;
@@ -962,10 +963,8 @@ public class SubsonicFragmentActivity extends SubsonicActivity implements Downlo
 
 	@Override
 	public void onStateUpdate(PlayerState playerState) {
-		int[] attrs = new int[]{(playerState == PlayerState.STARTED) ? R.attr.actionbar_pause : R.attr.actionbar_start};
-		TypedArray typedArray = this.obtainStyledAttributes(attrs);
-		startButton.setImageResource(typedArray.getResourceId(0, 0));
-		typedArray.recycle();
+		int attr = playerState == PlayerState.STARTED ? R.drawable.media_pause: R.drawable.media_start;
+		startButton.setImageDrawable(ContextCompat.getDrawable(this, attr));
 	}
 
 	@Override

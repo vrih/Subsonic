@@ -3,7 +3,7 @@
 	<dimen name="Button">54dip</dimen>
 	<dimen name="Button.Large">60dip</dimen>
 	<dimen name="Button.Small">52dip</dimen>
-	<dimen name="Button.Smaller">42dip</dimen>
+	<dimen name="Button.Smaller">38dip</dimen>
 	<dimen name="AlbumArt.Small">78dip</dimen>
 	<dimen name="AlbumArt.Header">120dip</dimen>
 	<dimen name="Star.Small">20dp</dimen>

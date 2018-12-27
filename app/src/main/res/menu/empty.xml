@@ -5,7 +5,8 @@
 	<group android:id="@+id/not_touchscreen">
 		<item
 			android:id="@+id/menu_refresh"
-			android:icon="?attr/refresh"
+			android:icon="@drawable/refresh"
+			compat:iconTint="?attr/actionbar_element_color"
 			android:title="@string/menu.refresh"
 			compat:showAsAction="ifRoom|withText"/>
 	</group>

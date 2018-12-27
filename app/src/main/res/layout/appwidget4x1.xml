@@ -82,28 +82,28 @@
 
             <ImageButton
                 android:id="@+id/control_previous"
-                android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 style="@style/NotificationButton"
-                app:srcCompat="@drawable/widget_media_backward"
+                app:srcCompat="@drawable/media_backward"
+                android:tint="@color/darkElement"
                 android:contentDescription="@string/skip_backwards" />
 
             <ImageButton
                 android:id="@+id/control_play"
-                android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/widget_media_start"
+                app:srcCompat="@drawable/media_start"
+                android:tint="@color/darkElement"
 				style="@style/NotificationButton"
                 android:contentDescription="@string/pause" />
 
             <ImageButton
                 android:id="@+id/control_next"
-                android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/widget_media_forward"
+                app:srcCompat="@drawable/media_forward"
+                android:tint="@color/darkElement"
 				style="@style/NotificationButton"
                 android:contentDescription="@string/skip_forwards" />
         </LinearLayout>

@@ -54,11 +54,13 @@
 		style="@style/NotificationButton"
 		android:contentDescription="@string/skip_backwards"
 		android:layout_width="24dp"
-		app:srcCompat="@drawable/notification_media_backward" />
+		app:srcCompat="@drawable/media_backward"
+		android:tint="@color/lightElement"/>
 
 	<ImageButton
 		android:id="@+id/control_pause"
-		app:srcCompat="@drawable/notification_media_pause"
+		app:srcCompat="@drawable/media_pause"
+		android:tint="@color/lightElement"
 		style="@style/NotificationButton"
 		android:layout_width="24dp"
 		android:padding="0dip"
@@ -69,5 +71,6 @@
 		style="@style/NotificationButton"
 		android:layout_width="24dp"
 		android:contentDescription="@string/skip_forwards"
-		app:srcCompat="@drawable/notification_media_forward" />
+		app:srcCompat="@drawable/media_forward"
+		android:tint="@color/lightElement"/>
 </LinearLayout>

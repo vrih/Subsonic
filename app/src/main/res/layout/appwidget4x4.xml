@@ -97,14 +97,16 @@
                 android:layout_height="56dip"
                 android:layout_weight="1"
                 style="@style/NotificationButton"
-                app:srcCompat="@drawable/widget_media_backward" />
+                app:srcCompat="@drawable/media_backward"
+				android:tint="@color/darkElement"/>
 
             <ImageButton
                 android:id="@+id/control_play"
                 android:layout_width="0dip"
                 android:layout_height="56dip"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/widget_media_start"
+                app:srcCompat="@drawable/media_start"
+				android:tint="@color/darkElement"
 				style="@style/NotificationButton" />
 
             <ImageButton
@@ -112,7 +114,8 @@
                 android:layout_width="0dip"
                 android:layout_height="56dip"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/widget_media_forward"
+                app:srcCompat="@drawable/media_forward"
+				android:tint="@color/darkElement"
 				style="@style/NotificationButton" />
         </LinearLayout>
 

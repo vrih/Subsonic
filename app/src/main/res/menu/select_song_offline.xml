@@ -3,14 +3,15 @@
 		xmlns:compat="http://schemas.android.com/apk/res-auto">
 	<item 
 		android:id="@+id/menu_play_now"
-		android:icon="@drawable/start"
+		android:icon="@drawable/media_start"
 		android:title="@string/menu.play"
 		compat:iconTint="?attr/actionbar_element_color"
 		compat:showAsAction="always|withText"/>
 		
 	<item 
 		android:id="@+id/menu_shuffle"
-		android:icon="?attr/shuffle"
+		android:icon="@drawable/shuffle"
+		android:tint="?attr/actionbar_element_color"
 		android:title="@string/menu.shuffle"
 		compat:showAsAction="ifRoom|withText"/>
 		

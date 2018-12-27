@@ -5,7 +5,8 @@
 
     <item
         android:id="@+id/menu_shuffle"
-        android:icon="?attr/shuffle"
+        android:icon="@drawable/shuffle"
+		android:tint="?attr/actionbar_element_color"
         android:title="@string/download.menu_shuffle"
 		android:visible="false"
         compat:showAsAction="ifRoom|withText"/>
@@ -27,14 +28,16 @@
 	-->
 	<item
         android:id="@+id/menu_remove_all"
-        android:icon="?attr/remove"
+        android:icon="@drawable/trash"
+		compat:iconTint="?attr/actionbar_element_color"
         android:title="@string/download.menu_remove_all"
 		android:visible="false"
         compat:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/menu_save_playlist"
-        android:icon="?attr/save"
+        android:icon="@drawable/save"
+		android:tint="?attr/actionbar_element_color"
         android:title="@string/download.menu_save"
 		android:visible="false"
         compat:showAsAction="ifRoom|withText"/>

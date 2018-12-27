@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId 'github.vrih.xsub'
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 14
         versionName '14'

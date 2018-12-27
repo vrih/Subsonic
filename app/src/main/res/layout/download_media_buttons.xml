@@ -6,72 +6,80 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
 
-  <ImageButton
-      app:srcCompat="?attr/media_button_repeat_off"
-			style="@style/PlaybackControl.Smaller"
-			android:id="@+id/download_repeat"
-			android:layout_alignParentStart="true"
-			android:layout_centerVertical="true"
-			android:contentDescription="@string/repeat" />
+    <ImageButton
+        app:srcCompat="?attr/media_button_repeat_off"
+        style="@style/PlaybackControl.Smaller"
+        android:id="@+id/download_repeat"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/repeat" />
 	
-  <github.vrih.xsub.view.AutoRepeatButton
-      style="@style/PlaybackControl.Small"
-      android:id="@+id/download_previous"
-      android:src="?attr/media_button_backward"
-      android:layout_toStartOf="@+id/download_pause"
-      android:layout_centerVertical="true" />
+    <github.vrih.xsub.view.AutoRepeatButton
+        style="@style/PlaybackControl.Small"
+        android:id="@+id/download_previous"
+        app:srcCompat="@drawable/media_backward"
+	    android:tint="?attr/element_color"
+        android:layout_toStartOf="@+id/download_pause"
+        android:layout_centerVertical="true" />
+
+    <github.vrih.xsub.view.AutoRepeatButton
+	    style="@style/PlaybackControl.Large"
+		android:id="@+id/download_rewind"
+		app:srcCompat="@drawable/media_rewind"
+		android:tint="?attr/element_color"
+		android:layout_toStartOf="@+id/download_pause"
+		android:layout_centerVertical="true"
+		android:visibility="invisible"/>
+
+    <ImageButton
+        style="@style/PlaybackControl.Large"
+	    android:id="@+id/download_pause"
+        app:srcCompat="@drawable/media_pause"
+	    android:tint="?attr/element_color"
+	    android:layout_centerInParent="true"
+	    android:visibility="invisible"
+	    android:contentDescription="@string/pause" />
+	
+    <ImageButton
+	    style="@style/PlaybackControl.Large"
+	    android:id="@+id/download_stop"
+	    app:srcCompat="@drawable/media_stop"
+	    android:tint="?attr/element_color"
+	    android:layout_centerInParent="true"
+	    android:visibility="invisible"
+	    android:contentDescription="@string/stop" />
+	
+    <ImageButton
+	    style="@style/PlaybackControl.Large"
+	    android:id="@+id/download_start"
+	    app:srcCompat="@drawable/media_start"
+	    android:tint="?attr/element_color"
+	    android:layout_centerInParent="true"
+	    android:contentDescription="@string/start" />
 	
 	<github.vrih.xsub.view.AutoRepeatButton
-			style="@style/PlaybackControl.Large"
-			android:id="@+id/download_rewind"
-			android:src="?attr/media_button_rewind"
-			android:layout_toStartOf="@+id/download_pause"
-			android:layout_centerVertical="true"
-			android:visibility="invisible"/>
+		style="@style/PlaybackControl.Large"
+		android:id="@+id/download_fastforward"
+		app:srcCompat="@drawable/media_fastforward"
+		android:tint="?attr/element_color"
+		android:layout_toEndOf="@+id/download_start"
+		android:layout_centerVertical="true"
+		android:visibility="invisible" />
 	
-  <ImageButton
-			style="@style/PlaybackControl.Large"
-			android:id="@+id/download_pause"
-			app:srcCompat="?attr/media_button_pause"
-			android:layout_centerInParent="true"
-			android:visibility="invisible"
-			android:contentDescription="@string/pause" />
-	
-  <ImageButton
-			style="@style/PlaybackControl.Large"
-			android:id="@+id/download_stop"
-			app:srcCompat="?attr/media_button_stop"
-			android:layout_centerInParent="true"
-			android:visibility="invisible"
-			android:contentDescription="@string/stop" />
-	
-  <ImageButton
-			style="@style/PlaybackControl.Large"
-			android:id="@+id/download_start"
-			app:srcCompat="?attr/media_button_start"
-			android:layout_centerInParent="true"
-			android:contentDescription="@string/start" />
-	
-	<github.vrih.xsub.view.AutoRepeatButton
-			style="@style/PlaybackControl.Large"
-			android:id="@+id/download_fastforward"
-			android:src="?attr/media_button_fastforward"
-			android:layout_toEndOf="@+id/download_start"
-			android:layout_centerVertical="true"
-			android:visibility="invisible" />
-	
-  <github.vrih.xsub.view.AutoRepeatButton
-			style="@style/PlaybackControl.Small"
-			android:id="@+id/download_next"
-			android:src="?attr/media_button_forward"
-			android:layout_toEndOf="@+id/download_start"
-			android:layout_centerVertical="true" />
+    <github.vrih.xsub.view.AutoRepeatButton
+	    style="@style/PlaybackControl.Small"
+	    android:id="@+id/download_next"
+	    app:srcCompat="@drawable/media_forward"
+	    android:tint="?attr/element_color"
+	    android:layout_toEndOf="@+id/download_start"
+	    android:layout_centerVertical="true" />
 	
 	<ImageButton
-			android:id="@+id/download_toggle_list"
-			style="@style/PlaybackControl.Smaller"
-			android:layout_alignParentEnd="true"
-			android:layout_centerVertical="true"
-			app:srcCompat="?attr/toggle_list"
-			android:contentDescription="@string/playlist" />
+        android:id="@+id/download_toggle_list"
+        style="@style/PlaybackControl.Smaller"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/toggle_list"
+        android:tint="?attr/element_color"
+        android:contentDescription="@string/playlist" />
 </RelativeLayout>

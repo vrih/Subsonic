@@ -89,7 +89,8 @@
 				android:layout_width="@dimen/SongStatusIcon"
 				android:layout_height="@dimen/SongStatusIcon"
 				android:layout_gravity="top|end"
-				app:srcCompat="?attr/downloading"
+				app:srcCompat="@drawable/downloading"
+				android:tint="?attr/element_color"
 				android:visibility="gone" />
 		</LinearLayout>
 

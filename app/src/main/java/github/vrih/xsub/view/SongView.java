@@ -283,7 +283,8 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		if (playing) {
 			if(!this.playing) {
 				this.playing = true;
-				playingTextView.setCompoundDrawablesWithIntrinsicBounds(DrawableTint.getDrawableRes(context, R.attr.playing), 0, 0, 0);
+				// TODO: Add playing icon back in
+			//	playingTextView.setCompoundDrawablesWithIntrinsicBounds(DrawableTint.getDrawableRes(context, R.drawable.media_start), 0, 0, 0);
 			}
 		} else {
 			if(this.playing) {

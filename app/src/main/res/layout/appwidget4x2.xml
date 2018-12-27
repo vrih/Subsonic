@@ -92,7 +92,6 @@
                 android:paddingRight="4dip"
                 android:singleLine="true"
                 android:gravity="center_horizontal"
-                android:text="Album"
                 android:textColor="@color/appwidget_text"
                 android:textSize="12sp" />
 
@@ -113,14 +112,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/NotificationButton"
-                app:srcCompat="@drawable/widget_media_backward" />
+				android:tint="@color/darkElement"
+                app:srcCompat="@drawable/media_backward" />
 
             <ImageButton
                 android:id="@+id/control_play"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/widget_media_start"
+                app:srcCompat="@drawable/media_start"
+				android:tint="#ffffffff"
 				style="@style/NotificationButton" />
 
             <ImageButton
@@ -128,7 +129,8 @@
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/widget_media_forward"
+                app:srcCompat="@drawable/media_forward"
+				android:tint="#ffffffff"
 				style="@style/NotificationButton" />
         </LinearLayout>
     </LinearLayout>

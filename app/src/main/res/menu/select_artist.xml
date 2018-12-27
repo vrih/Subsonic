@@ -3,21 +3,24 @@
 		xmlns:compat="http://schemas.android.com/apk/res-auto">
 	<item
 		android:id="@+id/menu_global_search"
-		android:icon="?attr/search"
+		android:icon="@drawable/search"
+		compat:iconTint="?attr/actionbar_element_color"
 		android:title="@string/menu.search"
 		compat:actionViewClass="androidx.appcompat.widget.SearchView"
 		compat:showAsAction="ifRoom|collapseActionView"/>
 
 	<item 
 		android:id="@+id/menu_global_shuffle"
-		android:icon="?attr/shuffle"
+		android:icon="@drawable/shuffle"
+		compat:iconTint="?attr/actionbar_element_color"
 		android:title="@string/menu.shuffle"
 		compat:showAsAction="ifRoom|withText"/>
 
 	<group android:id="@+id/not_touchscreen">
 		<item
 			android:id="@+id/menu_refresh"
-			android:icon="?attr/refresh"
+			android:icon="@drawable/refresh"
+			compat:iconTint="?attr/actionbar_element_color"
 			android:title="@string/menu.refresh"
 			compat:showAsAction="ifRoom|withText"/>
 	</group>

@@ -20,16 +20,17 @@
         android:paddingEnd="16dp">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/notification_title"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_gravity="start|center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:ellipsize="marquee"
                 android:focusable="true"
                 android:singleLine="true"
@@ -43,15 +44,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:contentDescription="@string/common.close"
+                android:tint="@color/lightElement"
                 app:srcCompat="@drawable/notification_close" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/notification_artist"
             style="@style/NotificationText.Content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
             android:ellipsize="end"
             android:scrollHorizontally="true"
             android:singleLine="true" />
@@ -59,7 +61,7 @@
         <TextView
             android:id="@+id/notification_album"
             style="@style/NotificationText.Content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:ellipsize="end"
@@ -86,19 +88,22 @@
                 android:id="@+id/control_previous"
                 style="@style/NotificationButton.Expanded"
                 android:contentDescription="@string/skip_backwards"
-                app:srcCompat="@drawable/notification_media_backward" />
+                app:srcCompat="@drawable/media_backward"
+                android:tint="@color/lightElement"/>
 
             <ImageButton
                 android:id="@+id/control_pause"
                 style="@style/NotificationButton.Expanded"
                 android:contentDescription="@string/pause"
-                app:srcCompat="@drawable/notification_media_pause" />
+                app:srcCompat="@drawable/media_pause"
+                android:tint="@color/lightElement"/>
 
             <ImageButton
                 android:id="@+id/control_next"
                 style="@style/NotificationButton.Expanded"
                 android:contentDescription="@string/skip_forwards"
-                app:srcCompat="@drawable/notification_media_forward" />
+                app:srcCompat="@drawable/media_forward"
+                android:tint="@color/lightElement"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
