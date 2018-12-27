@@ -22,6 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     companion object {
         const val FRAGMENT_TAG = "settings_fragment"
     }
+
 }
 
 class ServerSettingsFragment : PreferenceFragmentCompat() {

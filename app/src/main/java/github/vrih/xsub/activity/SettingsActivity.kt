@@ -19,6 +19,7 @@
 package github.vrih.xsub.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
@@ -26,6 +27,8 @@ import androidx.preference.PreferenceFragmentCompat
 import github.vrih.xsub.R
 import github.vrih.xsub.fragments.SettingsFragment
 import github.vrih.xsub.util.ThemeUtil
+
+
 
 class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
 
@@ -37,6 +40,8 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
         val toolbar: Toolbar = findViewById(R.id.main_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ("Title")
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // enabling action bar app icon and behaving it as toggle button
 
@@ -77,5 +82,15 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
 
     fun updateActionBarTitle(title: String) {
         supportActionBar!!.title = title
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                this.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

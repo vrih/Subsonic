@@ -41,7 +41,7 @@
 
 	<Preference
 		android:title="@string/settings.playback_title"
-		android:icon="@drawable/media_start"
+		android:icon="@drawable/element_start"
 		android:key="playback"
 		app:fragment="github.vrih.xsub.fragments.PlaybackSettingsFragment">
 	</Preference>
