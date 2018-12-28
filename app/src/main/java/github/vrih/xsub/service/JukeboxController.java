@@ -106,6 +106,17 @@ public class JukeboxController extends RemoteController {
 		}
 		tasks.add(new SetPlaylist(ids));
 	}
+
+	@Override
+	public void insertPlaylist(List<DownloadFile> songs, int index) {
+
+	}
+
+	@Override
+	public void appendPlaylist(List<DownloadFile> songs) {
+
+	}
+
 	@Override
 	public void changePosition(int seconds) {
 		tasks.remove(Skip.class);
@@ -125,7 +136,12 @@ public class JukeboxController extends RemoteController {
 
 	}
 
-	@Override
+    @Override
+    public void setCurrentPlaying(int index) {
+
+    }
+
+    @Override
 	public void changeTrack(int index, DownloadFile song, int position) {
 		tasks.remove(Skip.class);
 		tasks.remove(Stop.class);

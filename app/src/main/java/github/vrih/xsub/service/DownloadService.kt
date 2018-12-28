@@ -54,11 +54,7 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
-/**
- * @author Sindre Mehus
- * @version $Id$
- */
-class DownloadService:Service() {
+class DownloadService: Service() {
 
     var remoteControlClient:RemoteControlClientBase? = null
         private set
@@ -599,21 +595,17 @@ class DownloadService:Service() {
     @Synchronized  fun download(songs:List<MusicDirectory.Entry>, save:Boolean, autoplay:Boolean, playNext:Boolean, shuffle:Boolean) {
         download(songs, save, autoplay, playNext, shuffle, 0, 0)
     }
-    @Synchronized  fun download(songs:List<MusicDirectory.Entry>, save:Boolean, autoplay:Boolean, playNext:Boolean, shuffle:Boolean, start:Int, position:Int) {
+    @Synchronized  fun download(songs: List<MusicDirectory.Entry>, save:Boolean, autoplay:Boolean, playNext: Boolean, shuffle:Boolean, start:Int, position:Int) {
         isShufflePlayEnabled = false
         setArtistRadio(null)
         var offset = 1
         val noNetwork = !Util.isOffline(this) && !Util.isNetworkConnected(this)
         var warnNetwork = false
+        var newDownloadList = ArrayList<DownloadFile>()
 
-        if (songs.isEmpty())
-        {
-            return
-        }
-        else if (isCurrentPlayingSingle)
-        {
-            clear()
-        }
+        if (songs.isEmpty()) return
+
+        if (isCurrentPlayingSingle) clear()
 
         if (playNext)
         {
@@ -624,6 +616,7 @@ class DownloadService:Service() {
             for (song in songs)
             {
                 val downloadFile = DownloadFile(this, song, save)
+                newDownloadList.add(downloadFile)
                 addToDownloadList(downloadFile, currentPlayingIndex + offset)
                 if (noNetwork && !warnNetwork)
                 {
@@ -644,26 +637,23 @@ class DownloadService:Service() {
         {
             val size = size()
             val index = currentPlayingIndex
+
+            // Add each song to the local playlist
             for (song in songs)
             {
                 val downloadFile = DownloadFile(this, song, save)
                 addToDownloadList(downloadFile, -1)
                 if (noNetwork && !warnNetwork)
                 {
-                    if (!downloadFile.isCompleteFileAvailable)
-                    {
-                        warnNetwork = true
-                    }
+                    if (!downloadFile.isCompleteFileAvailable) warnNetwork = true
                 }
             }
-            if (!autoplay && size - 1 == index)
-            {
-                setNextPlaying()
-            }
+
+            if (!autoplay && size - 1 == index) setNextPlaying()
         }
         downloadListUpdateRevision++
         onSongsChanged()
-        updateRemotePlaylist()
+        alterRemotePlaylist(newDownloadList, playNext)
 
         if (shuffle)
         {
@@ -761,6 +751,41 @@ class DownloadService:Service() {
         if (remoteState !== LOCAL && remoteController != null)
         {
             remoteController!!.updatePlaylist()
+        }
+        remoteControlClient!!.updatePlaylist(playlist)
+    }
+
+
+    @Synchronized private fun alterRemotePlaylist(songs: List<DownloadFile>, playNext: Boolean) {
+        val playlist = ArrayList<DownloadFile>()
+
+        val cp = currentPlaying
+        if (cp != null)
+        {
+            var startIndex = downloadList.indexOf(cp) - REMOTE_PLAYLIST_PREV
+            if (startIndex < 0)
+            {
+                startIndex = 0
+            }
+
+            val size = size()
+            var endIndex = downloadList.indexOf(cp) + REMOTE_PLAYLIST_NEXT
+            if (endIndex > size)
+            {
+                endIndex = size
+            }
+            for (i in startIndex until endIndex)
+            {
+                playlist.add(downloadList[i])
+            }
+        }
+
+        if (remoteState !== LOCAL && remoteController != null) {
+            if (playNext) {
+                remoteController!!.insertPlaylist(songs, currentPlayingIndex)
+            } else {
+                remoteController!!.appendPlaylist(songs)
+            }
         }
         remoteControlClient!!.updatePlaylist(playlist)
     }
@@ -1083,6 +1108,9 @@ class DownloadService:Service() {
     }
 
     @Synchronized fun setCurrentPlaying(currentPlayingIndex:Int) {
+        if(remoteState == CHROMECAST){
+            remoteController?.setCurrentPlaying(currentPlayingIndex)
+        }
         try
         {
             setCurrentPlaying(downloadList[currentPlayingIndex])
@@ -1374,7 +1402,7 @@ class DownloadService:Service() {
     }
 
     /**
-     * @param position position in media in ms
+     * @param pos position in media in ms
      */
     @Synchronized  fun seekTo(pos:Int) {
         var position = pos

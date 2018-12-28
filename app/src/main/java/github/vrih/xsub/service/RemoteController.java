@@ -56,9 +56,16 @@ public abstract class RemoteController {
 	public abstract void shutdown();
 	
 	public abstract void updatePlaylist();
+
+    public abstract void insertPlaylist(List<DownloadFile> songs, int index);
+
+	public abstract void appendPlaylist(List<DownloadFile> songs);
+
 	public abstract void changePosition(int seconds);
 
     public abstract void changeTrack(int index, List<DownloadFile> downloadList, int position);
+
+    public abstract void setCurrentPlaying(int index);
 
     public abstract void changeTrack(int index, DownloadFile song, int position);
 	// Really is abstract, just don't want to require RemoteController's support it

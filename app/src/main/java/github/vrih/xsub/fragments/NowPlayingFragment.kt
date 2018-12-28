@@ -123,10 +123,12 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         mSessionManager!!.addSessionManagerListener(mSessionManagerListener, Session::class.java)
         val downloadService = downloadService
 
-        if (mCastSession?.isConnected == true) {
-            castController = castController ?: ChromeCastController(downloadService)
-            castController?.setSession(mCastSession)
-            downloadService!!.setRemoteEnabled(RemoteControlState.CHROMECAST, castController)
+        mCastSession?.let {
+            if (it.isConnected) {
+                castController = castController ?: ChromeCastController(downloadService)
+                castController?.setSession(it)
+                downloadService!!.setRemoteEnabled(RemoteControlState.CHROMECAST, castController)
+            }
         }
 
         primaryFragment = false
@@ -201,11 +203,13 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         castController = castController ?: ChromeCastController(downloadService)
         mCastSession = mCastContext!!.sessionManager.currentCastSession
 
-        if (mCastSession?.isConnected == true) {
-            castController!!.setSession(mCastSession)
-            downloadService!!.setRemoteEnabled(RemoteControlState.CHROMECAST, castController)
-        } else {
-            downloadService!!.setRemoteEnabled(RemoteControlState.LOCAL)
+        mCastSession?.let {
+            if (it.isConnected) {
+                castController!!.setSession(it)
+                downloadService!!.setRemoteEnabled(RemoteControlState.CHROMECAST, castController)
+            } else {
+                downloadService!!.setRemoteEnabled(RemoteControlState.LOCAL)
+            }
         }
     }
 

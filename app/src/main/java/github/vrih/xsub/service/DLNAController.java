@@ -294,6 +294,16 @@ public class DLNAController extends RemoteController {
 	}
 
 	@Override
+	public void insertPlaylist(List<DownloadFile> songs, int index) {
+
+	}
+
+	@Override
+	public void appendPlaylist(List<DownloadFile> songs) {
+
+	}
+
+	@Override
 	public void changePosition(int seconds) {
 		DateFormat df = SimpleDateFormat.getTimeInstance();
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -310,7 +320,12 @@ public class DLNAController extends RemoteController {
 	public void changeTrack(int index, List<DownloadFile> song, int position) {
 	}
 
-	@Override
+    @Override
+    public void setCurrentPlaying(int index) {
+
+    }
+
+    @Override
 	public void changeTrack(int index, DownloadFile song, int position) {
 		startSong(song, true, 0);
 	}
