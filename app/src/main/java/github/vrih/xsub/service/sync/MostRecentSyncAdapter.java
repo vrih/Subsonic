@@ -90,7 +90,7 @@ public class MostRecentSyncAdapter extends SubsonicSyncAdapter {
 					musicService.getIndexes(Util.getSelectedMusicFolderId(context), true, context, null);
 				}
 
-				Notifications.showSyncNotification(context, R.string.sync_new_albums, SyncUtil.joinNames(updated));
+				Notifications.showSyncNotification(context, R.string.sync_new_albums, SyncUtil.joinNames(updated), null);
 			} else if(firstRun) {
 				FileUtil.serialize(context, syncedList, SyncUtil.getMostRecentSyncFile(context, instance));
 			}

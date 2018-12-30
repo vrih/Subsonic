@@ -70,7 +70,7 @@ public class StarredSyncAdapter extends SubsonicSyncAdapter {
 
 			SyncUtil.setSyncedStarred(syncedList, context, instance);
 			if(updated) {
-				Notifications.showSyncNotification(context, R.string.sync_new_starred, null);
+				Notifications.showSyncNotification(context, R.string.sync_new_starred, "", null);
 			}
 		} catch(Exception e) {
 			Log.e(TAG, "Failed to get starred list for " + Util.getServerName(context));

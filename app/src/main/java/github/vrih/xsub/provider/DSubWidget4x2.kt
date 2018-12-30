@@ -16,13 +16,14 @@
 
  Copyright 2010 (C) Sindre Mehus
  */
-package github.vrih.xsub.provider;
+package github.vrih.xsub.provider
 
-import github.vrih.xsub.R;
+import github.vrih.xsub.R
 
-public class DSubWidget4x2 extends DSubWidgetProvider {
-	@Override
-	protected int getLayout() {
-		return R.layout.appwidget4x2;
-	}
+class DSubWidget4x2 : DSubWidgetProvider() {
+    override var layout: Int
+        get() = R.layout.appwidget4x2
+        set(value) {
+            super.layout = value
+        }
 }

@@ -108,7 +108,7 @@ public class PodcastSyncAdapter extends SubsonicSyncAdapter {
 			// Make sure there are is at least one change before re-syncing
 			if(updated.size() > 0) {
 				FileUtil.serialize(context, podcastList, SyncUtil.getPodcastSyncFile(context, instance));
-				Notifications.showSyncNotification(context, R.string.sync_new_podcasts, SyncUtil.joinNames(updated), updatedId);
+				Notifications.INSTANCE.showSyncNotification(context, R.string.sync_new_podcasts, SyncUtil.joinNames(updated), updatedId);
 			}
 		} catch(Exception e) {
 			Log.w(TAG, "Failed to get podcasts for " + Util.getServerName(context));

@@ -152,7 +152,7 @@ public class PlaylistSyncAdapter extends SubsonicSyncAdapter {
 		}
 
 		if(updated.size() > 0) {
-			Notifications.showSyncNotification(context, R.string.sync_new_playlists, SyncUtil.joinNames(updated), updatedId);
+			Notifications.INSTANCE.showSyncNotification(context, R.string.sync_new_playlists, SyncUtil.joinNames(updated), updatedId);
 		}
 	}
 }
