@@ -1722,19 +1722,10 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 	}
 
 	private void playNow(final List<Entry> entries, final Entry song, final int position) {
-		new LoadingTask<Void>(context) {
-			@Override
-			protected Void doInBackground() {
-				playNowInTask(entries, song, position);
-				return null;
-			}
-
-			@Override
-			protected void done(Void result) {
-				context.openNowPlaying();
-			}
-		}.execute();
+		playNowInTask(entries, song, position);
+		context.openNowPlaying();
 	}
+
 	public void playNowInTask(final List<Entry> entries, final Entry song, final int position) {
 		DownloadService downloadService = getDownloadService();
 		if(downloadService == null) {
@@ -1889,32 +1880,65 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 			return;
 		}
 
-		RecursiveLoader onValid = new RecursiveLoader(context) {
-			@Override
-			protected Boolean doInBackground() throws Throwable {
-				if (!append) {
-					getDownloadService().clear();
-				}
-				getSongsRecursively(entries, songs);
+		if (!append) {
+			getDownloadService().clear();
+		}
 
-				downloadService.download(songs, false, autoplay, playNext, shuffle);
-				downloadService.setSuggestedPlaylistName("Default", "0");
-				return null;
-			}
+		List<Entry> songs = new ArrayList<>();
+		MusicDirectory dir = new MusicDirectory();
+		MusicService musicService = MusicServiceFactory.getMusicService(context);
 
-			@Override
-			protected void done(Boolean result) {
-				if (autoplay) {
-					context.openNowPlaying();
-				} else if (append) {
-					Util.toast(context,
-							context.getResources().getQuantityString(R.plurals.select_album_n_songs_added, songs.size(), songs.size()));
-				}
-			}
-		};
+		dir.addChildren(entries);
+		getSongsRecursively(dir, songs, musicService);
 
-		executeOnValid(onValid);
+		downloadService.download(songs, false, autoplay, playNext, shuffle);
+		downloadService.setSuggestedPlaylistName("Default", "0");
+
+		if (autoplay) {
+			context.openNowPlaying();
+		} else if (append) {
+			Util.toast(context,
+					context.getResources().getQuantityString(R.plurals.select_album_n_songs_added, songs.size(), songs.size()));
+		}
 	}
+
+	private void getSongsRecursively(MusicDirectory dir, List<Entry> songs, MusicService musicService){
+		final int MAX_SONGS = 500;
+
+		if (songs.size() > MAX_SONGS) {
+			return;
+		}
+
+		for (Entry entry : dir.getChildren(true, false)) {
+			if (entry.getRating() == 1) {
+				continue;
+			}
+
+			MusicDirectory musicDirectory = null;
+			if (Util.isTagBrowsing(context) && !Util.isOffline(context)) {
+				try {
+					musicDirectory = musicService.getAlbum(dir.getId(), entry.getTitle(), false, context, null);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					musicDirectory = musicService.getMusicDirectory(dir.getId(), entry.getTitle(), false, context, null);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			getSongsRecursively(musicDirectory, songs, musicService);
+		}
+
+		for (Entry song : dir.getChildren(false, true)) {
+			if ((!song.isVideo() || false) && song.getRating() != 1) {
+				songs.add(song);
+			}
+		}
+	}
+
 	void executeOnValid(RecursiveLoader onValid) {
 		onValid.execute();
 	}

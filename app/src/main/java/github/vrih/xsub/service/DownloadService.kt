@@ -642,6 +642,7 @@ class DownloadService: Service() {
             for (song in songs)
             {
                 val downloadFile = DownloadFile(this, song, save)
+                newDownloadList.add(downloadFile)
                 addToDownloadList(downloadFile, -1)
                 if (noNetwork && !warnNetwork)
                 {
@@ -780,10 +781,12 @@ class DownloadService: Service() {
             }
         }
 
+        Log.w("CAST", "remote state $remoteState")
         if (remoteState !== LOCAL && remoteController != null) {
             if (playNext) {
                 remoteController!!.insertPlaylist(songs, currentPlayingIndex)
             } else {
+                Log.w("CAST", "Append")
                 remoteController!!.appendPlaylist(songs)
             }
         }

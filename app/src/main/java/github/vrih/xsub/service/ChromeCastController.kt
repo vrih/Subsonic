@@ -145,6 +145,7 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
     }
 
     override fun appendPlaylist(songs: List<DownloadFile>) {
+        Log.w("CAST", "Append $songs")
         for(song in songs)
             mediaPlayer!!.queueAppendItem(entryToQueueItem(song), null)
     }
