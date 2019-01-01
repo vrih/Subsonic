@@ -279,10 +279,7 @@ class DownloadService: Service() {
             try
             {
                 controller = effectsController!!.equalizerController
-                if (controller!!.equalizer == null)
-                {
-                    throw Exception("Failed to get EQ")
-                }
+                controller!!.equalizer ?: throw Exception("Failed to get EQ")
             }
             catch (e:Exception) {
                 Log.w(TAG, "Failed to start EQ, retrying with new mediaPlayer: $e")
@@ -297,10 +294,7 @@ class DownloadService: Service() {
                     mediaPlayer!!.setDataSource(currentPlaying!!.file.canonicalPath)
 
                     controller = effectsController!!.equalizerController
-                    if (controller!!.equalizer == null)
-                    {
-                        throw Exception("Failed to get EQ")
-                    }
+                    controller!!.equalizer ?: throw Exception("Failed to get EQ")
                 }
                 catch (e2:Exception) {
                     Log.w(TAG, "Failed to setup EQ even after reinitialization")
@@ -1111,9 +1105,6 @@ class DownloadService: Service() {
     }
 
     @Synchronized fun setCurrentPlaying(currentPlayingIndex:Int) {
-        if(remoteState == CHROMECAST){
-            remoteController?.setCurrentPlaying(currentPlayingIndex)
-        }
         try
         {
             setCurrentPlaying(downloadList[currentPlayingIndex])
@@ -1293,7 +1284,7 @@ class DownloadService: Service() {
                 Notifications.hidePlayingNotification(this, this, handler)
             }
             else
-            {
+                {
                 setCurrentPlaying(null)
             }
             lifecycleSupport.serializeDownloadQueue()
@@ -1482,10 +1473,7 @@ class DownloadService: Service() {
         }
 
         var index = currentPlayingIndex
-        if (index == -1)
-        {
-            return
-        }
+        if (index == -1) return
 
         // If only one song, just skip within song
         if (shouldFastForward())
@@ -1505,11 +1493,7 @@ class DownloadService: Service() {
         }
         else
         {
-            if (index == 0)
-            {
-                index = size()
-            }
-
+            if (index == 0) index = size()
             play(index - 1, playerState !== PAUSED && playerState !== STOPPED && playerState !== IDLE)
         }
     }
@@ -1535,30 +1519,14 @@ class DownloadService: Service() {
         // Delete podcast if fully listened to
         val position = playerPosition
         val duration = playerDuration
-        val cutoff:Boolean
-        if (forceCutoff)
-        {
-            cutoff = true
-        }
-        else
-        {
-            cutoff = isPastCutoff(position, duration)
-        }
+        val cutoff = if (forceCutoff) true else isPastCutoff(position, duration)
+
         if (currentPlaying != null && currentPlaying!!.song is PodcastEpisode && !currentPlaying!!.isSaved)
         {
-            if (cutoff)
-            {
-                toDelete.add(currentPlaying!!)
-            }
+            if (cutoff) toDelete.add(currentPlaying!!)
         }
-        if (cutoff)
-        {
-            clearCurrentBookmark()
-        }
-        if (currentPlaying != null)
-        {
-            scrobbler.conditionalScrobble(this, currentPlaying, position, duration, cutoff)
-        }
+        if (cutoff) clearCurrentBookmark()
+        if (currentPlaying != null) scrobbler.conditionalScrobble(this, currentPlaying, position, duration, cutoff)
 
         if (remoteState === CHROMECAST)
         {
@@ -1569,10 +1537,7 @@ class DownloadService: Service() {
             val index = currentPlayingIndex
             var nextPlayingIndex = nextPlayingIndex
             // Make sure to actually go to next when repeat song is on
-            if (index == nextPlayingIndex)
-            {
-                nextPlayingIndex++
-            }
+            if (index == nextPlayingIndex) nextPlayingIndex++
             if (index != -1 && nextPlayingIndex < size())
             {
                 play(nextPlayingIndex, playerState !== PAUSED && playerState !== STOPPED && playerState !== IDLE || forceStart)
@@ -1648,10 +1613,9 @@ class DownloadService: Service() {
         catch (x:Exception) {
             handleError(x)
         }
-
     }
 
-    @Synchronized  fun start() {
+    @Synchronized fun start() {
         try
         {
             if (remoteState !== LOCAL)
@@ -1739,13 +1703,8 @@ class DownloadService: Service() {
 
     }
 
-    fun getPlayerState():PlayerState {
-        return playerState
-    }
-
-    fun getNextPlayerState():PlayerState {
-        return nextPlayerState
-    }
+    fun getPlayerState():PlayerState = playerState
+    fun getNextPlayerState():PlayerState = nextPlayerState
 
     @Synchronized  fun setPlayerState(playerState:PlayerState) {
         Log.i(TAG, this.playerState.name + " -> " + playerState.name + " (" + currentPlaying + ")")
@@ -1753,10 +1712,7 @@ class DownloadService: Service() {
         if (playerState === PAUSED)
         {
             lifecycleSupport.serializeDownloadQueue()
-            if (!isPastCutoff)
-            {
-                checkAddBookmark(true)
-            }
+            if (!isPastCutoff) checkAddBookmark(true)
         }
 
         val show = playerState === PlayerState.STARTED
@@ -1841,10 +1797,7 @@ class DownloadService: Service() {
 
         if (remoteController != null && remoteController!!.isNextSupported)
         {
-            if (playerState === PREPARING || playerState === IDLE)
-            {
-                nextPlayerState = IDLE
-            }
+            if (playerState === PREPARING || playerState === IDLE) nextPlayerState = IDLE
         }
 
         onStateUpdate()
@@ -1866,9 +1819,7 @@ class DownloadService: Service() {
     private open inner class PositionCache:Runnable {
         internal open var isRunning = true
 
-        internal open fun stop() {
-            isRunning = false
-        }
+        internal open fun stop() = run { isRunning = false }
 
         override fun run() {
             // Stop checking position before the song reaches completion
@@ -1937,10 +1888,7 @@ class DownloadService: Service() {
         }
     }
 
-    @Synchronized  fun setNextPlayerState(playerState:PlayerState) {
-        Log.i(TAG, "Next: " + this.nextPlayerState.name + " -> " + playerState.name + " (" + nextPlaying + ")")
-        this.nextPlayerState = playerState
-    }
+    @Synchronized  fun setNextPlayerState(playerState:PlayerState) = run { this.nextPlayerState = playerState }
 
     fun setSuggestedPlaylistName(name:String, id:String) {
         this.suggestedPlaylistName = name
@@ -1952,12 +1900,8 @@ class DownloadService: Service() {
         editor.apply()
     }
 
-    fun setRemoteEnabled(newState:RemoteControlState) {
-        if (instance != null)
-        {
-            setRemoteEnabled(newState, null)
-        }
-    }
+    fun setRemoteEnabled(newState:RemoteControlState) = instance?.let { setRemoteEnabled(newState, null) }
+
     fun setRemoteEnabled(newState:RemoteControlState, ref:Any?) {
         setRemoteState(newState, ref)
 
@@ -1971,26 +1915,17 @@ class DownloadService: Service() {
     }
     private fun setRemoteState(newState:RemoteControlState, ref:Any?, routeId:String? = null) {
         // Don't try to do anything if already in the correct state
-        if (remoteState === newState)
-        {
-            return
-        }
+        if (remoteState === newState) return
 
         val isPlaying = playerState === STARTED
         val position = playerPosition
 
-        if (remoteController != null)
-        {
-            remoteController!!.stop()
-            setPlayerState(PlayerState.IDLE)
-            remoteController!!.shutdown()
-            remoteController = null
+        remoteController?.stop()
+        setPlayerState(PlayerState.IDLE)
+        remoteController?.shutdown()
+        remoteController = null
 
-            if (newState === LOCAL)
-            {
-                mediaRouter!!.setDefaultRoute()
-            }
-        }
+        if (newState === LOCAL) mediaRouter!!.setDefaultRoute()
 
         Log.i(TAG, remoteState.name + " => " + newState.name + " (" + currentPlaying + ")")
         remoteState = newState
@@ -1998,10 +1933,7 @@ class DownloadService: Service() {
             RemoteControlState.JUKEBOX_SERVER -> remoteController = JukeboxController(this, handler)
             CHROMECAST, RemoteControlState.DLNA -> {
                 Log.w("CAST", "ref: " + ref.toString())
-                if (ref == null)
-                {
-                    remoteState = LOCAL
-                }
+                ref ?: run { remoteState = LOCAL }
                 remoteController = ref as RemoteController?
             }
             LOCAL -> if (wifiLock!!.isHeld)
@@ -2571,10 +2503,7 @@ class DownloadService: Service() {
             if (n != 0 && (remoteState === LOCAL || Util.shouldCacheDuringCasting(this)))
             {
                 var start = if (currentPlaying == null) 0 else currentPlayingIndex
-                if (start == -1)
-                {
-                    start = 0
-                }
+                if (start == -1) start = 0
                 var i = start
                 do
                 {
@@ -2773,10 +2702,7 @@ class DownloadService: Service() {
         }
     }
     private fun postPlayCleanup(downloadFile:DownloadFile? = currentPlaying) {
-        if (downloadFile == null)
-        {
-            return
-        }
+        downloadFile ?: return
 
         // Finished loading, delete when list is cleared
         if (downloadFile.song is PodcastEpisode)
@@ -2786,10 +2712,7 @@ class DownloadService: Service() {
         clearCurrentBookmark(downloadFile.song)
     }
     private fun isPastCutoff(position:Int, duration:Int, allowSkipping:Boolean = false):Boolean {
-        if (currentPlaying == null)
-        {
-            return false
-        }
+        currentPlaying ?: return false
 
         // Make cutoff a maximum of 10 minutes
         val cutoffPoint = Math.max((duration * DELETE_CUTOFF).toInt(), duration - 10 * 60 * 1000)
@@ -2825,19 +2748,12 @@ class DownloadService: Service() {
 
     private fun clearCurrentBookmark() {
         // If current is null, nothing to do
-        if (currentPlaying == null)
-        {
-            return
-        }
-
+        currentPlaying ?: return
         clearCurrentBookmark(currentPlaying!!.song)
     }
     private fun clearCurrentBookmark(entry:MusicDirectory.Entry) {
         // If no bookmark, move on
-        if (entry.bookmark == null)
-        {
-            return
-        }
+        entry.bookmark ?: return
 
         // If supposed to delete
         object:SilentBackgroundTask<Void>(this) {
@@ -2848,24 +2764,17 @@ class DownloadService: Service() {
                 musicService.deleteBookmark(entry, this@DownloadService, null)
 
                 val found = UpdateView.findEntry(entry)
-                if (found != null)
-                {
-                    found.bookmark = null
-                }
+                if (found != null) found.bookmark = null
                 return null
             }
 
             public override fun error(error:Throwable) {
                 Log.e(TAG, "Failed to delete bookmark", error)
 
-                val msg:String
-                if (error is OfflineException || error is ServerTooOldException)
-                {
-                    msg = getErrorMessage(error)
-                }
-                else
-                {
-                    msg = this@DownloadService.resources.getString(R.string.bookmark_deleted_error, entry.title) + " " + getErrorMessage(error)
+                val msg:String = if (error is OfflineException || error is ServerTooOldException) {
+                    getErrorMessage(error)
+                } else {
+                    this@DownloadService.resources.getString(R.string.bookmark_deleted_error, entry.title) + " " + getErrorMessage(error)
                 }
 
                 Util.toast(this@DownloadService, msg, false)
@@ -2874,10 +2783,8 @@ class DownloadService: Service() {
     }
     private fun checkAddBookmark(updateMetadata:Boolean = false) {
         // Don't do anything if no current playing
-        if (currentPlaying == null || !ServerInfo.canBookmark())
-        {
-            return
-        }
+        currentPlaying ?: return
+        if (!ServerInfo.canBookmark()) return
 
         val entry = currentPlaying!!.song
         val duration = playerDuration
@@ -2889,10 +2796,7 @@ class DownloadService: Service() {
             val position = playerPosition
 
             // Don't bother when at beginning
-            if (position < 5000L)
-            {
-                return
-            }
+            if (position < 5000L) return
 
             object:SilentBackgroundTask<Void>(context) {
                 @Throws(Throwable::class)
@@ -2902,15 +2806,8 @@ class DownloadService: Service() {
                     musicService.createBookmark(entry, position, "Auto created by DSub", context, null)
 
                     val found = UpdateView.findEntry(entry)
-                    if (found != null)
-                    {
-                        found.bookmark = Bookmark(position)
-                    }
-                    if (updateMetadata)
-                    {
-                        onMetadataUpdate(METADATA_UPDATED_BOOKMARK)
-                    }
-
+                    if (found != null) found.bookmark = Bookmark(position)
+                    if (updateMetadata) onMetadataUpdate(METADATA_UPDATED_BOOKMARK)
                     return null
                 }
 
@@ -2930,10 +2827,7 @@ class DownloadService: Service() {
     }
 
     private fun applyReplayGain(mediaPlayer:MediaPlayer?, downloadFile:DownloadFile?) {
-        if (currentPlaying == null)
-        {
-            return
-        }
+        currentPlaying ?: return
 
         val prefs = Util.getPreferences(this)
         try
@@ -2984,10 +2878,7 @@ class DownloadService: Service() {
                             i--
                         }
 
-                        if (matched >= REQUIRED_ALBUM_MATCHES)
-                        {
-                            singleAlbum = true
-                        }
+                        if (matched >= REQUIRED_ALBUM_MATCHES) singleAlbum = true
                     }
                 }
                 else if ("2" == replayGainType)
@@ -3090,13 +2981,10 @@ class DownloadService: Service() {
         })
     }
     fun toggleRating(rating:Int) {
-        if (currentPlaying == null)
-        {
-            return
-        }
+        currentPlaying ?: return
 
-        val entry = currentPlaying!!.song
-        if (entry.getRating() == rating)
+        val entry = currentPlaying?.song
+        if (entry?.getRating() == rating)
         {
             setRating(0)
         }
@@ -3327,10 +3215,7 @@ class DownloadService: Service() {
 
         @Throws(InterruptedException::class)
         public override fun doInBackground():Void? {
-            if (downloadFile == null)
-            {
-                return null
-            }
+            downloadFile ?: return null
 
             // Do an initial sleep so this prepare can't compete with main prepare
             Thread.sleep(5000L)

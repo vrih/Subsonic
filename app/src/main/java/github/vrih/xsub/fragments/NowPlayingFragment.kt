@@ -129,7 +129,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                 castController?.setSession(it)
                 downloadService!!.setRemoteEnabled(RemoteControlState.CHROMECAST, castController)
             }
-        }
+        } ?: run { downloadService?.setRemoteEnabled(RemoteControlState.LOCAL) }
 
         primaryFragment = false
     }
@@ -166,13 +166,13 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
 
         private fun onApplicationConnected() {
             val downloadService = downloadService
-
             castController = castController ?: ChromeCastController(downloadService)
             castController?.setSession(mSessionManager!!.currentCastSession)
+            castController?.resetPlaylist()
 
             val position = downloadService!!.playerPosition / 1000
             downloadService.setRemoteEnabled(RemoteControlState.CHROMECAST, castController)
-
+            Log.w("CAST", "ds cp ${downloadService.currentPlaying}")
             if (null != downloadService.currentPlaying) {
                 if (downloadService.getPlayerState() === PlayerState.STARTED || downloadService.getPlayerState() === PlayerState.PREPARING) {
                     //mVideoView.pause();
@@ -210,7 +210,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             } else {
                 downloadService!!.setRemoteEnabled(RemoteControlState.LOCAL)
             }
-        }
+        } ?: run { downloadService.setRemoteEnabled(RemoteControlState.LOCAL) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -592,11 +592,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                 return true
             }
             R.id.menu_remove_played -> {
-                if (downloadService!!.isRemovePlayed) {
-                    downloadService!!.isRemovePlayed = false
-                } else {
-                    downloadService!!.isRemovePlayed = true
-                }
+                downloadService!!.isRemovePlayed = !downloadService!!.isRemovePlayed
                 context.supportInvalidateOptionsMenu()
                 return true
             }
