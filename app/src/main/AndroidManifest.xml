@@ -30,8 +30,9 @@
     	android:backupAgent="github.vrih.xsub.util.SettingsBackupAgent"
     	android:icon="@drawable/launch"
     	android:theme="@style/Theme.DSub.Light"
+		android:usesCleartextTraffic="true"
 		android:largeHeap="true">
-    	
+
         <uses-library android:name="android.test.runner" />
 
 		<activity android:name="github.vrih.xsub.activity.SubsonicFragmentActivity"
