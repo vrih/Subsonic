@@ -1,157 +1,19 @@
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:sothree="http://schemas.android.com/apk/res-auto"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/slide_up_panel"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
 	android:gravity="bottom"
-	sothree:umanoPanelHeight="?attr/actionBarSize"
-	sothree:umanoShadowHeight="4dp"
-	sothree:umanoDragView="@+id/slide_up_swipe_target">
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-	<FrameLayout
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/main_toolbar"
+		android:layout_height="?attr/actionBarSize"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:background="?attr/actionbarBackgroundColor"
+		android:elevation="4dp"
+		android:theme="?attr/actionbarThemeStyle"
+		app:popupTheme="?attr/actionbarPopupStyle"/>
 
-		<androidx.appcompat.widget.Toolbar
-			android:id="@+id/main_toolbar"
-			android:layout_height="?attr/actionBarSize"
-			android:layout_width="match_parent"
-			android:background="?attr/actionbarBackgroundColor"
-			android:elevation="4dp"
-			android:theme="?attr/actionbarThemeStyle"
-			app:popupTheme="?attr/actionbarPopupStyle"/>
-
-		<include layout="@layout/abstract_fragment_container"/>
-	</FrameLayout>
-
-	<LinearLayout
-        android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
-
-		<FrameLayout
-			android:id="@+id/slide_up_swipe_target"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/actionbarBackgroundColor">
-
-			<androidx.appcompat.widget.Toolbar
-				android:id="@+id/now_playing_toolbar"
-				android:layout_height="?attr/actionBarSize"
-				android:layout_width="match_parent"
-				android:elevation="4dp"
-				android:visibility="gone"
-				android:theme="?attr/actionbarThemeStyle"
-				app:popupTheme="?attr/actionbarPopupStyle"/>
-
-			<LinearLayout
-				android:id="@+id/bottom_bar"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				style="@style/BasicButton"
-				android:orientation="horizontal"
-				android:elevation="4dp">
-
-				<github.vrih.xsub.view.RecyclingImageView
-					android:id="@+id/album_art"
-					android:layout_width="?attr/actionBarSize"
-					android:layout_height="?attr/actionBarSize"
-					android:layout_gravity="start|center"
-					android:scaleType="fitCenter"/>
-
-				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"
-					android:layout_weight="1"
-					android:orientation="vertical"
-					android:paddingStart="8dip">
-
-					<TextView
-						android:id="@+id/track_name"
-						android:layout_height="wrap_content"
-						android:layout_width="wrap_content"
-						android:singleLine="true"
-						android:text="@string/main.title"
-						android:ellipsize="marquee"
-						android:marqueeRepeatLimit="marquee_forever"
-						android:scrollHorizontally="true"
-						android:focusable="true"
-						android:focusableInTouchMode="true"
-						style="?attr/actionbarTitleStyle">
-
-						<requestFocus android:focusable="true"
-							android:focusableInTouchMode="true"
-							android:duplicateParentState="true" />
-					</TextView>
-
-					<TextView
-						android:id="@+id/artist_name"
-						android:layout_height="wrap_content"
-						android:layout_width="wrap_content"
-						android:singleLine="true"
-						android:text="@string/main.artist"
-						style="?attr/actionbarSubtitleStyle"/>
-				</LinearLayout>
-
-
-				<LinearLayout
-					android:layout_height="fill_parent"
-					android:layout_width="0dp"
-					android:layout_weight="1">
-
-					<ImageButton
-						style="@style/PlaybackControl.BottomBar"
-						android:id="@+id/download_rewind"
-						sothree:srcCompat="@drawable/media_rewind"
-						android:tint="?attr/actionbar_element_color"
-						android:padding="2dp"
-						android:visibility="gone"
-						android:contentDescription="@string/rewind" />
-
-					<ImageButton
-						style="@style/PlaybackControl.BottomBar"
-						android:id="@+id/download_previous"
-						sothree:srcCompat="@drawable/media_backward"
-						android:tint="?attr/actionbar_element_color"
-						android:padding="2dp"
-						android:contentDescription="@string/skip_backwards" />
-
-					<ImageButton
-						style="@style/PlaybackControl.BottomBar"
-						android:id="@+id/download_start"
-						sothree:srcCompat="@drawable/media_start"
-						android:tint="?attr/actionbar_element_color"
-						android:contentDescription="@string/start" />
-
-					<ImageButton
-						style="@style/PlaybackControl.BottomBar"
-						android:id="@+id/download_next"
-						sothree:srcCompat="@drawable/media_forward"
-						android:tint="?attr/actionbar_element_color"
-						android:padding="2dp"
-						android:contentDescription="@string/skip_forwards" />
-
-					<ImageButton
-						style="@style/PlaybackControl.BottomBar"
-						android:id="@+id/download_fastforward"
-						sothree:srcCompat="@drawable/media_fastforward"
-						android:tint="?attr/actionbar_element_color"
-						android:padding="2dp"
-						android:visibility="gone"
-						android:contentDescription="@string/fast_forward" />
-				</LinearLayout>
-			</LinearLayout>
-		</FrameLayout>
-
-		<FrameLayout
-			android:id="@+id/now_playing_fragment_container"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:clickable="true"
-			android:focusable="true" />
-	</LinearLayout>
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+	<include layout="@layout/abstract_fragment_container"/>
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/cloud"
+        android:title="Home" />
+    <item
+        android:id="@+id/bottom_playlists"
+        android:icon="@drawable/playlist"
+        android:title="Playlists" />
+    <item
+        android:id="@+id/bottom_queue"
+        android:icon="@drawable/toggle_list"
+        android:title="Queue" />
+    <item
+        android:id="@+id/bottom_now_playing"
+        android:icon="@drawable/library"
+        android:title="Now Playing" />
+</menu>

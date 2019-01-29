@@ -784,7 +784,7 @@ class DownloadService: Service() {
                 remoteController!!.appendPlaylist(songs)
             }
         }
-        remoteControlClient!!.updatePlaylist(playlist)
+        remoteControlClient?.updatePlaylist(playlist)
     }
 
     @Synchronized  fun restore(songs:List<MusicDirectory.Entry>, toDelete:List<MusicDirectory.Entry>?, currentPlayingIndex:Int, currentPlayingPosition:Int) {

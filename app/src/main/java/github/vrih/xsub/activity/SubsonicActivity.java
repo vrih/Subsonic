@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,6 +49,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -99,7 +99,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	private final List<Runnable> afterServiceAvailable = new ArrayList<>();
 	private boolean drawerIdle = true;
 	private boolean destroyed = false;
-	private boolean finished = false;
 	final List<SubsonicFragment> backStack = new ArrayList<>();
 	SubsonicFragment currentFragment;
     View secondaryContainer;
@@ -128,9 +127,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	protected void onCreate(Bundle bundle) {
 
 		UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
-		if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
-			// tv = true;
-		}
+		uiModeManager.getCurrentModeType();
 		PackageManager pm = getPackageManager();
 		if(!pm.hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN)) {
 			touchscreen = false;
@@ -173,6 +170,9 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 			};
 			Util.getPreferences(this).registerOnSharedPreferenceChangeListener(preferencesListener);
 		}
+
+
+
 
 		if (ContextCompat.checkSelfPermission(this, permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
 			ActivityCompat.requestPermissions(this, new String[]{permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
@@ -289,6 +289,29 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 			layoutInflater.inflate(viewId, rootView);
 		}
 
+		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+			@Override
+			public boolean onNavigationItemSelected(final MenuItem menuItem) {
+				// Settings are on a different selectable track
+				switch (menuItem.getItemId()) {
+					case R.id.bottom_now_playing:
+						drawerItemSelected("Now Playing");
+						return true;
+					case R.id.bottom_home:
+						drawerItemSelected("Home");
+						return true;
+					case R.id.bottom_playlists:
+						drawerItemSelected("Playlist");
+						return true;
+					case R.id.bottom_queue:
+						drawerItemSelected("Queue");
+						return true;
+				}
+				return false;
+			}
+		});
+
 		drawerList = findViewById(R.id.left_drawer);
 		drawerList.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 			@Override
@@ -301,14 +324,8 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 					}
 
 					switch (menuItem.getItemId()) {
-						case R.id.drawer_home:
-							drawerItemSelected("Home");
-							return true;
 						case R.id.drawer_library:
 							drawerItemSelected("Artist");
-							return true;
-						case R.id.drawer_playlists:
-							drawerItemSelected("Playlist");
 							return true;
 						case R.id.drawer_podcasts:
 							drawerItemSelected("Podcast");
@@ -427,10 +444,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 			});
 		}
 
-		// Check whether this is a tablet or not
-		secondaryContainer = findViewById(R.id.fragment_second_container);
-		if(secondaryContainer != null) {
-		}
+
 	}
 
 	@Override
@@ -594,9 +608,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 
 		MenuItem offlineMenuItem = drawerList.getMenu().findItem(R.id.drawer_offline);
 		if(Util.isOffline(this)) {
-			setDrawerItemVisible(R.id.drawer_home, false);
-
-			if(lastSelectedPosition == 0 || lastSelectedPosition == R.id.drawer_home) {
+			if(lastSelectedPosition == 0) {
 				String newFragment = Util.openToTab(this);
 				if(newFragment == null || "Home".equals(newFragment)) {
 					newFragment = "Artist";
@@ -958,6 +970,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	}
 
 	public DownloadService getDownloadService() {
+		boolean finished = false;
 		if(finished) {
 			return null;
 		}
@@ -1137,19 +1150,11 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 		offline.putInt(Constants.OFFLINE_STAR_COUNT, 0);
 		offline.apply();
 	}
-	
-	int getDrawerItemId(String fragmentType) {
-		if(fragmentType == null) {
-			return R.id.drawer_home;
-		}
 
+	int getDrawerItemId(String fragmentType) {
 		switch(fragmentType) {
-			case "Home":
-				return R.id.drawer_home;
 			case "Artist":
 				return R.id.drawer_library;
-			case "Playlist":
-				return R.id.drawer_playlists;
 			case "Podcast":
 				return R.id.drawer_podcasts;
 			case "Bookmark":
@@ -1159,7 +1164,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 			case "Share":
 				return R.id.drawer_shares;
 			default:
-				return R.id.drawer_home;
+				return R.id.drawer_library;
 		}
 	}
 

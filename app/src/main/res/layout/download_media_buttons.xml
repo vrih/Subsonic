@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:orientation="horizontal"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
@@ -73,13 +74,5 @@
 	    android:tint="?attr/element_color"
 	    android:layout_toEndOf="@+id/download_start"
 	    android:layout_centerVertical="true" />
-	
-	<ImageButton
-        android:id="@+id/download_toggle_list"
-        style="@style/PlaybackControl.Smaller"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/toggle_list"
-        android:tint="?attr/element_color"
-        android:contentDescription="@string/playlist" />
+
 </RelativeLayout>

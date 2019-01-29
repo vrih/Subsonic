@@ -11,21 +11,12 @@
 		android:visible="false"
         compat:showAsAction="ifRoom|withText"/>
 
-
 	<item
 		android:id="@+id/menu_mediaroutecast"
 		compat:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
 		compat:showAsAction="always"
 		android:title="@string/menu.cast"/>
 
-	<!--<item
-		android:id="@+id/menu_mediaroute"
-		compat:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
-		compat:actionViewClass="androidx.mediarouter.app.MediaRouteButton"
-		compat:showAsAction="always"
-		android:visible="false"
-		android:title="@string/menu.cast"/>
-	-->
 	<item
         android:id="@+id/menu_remove_all"
         android:icon="@drawable/trash"
@@ -65,7 +56,7 @@
 		android:title="@string/download.menu_remove_played_songs"
 		android:visible="false"
 		android:checkable="true"/>
-		
+
 	<item
         android:id="@+id/menu_toggle_timer"
 		android:visible="false"

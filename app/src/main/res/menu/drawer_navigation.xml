@@ -2,20 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<group android:checkableBehavior="single">
 		<item
-			android:id="@+id/drawer_home"
-			android:icon="@drawable/cloud"
-			android:tint="?attr/element_color"
-			android:title="@string/button_bar.home"/>
-		<item
 			android:id="@+id/drawer_library"
 			android:icon="@drawable/library"
 			android:tint="?attr/element_color"
 			android:title="@string/button_bar.browse"/>
-		<item
-			android:id="@+id/drawer_playlists"
-			android:icon="@drawable/playlist"
-			android:tint="?attr/element_color"
-			android:title="@string/button_bar.playlists"/>
 		<item
 			android:id="@+id/drawer_podcasts"
 			android:icon="@drawable/podcast"

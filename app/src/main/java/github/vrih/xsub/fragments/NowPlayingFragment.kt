@@ -25,14 +25,8 @@ import android.util.Log
 import android.view.*
 import android.view.GestureDetector.OnGestureListener
 import android.view.View.OnClickListener
-import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.MenuItemCompat
-import androidx.mediarouter.app.MediaRouteButton
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.cast.framework.*
 import com.shehabic.droppy.DroppyClickCallbackInterface
 import com.shehabic.droppy.DroppyMenuPopup
@@ -49,9 +43,7 @@ import github.vrih.xsub.service.DownloadService.OnSongChangedListener
 import github.vrih.xsub.util.*
 import github.vrih.xsub.view.AutoRepeatButton
 import github.vrih.xsub.view.FadeOutAnimation
-import github.vrih.xsub.view.FastScroller
 import github.vrih.xsub.view.UpdateView
-import github.vrih.xsub.view.compat.CustomMediaRouteDialogFactory
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -60,11 +52,8 @@ import java.util.concurrent.TimeUnit
 
 class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter.OnItemClickedListener<DownloadFile>, OnSongChangedListener {
 
-    private var playlistFlipper: ViewFlipper? = null
-    private var emptyTextView: TextView? = null
     private var songTitleTextView: TextView? = null
     private var albumArtImageView: ImageView? = null
-    private var playlistView: RecyclerView? = null
     private var positionTextView: TextView? = null
     private var durationTextView: TextView? = null
     private var statusTextView: TextView? = null
@@ -77,7 +66,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
     private lateinit var stopButton: View
     private lateinit var startButton: View
     private lateinit var repeatButton: ImageButton
-    private lateinit var toggleListButton: View
     private lateinit var starButton: ImageButton
     private lateinit var bookmarkButton: ImageButton
     private lateinit var rateBadButton: ImageButton
@@ -92,7 +80,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
     private var songList: MutableList<DownloadFile>? = null
     private var songListAdapter: DownloadFileAdapter? = null
     private var seekInProgress = false
-    private var startFlipped = false
     private var scrollWhenLoaded = false
     private var lastY = 0
     private var currentPlayingSize = 0
@@ -111,14 +98,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        savedInstanceState?.let {
-            if (it.getInt(Constants.FRAGMENT_DOWNLOAD_FLIPPER) == 1) {
-                startFlipped = true
-            }
-        }
-
         mCastContext = CastContext.getSharedInstance(getContext()!!)
+        Log.e("CAST", mCastContext.toString())
         mCastSession = mCastContext!!.sessionManager.currentCastSession
+        Log.e("CAST", mCastSession.toString())
         mSessionManager = CastContext.getSharedInstance(getContext()!!).sessionManager
         mSessionManager!!.addSessionManagerListener(mSessionManagerListener, Session::class.java)
         val downloadService = downloadService
@@ -131,7 +114,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             }
         } ?: run { downloadService?.setRemoteEnabled(RemoteControlState.LOCAL) }
 
-        primaryFragment = false
+        downloadService?.addOnSongChangedListener(this@NowPlayingFragment, true)
     }
 
     override fun onResume() {
@@ -145,7 +128,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         mSessionManager!!.removeSessionManagerListener(mSessionManagerListener)
         mCastSession = null
     }
-
 
     private inner class SessionManagerListenerImpl : SessionManagerListener<Session> {
         override fun onSessionEnded(session: Session, error: Int) = onApplicationDisconnected()
@@ -192,10 +174,9 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             val downloadService = downloadService
             downloadService!!.setRemoteEnabled(RemoteControlState.LOCAL)
             Log.w("CAST", "Application disconnected position$lastKnownRemotePositionMs")
-            //invalidateOptionsMenu();
+            // invalidateOptionsMenu();
         }
     }
-
 
     private fun checkCastConnection() {
         val downloadService = downloadService
@@ -213,11 +194,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         } ?: run { downloadService.setRemoteEnabled(RemoteControlState.LOCAL) }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(Constants.FRAGMENT_DOWNLOAD_FLIPPER, playlistFlipper!!.displayedChild)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View? {
         rootView = inflater.inflate(R.layout.download, container, false)
         setTitle(R.string.button_bar_now_playing)
@@ -227,10 +203,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         w.defaultDisplay.getMetrics(dm)
         swipeDistance = (dm.widthPixels + dm.heightPixels) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100
         swipeVelocity = (dm.widthPixels + dm.heightPixels) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100
-        gestureScanner = GestureDetector(this)
 
-        playlistFlipper = rootView.findViewById(R.id.download_playlist_flipper)
-        emptyTextView = rootView.findViewById(R.id.download_empty)
         songTitleTextView = rootView.findViewById(R.id.download_song_title)
         albumArtImageView = rootView.findViewById(R.id.download_album_art_image)
         positionTextView = rootView.findViewById(R.id.download_position)
@@ -249,14 +222,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         rateBadButton = rootView.findViewById(R.id.download_rating_bad)
         rateGoodButton = rootView.findViewById(R.id.download_rating_good)
         playbackSpeedButton = rootView.findViewById(R.id.download_playback_speed)
-        toggleListButton = rootView.findViewById(R.id.download_toggle_list)
-
-        playlistView = rootView.findViewById(R.id.download_list)
-        val fastScroller = rootView.findViewById<FastScroller>(R.id.download_fast_scroller)
-        fastScroller.attachRecyclerView(playlistView)
-        setupLayoutManager(playlistView, false)
-        val touchHelper = ItemTouchHelper(DownloadFileItemHelperCallback(this, true))
-        touchHelper.attachToRecyclerView(playlistView)
 
         starButton = rootView.findViewById(R.id.download_star)
         if (Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_MENU_STAR, true)) {
@@ -276,7 +241,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         rateBadButton.setOnTouchListener(touchListener)
         rateGoodButton.setOnTouchListener(touchListener)
         playbackSpeedButton!!.setOnTouchListener(touchListener)
-        emptyTextView!!.setOnTouchListener(touchListener)
         albumArtImageView!!.setOnTouchListener { _, me ->
             if (me.action == MotionEvent.ACTION_DOWN) {
                 lastY = me.rawY.toInt()
@@ -363,16 +327,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             playbackSpeedButton!!.visibility = View.GONE
         }
 
-        toggleListButton.setOnClickListener {
-            toggleFullscreenAlbumArt()
-            setControlsVisible(true)
-        }
-
         val overlay = rootView.findViewById<View>(R.id.download_overlay_buttons)
         val overlayHeight = overlay?.height ?: -1
         albumArtImageView!!.setOnClickListener { view ->
             if (overlayHeight == -1 || lastY < view.bottom - overlayHeight) {
-                toggleFullscreenAlbumArt()
                 setControlsVisible(true)
             }
         }
@@ -400,12 +358,9 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         val downloadService = downloadService
-        //		if(Util.isOffline(context)) {
-        //		menuInflater.inflate(R.menu.nowplaying_offline, menu);
-        //} else {
         menuInflater.inflate(R.menu.nowplaying, menu)
         CastButtonFactory.setUpMediaRouteButton(getContext(), menu, R.id.menu_mediaroutecast)
-        //	}
+
         if (downloadService?.getSleepTimer() == true) {
             val timeRemaining = downloadService.sleepTimeRemaining
             timerMenu = menu.findItem(R.id.menu_toggle_timer)
@@ -444,12 +399,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
 
 
         if (downloadService != null) {
-            val mediaRouteItem = menu.findItem(R.id.menu_mediaroute)
-            if (mediaRouteItem != null) {
-                val mediaRouteButton = MenuItemCompat.getActionView(mediaRouteItem) as MediaRouteButton
-                mediaRouteButton.dialogFactory = CustomMediaRouteDialogFactory()
-                mediaRouteButton.routeSelector = downloadService.remoteSelector
-            }
             if (downloadService.isCurrentPlayingSingle) {
                 if (!Util.isOffline(context)) {
                     menu.removeItem(R.id.menu_save_playlist)
@@ -506,10 +455,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                 val albumId: String?
                 val albumName: String?
                 if (menuItemId == R.id.menu_show_album) {
-                    if (Util.isTagBrowsing(context)) {
-                        albumId = entry.albumId
+                    albumId = if (Util.isTagBrowsing(context)) {
+                        entry.albumId
                     } else {
-                        albumId = entry.parent
+                        entry.parent
                     }
                     albumName = entry.album
                 } else {
@@ -588,12 +537,12 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                     context.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                     downloadService!!.setKeepScreenOn(true)
                 }
-                context.supportInvalidateOptionsMenu()
+                context.invalidateOptionsMenu()
                 return true
             }
             R.id.menu_remove_played -> {
                 downloadService!!.isRemovePlayed = !downloadService!!.isRemovePlayed
-                context.supportInvalidateOptionsMenu()
+                context.invalidateOptionsMenu()
                 return true
             }
             R.id.menu_shuffle -> {
@@ -622,7 +571,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             R.id.menu_toggle_timer -> {
                 if (downloadService!!.getSleepTimer()) {
                     downloadService!!.stopSleepTimer()
-                    context.supportInvalidateOptionsMenu()
+                    context.invalidateOptionsMenu()
                 } else {
                     startTimer()
                 }
@@ -663,7 +612,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                     Util.setBatchMode(context, true)
                     songListAdapter!!.notifyDataSetChanged()
                 }
-                context.supportInvalidateOptionsMenu()
+                context.invalidateOptionsMenu()
 
                 return true
             }
@@ -673,11 +622,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
 
     override fun onStart() {
         super.onStart()
-        if (this.primaryFragment) {
-            onResumeHandlers()
-        } else {
-            update()
-        }
+        onResumeHandlers()
     }
 
     private fun onResumeHandlers() {
@@ -685,10 +630,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         setControlsVisible(true)
 
         val downloadService = downloadService
-        if (downloadService == null || downloadService.currentPlaying == null || startFlipped) {
-            playlistFlipper!!.displayedChild = 1
-            startFlipped = false
-        }
         if (downloadService != null && downloadService.getKeepScreenOn()) {
             context.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
@@ -724,7 +665,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                 downloadService.stopRemoteScan()
                 downloadService.removeOnSongChangeListener(this)
             }
-            playlistFlipper!!.displayedChild = 0
         }
     }
 
@@ -805,27 +745,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             scrollWhenLoaded = true
             return
         }
-
-        // Try to get position of current playing/downloading
-        var position = songListAdapter!!.getItemPosition(currentPlaying)
-        if (position == -1) {
-            val currentDownloading = downloadService!!.currentDownloading
-            position = songListAdapter!!.getItemPosition(currentDownloading)
-        }
-
-        // If found, scroll to it
-        if (position != -1) {
-            // RecyclerView.scrollToPosition just puts it on the screen (ie: bottom if scrolled below it)
-            val layoutManager = playlistView!!.layoutManager as LinearLayoutManager?
-            layoutManager!!.scrollToPositionWithOffset(position, 0)
-        }
-    }
-
-    private fun update() {
-        if (startFlipped) {
-            startFlipped = false
-            scrollToCurrent()
-        }
     }
 
     private fun startTimer() {
@@ -857,15 +776,15 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         builder.setTitle(R.string.menu_set_timer)
                 .setView(dialogView)
                 .setPositiveButton(R.string.common_ok) { _, _ ->
-                    val length = getMinutes(lengthBar.progress)
-
                     val editor = prefs.edit()
-                    editor.putString(Constants.PREFERENCES_KEY_SLEEP_TIMER_DURATION, Integer.toString(length))
+                    editor.putString(
+                            Constants.PREFERENCES_KEY_SLEEP_TIMER_DURATION,
+                            Integer.toString(getMinutes(lengthBar.progress)))
                     editor.apply()
 
                     downloadService!!.setSleepTimerDuration(length)
                     downloadService!!.startSleepTimer()
-                    context.supportInvalidateOptionsMenu()
+                    context.invalidateOptionsMenu()
                 }
                 .setNegativeButton(R.string.common_cancel, null)
         val dialog = builder.create()
@@ -879,21 +798,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             progress < 57 -> (progress - 48) * 30 + getMinutes(48)
             progress < 81 -> (progress - 56) * 60 + getMinutes(56)
             else -> (progress - 80) * 150 + getMinutes(80)
-        }
-    }
-
-    private fun toggleFullscreenAlbumArt() {
-        if (playlistFlipper!!.displayedChild == 1) {
-            playlistFlipper!!.inAnimation = AnimationUtils.loadAnimation(context, R.anim.push_down_in)
-            playlistFlipper!!.outAnimation = AnimationUtils.loadAnimation(context, R.anim.push_down_out)
-            playlistFlipper!!.displayedChild = 0
-        } else {
-            scrollToCurrent()
-            playlistFlipper!!.inAnimation = AnimationUtils.loadAnimation(context, R.anim.push_up_in)
-            playlistFlipper!!.outAnimation = AnimationUtils.loadAnimation(context, R.anim.push_up_out)
-            playlistFlipper!!.displayedChild = 1
-
-            UpdateView.triggerUpdate()
         }
     }
 
@@ -947,9 +851,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         builder.setTitle(R.string.download_save_bookmark_title)
                 .setView(dialogView)
                 .setPositiveButton(R.string.common_ok) { _, _ ->
-                    val comment = commentBox.text.toString()
-
-                    createBookmark(currentDownload, comment)
+                    createBookmark(currentDownload, commentBox.text.toString())
                 }
                 .setNegativeButton(R.string.common_cancel, null)
         val dialog = builder.create()
@@ -963,7 +865,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         val position = downloadService.playerPosition
         val oldBookmark = currentSong.bookmark
         currentSong.bookmark = Bookmark(position)
-        bookmarkButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_menu_bookmark_selected))
+        bookmarkButton.setImageDrawable(
+                DrawableTint.getTintedDrawable(
+                        context,
+                        R.drawable.ic_menu_bookmark_selected))
 
         object : SilentBackgroundTask<Void>(context) {
             @Throws(Throwable::class)
@@ -1106,14 +1011,11 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
             imageLoader.loadImage(albumArtImageView, song, true, true)
 
             val downloadService = downloadService
-            if (downloadService!!.isCurrentPlayingSingle) {
-                setSubtitle(null)
-            } else if (downloadService.isShufflePlayEnabled) {
-                setSubtitle(context.resources.getString(R.string.download_playerstate_playing_shuffle))
-            } else if (downloadService.isArtistRadio) {
-                setSubtitle(context.resources.getString(R.string.download_playerstate_playing_artist_radio))
-            } else {
-                setSubtitle(context.resources.getString(R.string.download_playing_out_of, currentPlayingIndex + 1, currentPlayingSize))
+            when {
+                downloadService!!.isCurrentPlayingSingle -> setSubtitle(null)
+                downloadService.isShufflePlayEnabled -> setSubtitle(context.resources.getString(R.string.download_playerstate_playing_shuffle))
+                downloadService.isArtistRadio -> setSubtitle(context.resources.getString(R.string.download_playerstate_playing_artist_radio))
+                else -> setSubtitle(context.resources.getString(R.string.download_playing_out_of, currentPlayingIndex + 1, currentPlayingSize))
             }
         } else {
             songTitleTextView!!.text = null
@@ -1126,24 +1028,15 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         currentPlayingSize = songs!!.size
 
         val downloadService = downloadService
-        if (downloadService!!.isShufflePlayEnabled) {
-            emptyTextView!!.setText(R.string.download_shuffle_loading)
-        } else {
-            emptyTextView!!.setText(R.string.download_empty)
-        }
-
         if (songListAdapter == null) {
             songList = ArrayList()
             songList!!.addAll(songs)
             songListAdapter = DownloadFileAdapter(context, songList, this@NowPlayingFragment)
-            playlistView!!.adapter = songListAdapter
         } else {
             songList!!.clear()
             songList!!.addAll(songs)
             songListAdapter!!.notifyDataSetChanged()
         }
-
-        emptyTextView!!.visibility = if (songs.isEmpty()) View.VISIBLE else View.GONE
 
         if (scrollWhenLoaded) {
             scrollToCurrent()
@@ -1159,10 +1052,8 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         }
 
         if (downloadService.isCurrentPlayingSingle) {
-            toggleListButton.visibility = View.GONE
             repeatButton.visibility = View.GONE
         } else {
-            toggleListButton.visibility = View.VISIBLE
             repeatButton.visibility = View.VISIBLE
         }
         setPlaybackSpeed()
@@ -1275,10 +1166,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         if (entry?.getRating() == 5) {
             rateGoodButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_good_selected))
         } else {
-            if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                goodRating = R.drawable.ic_action_rating_good
+            goodRating = if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                R.drawable.ic_action_rating_good
             } else {
-                goodRating = DrawableTint.getDrawableRes(context, R.attr.rating_good)
+                DrawableTint.getDrawableRes(context, R.attr.rating_good)
             }
             rateGoodButton.setImageResource(goodRating)
         }

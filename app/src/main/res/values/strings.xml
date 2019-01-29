@@ -633,8 +633,9 @@
 	<string name="divider">divider</string>
     <string name="rewind">Rewind</string>
 	<string name="fast_forward">Fast forward</string>
+    <string name="queue">Play Queue</string>
 
-	<plurals name="select_album_n_songs">
+    <plurals name="select_album_n_songs">
         <item quantity="zero">No songs</item>
         <item quantity="one">One song</item>
         <item quantity="other">%d songs</item>
