@@ -10,9 +10,9 @@
 	<color name="holo_green_light">#ff99cc00</color>
 	<color name="holo_red_light">#ffff4444</color>
 
-	<color name="lightPrimary">#2196f3</color>
-	<color name="lightPrimaryDark">#1e88e5</color>
-	<color name="lightAccent">#448aff</color>
+	<color name="lightPrimary">#2d516e</color>
+	<color name="lightPrimaryDark">#1b3246</color>
+	<color name="lightAccent">#56a6ac</color>
 	<color name="lightElement">#A0000000</color>
 
 

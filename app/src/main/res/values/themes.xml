@@ -16,6 +16,9 @@
 		<item name="star_outline">@drawable/ic_toggle_star_outline_light</item>
 		<item name="playback_speed">@drawable/ic_action_playback_speed</item>
 		<item name="drawerArrowStyle">@style/DSub.DrawerArrow</item>
+		<item name="colorPrimary">@color/lightPrimary</item>
+		<item name="colorPrimaryDark">@color/lightPrimaryDark</item>
+		<item name="colorAccent">@color/lightAccent</item>
 		<item name="actionbarBackgroundColor">@color/lightPrimary</item>
 		<item name="actionbarTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
 		<item name="actionbarSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
@@ -24,7 +27,6 @@
 		<item name="android:spinnerItemStyle">@style/DarkSpinnerItem</item>
 		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
 		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
-		<item name="drawerHeaderBackground">@drawable/drawer_header_light</item>
 	</style>
 	<style name="Theme.DSub.Dark.Base" parent="@style/Theme.MaterialComponents">
 		<item name="element_color">@color/darkElement</item>
@@ -49,7 +51,6 @@
 		<item name="actionbarThemeStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
 		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
 		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
-		<item name="drawerHeaderBackground">@drawable/drawer_header_dark</item>
 	</style>
 	<style name="Theme.DSub.Light" parent="Theme.DSub.Light.Base">
 	</style>
@@ -69,7 +70,6 @@
 		<item name="colorPrimaryDark">@color/holoPrimaryDark</item>
 		<item name="colorAccent">@color/holoAccent</item>
 		<item name="actionbarBackgroundColor">@color/holoPrimary</item>
-		<item name="drawerHeaderBackground">@drawable/drawer_header_holo</item>
 		<item name="card_background">@color/background_material_dark</item>
 		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
 	</style>

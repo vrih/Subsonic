@@ -1,58 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="178dp"
-	android:background="?attr/drawerHeaderBackground"
-	android:orientation="vertical"
-	android:weightSum="1">
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="56dp"
-		android:orientation="horizontal"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentStart="true"
-		android:background="?attr/selectableItemBackground">
+		android:background="?attr/colorPrimary"
+		android:orientation="horizontal">
 
-		<LinearLayout
-			android:orientation="vertical"
+		<TextView
+			android:id="@+id/header_server_name"
+			style="?attr/drawerTitleStyle"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-
-			<TextView
-				android:id="@+id/header_server_name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="16dp"
-				style="?attr/drawerTitleStyle"/>
-
-			<TextView
-				android:id="@+id/header_user_name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="16dp"
-				style="?attr/drawerSubtitleStyle"/>
-		</LinearLayout>
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:layout_marginStart="16dp" />
 
 		<View
 			android:layout_width="0dp"
 			android:layout_height="0dp"
-			android:layout_weight="1"/>
+			android:layout_weight="1" />
 
 		<ImageView
 			android:id="@+id/header_select_image"
-			app:srcCompat="@drawable/main_select_server"
-			android:layout_gravity="center_vertical"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:paddingEnd="20dp"/>
+			android:layout_gravity="center_vertical"
+			android:paddingEnd="20dp"
+			app:srcCompat="@drawable/main_select_server" />
 	</LinearLayout>
-
-	<de.hdodenhof.circleimageview.CircleImageView
-		android:id="@+id/header_user_avatar"
-		android:layout_width="70dp"
-		android:layout_height="70dp"
-		android:layout_marginStart="16dp"
-		android:layout_marginTop="38dp"/>
-</RelativeLayout>
+</LinearLayout>

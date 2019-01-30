@@ -220,7 +220,6 @@ class SubsonicFragmentActivity : SubsonicActivity(), DownloadService.OnSongChang
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putString(Constants.MAIN_NOW_PLAYING, nowPlayingFragment!!.tag)
         if (secondaryFragment != null) {
             savedInstanceState.putString(Constants.MAIN_NOW_PLAYING_SECONDARY, secondaryFragment!!.tag)
         }

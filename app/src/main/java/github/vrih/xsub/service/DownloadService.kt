@@ -203,6 +203,7 @@ class DownloadService: Service() {
         @Synchronized get() {
             val from = Math.max(currentPlayingIndex - 10, 0)
             val songsToKeep = Math.max(Util.getPreloadCount(this), 20)
+            Log.w("DEBUG", "" + currentPlayingIndex + " " + songsToKeep + " " + downloadList.size)
             val to = Math.min(currentPlayingIndex + songsToKeep, Math.max(downloadList.size - 1, 0))
             val temp = downloadList.subList(from, to)
             temp.addAll(backgroundDownloadList)

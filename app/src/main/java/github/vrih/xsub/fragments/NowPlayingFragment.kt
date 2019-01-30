@@ -170,10 +170,8 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
 
         private fun onApplicationDisconnected() {
             // Stop remote track, switch to local renderer and hit play
-            Log.w("CAST", "Application disconnected")
             val downloadService = downloadService
             downloadService!!.setRemoteEnabled(RemoteControlState.LOCAL)
-            Log.w("CAST", "Application disconnected position$lastKnownRemotePositionMs")
             // invalidateOptionsMenu();
         }
     }
@@ -234,9 +232,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         }
 
         val touchListener = View.OnTouchListener { _, me -> gestureScanner.onTouchEvent(me) }
-        pauseButton.setOnTouchListener(touchListener)
-        stopButton.setOnTouchListener(touchListener)
-        startButton.setOnTouchListener(touchListener)
         bookmarkButton.setOnTouchListener(touchListener)
         rateBadButton.setOnTouchListener(touchListener)
         rateGoodButton.setOnTouchListener(touchListener)
@@ -289,7 +284,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         startButton.setOnClickListener {
             warnIfStorageUnavailable()
             checkCastConnection()
-
             start()
         }
 
@@ -954,7 +948,6 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
                     return null
                 }
             }.execute()
-
             return true
         } else {
             return false

@@ -6,22 +6,12 @@
 	android:layout_height="match_parent"
 	android:baselineAligned="false">
 
-	<ViewFlipper
-		android:id="@+id/download_playlist_flipper"
-		android:layout_width="match_parent"
+	<github.vrih.xsub.view.RecyclingImageView
+		android:id="@+id/download_album_art_image"
+		android:src="@drawable/unknown_album_large"
+		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:layout_weight="1">
-
-		<github.vrih.xsub.view.RecyclingImageView
-			android:id="@+id/download_album_art_image"
-			android:src="@drawable/unknown_album_large"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-            android:scaleType="fitCenter"/>
-
-		<include layout="@layout/download_playlist"/>
-
-	</ViewFlipper>
+		android:scaleType="fitCenter"/>
 
 	<RelativeLayout
         android:layout_width="match_parent"
