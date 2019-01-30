@@ -74,4 +74,14 @@
 	    android:layout_toEndOf="@+id/download_start"
 	    android:layout_centerVertical="true" />
 
+	<ImageButton
+		style="@style/PlaybackControl.Smaller"
+		android:id="@+id/download_shuffle"
+		app:srcCompat="@drawable/shuffle"
+		android:tint="?attr/element_color"
+		android:layout_alignParentEnd="true"
+		android:layout_centerVertical="true"
+		android:contentDescription="@string/menu.shuffle" />
+
+
 </RelativeLayout>

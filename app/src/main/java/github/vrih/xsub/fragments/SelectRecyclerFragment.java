@@ -16,10 +16,6 @@
 package github.vrih.xsub.fragments;
 
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,10 +24,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import github.vrih.xsub.R;
 import github.vrih.xsub.adapter.SectionAdapter;
 import github.vrih.xsub.service.MusicService;
@@ -93,6 +93,15 @@ public abstract class SelectRecyclerFragment<T> extends SubsonicFragment impleme
 			recyclerView.setAdapter(adapter = getAdapter(objects));
 		}
 
+		FloatingActionButton fab = rootView.findViewById(R.id.floating_action_button);
+		if (fab != null) {
+			fab.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					playNow(false, false, true);
+				}
+			});
+		}
 		return rootView;
 	}
 	

@@ -70,6 +70,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
     private lateinit var bookmarkButton: ImageButton
     private lateinit var rateBadButton: ImageButton
     private lateinit var rateGoodButton: ImageButton
+    private lateinit var shuffleButton: ImageButton
     private var playbackSpeedButton: ImageButton? = null
 
     private var executorService: ScheduledExecutorService? = null
@@ -220,6 +221,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         rateBadButton = rootView.findViewById(R.id.download_rating_bad)
         rateGoodButton = rootView.findViewById(R.id.download_rating_good)
         playbackSpeedButton = rootView.findViewById(R.id.download_playback_speed)
+        shuffleButton = rootView.findViewById(R.id.download_shuffle)
 
         starButton = rootView.findViewById(R.id.download_star)
         if (Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_MENU_STAR, true)) {
@@ -302,6 +304,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         bookmarkButton.setOnClickListener {
             createBookmark()
             setControlsVisible(true)
+        }
+
+        shuffleButton.setOnClickListener {
+            downloadService!!.shuffle()
         }
 
         rateBadButton.setOnClickListener(OnClickListener {

@@ -25,6 +25,8 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -174,7 +176,7 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			}
 		}
 
-		rootView = inflater.inflate(R.layout.abstract_recycler_fragment, container, false);
+		rootView = inflater.inflate(R.layout.fab_recycler_fragment, container, false);
 
 		refreshLayout = rootView.findViewById(R.id.refresh_layout);
 		refreshLayout.setOnRefreshListener(this);
@@ -232,6 +234,14 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 				}
 			});
 		}
+
+		FloatingActionButton fab = rootView.findViewById(R.id.floating_action_button);
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				playNow(false, false, true);
+			}
+		});
 
 		boolean addedHeader = setupEntryGridAdapter();
 

@@ -1860,6 +1860,7 @@ public class SubsonicFragment extends Fragment implements SwipeRefreshLayout.OnR
 	}
 	void playNow(final boolean shuffle, final boolean append, final boolean playNext) {
 		List<Entry> songs = getSelectedEntries();
+		Log.w("DEBUG", "" +  songs.toString());
 		if(!songs.isEmpty()) {
 			download(songs, append, !append, playNext, shuffle);
 			clearSelected();

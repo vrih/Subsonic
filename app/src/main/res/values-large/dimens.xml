@@ -3,6 +3,7 @@
 	<dimen name="Button">64dip</dimen>
 	<dimen name="Button.Large">74dip</dimen>
 	<dimen name="Button.Small">54dip</dimen>
+	<dimen name="Button.Smaller">38dip</dimen>
 	<dimen name="AlbumArt.Small">96dip</dimen>
 	<dimen name="AlbumArt.Header">210dip</dimen>
 	<dimen name="FastScroller.LeftAlignedMargin">10dp</dimen>
