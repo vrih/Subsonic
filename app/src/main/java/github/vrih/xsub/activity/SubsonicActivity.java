@@ -207,22 +207,7 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		Util.registerMediaButtonEventReceiver(this);
-
-		// Make sure to update theme
-		SharedPreferences prefs = Util.getPreferences(this);
-		if (theme != null && !theme.equals(ThemeUtil.getTheme(this)) || fullScreen != prefs.getBoolean(Constants.PREFERENCES_KEY_FULL_SCREEN, false)) {
-			restart();
-			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-			DrawableTint.clearCache();
-			return;
-		}
-
-		getImageLoader().onUIVisible();
-		UpdateView.addActiveActivity();
-	}
+	protected void onStart() q
 
 	@Override
 	protected void onResume() {
