@@ -44,88 +44,86 @@ public class CacheLocationPreference extends EditTextPreference {
 	protected void onBindDialogView(View view) {
 		super.onBindDialogView(view);
 
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			view.setLayoutParams(new ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+		view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-			final EditText editText = view.findViewById(android.R.id.edit);
-			ViewGroup vg = (ViewGroup) editText.getParent();
+		final EditText editText = view.findViewById(android.R.id.edit);
+		ViewGroup vg = (ViewGroup) editText.getParent();
 
-			LinearLayout cacheButtonsWrapper = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.cache_location_buttons, vg, true);
-			Button internalLocation = cacheButtonsWrapper.findViewById(R.id.location_internal);
-			Button externalLocation = cacheButtonsWrapper.findViewById(R.id.location_external);
+		LinearLayout cacheButtonsWrapper = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.cache_location_buttons, vg, true);
+		Button internalLocation = cacheButtonsWrapper.findViewById(R.id.location_internal);
+		Button externalLocation = cacheButtonsWrapper.findViewById(R.id.location_external);
 
-			File[] dirs;
-			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				dirs = context.getExternalMediaDirs();
-			} else {
-				dirs = ContextCompat.getExternalFilesDirs(context, null);
-			}
+		File[] dirs;
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			dirs = context.getExternalMediaDirs();
+		} else {
+			dirs = ContextCompat.getExternalFilesDirs(context, null);
+		}
 
-			// Past 5.0 we can query directly for SD Card
-			File internalDir = null, externalDir = null;
-			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				for(File dir: dirs) {
-					try {
-						if (dir != null) {
-							if(Environment.isExternalStorageRemovable(dir)) {
-								if(externalDir != null) {
-									externalDir = dir;
-								}
-							} else {
-								internalDir = dir;
-							}
-
-						}
-					} catch (Exception e) {
-						Log.e(TAG, "Failed to check if is external", e);
-					}
-				}
-			}
-
-			// Before 5.0, we have to guess.  Most of the time the SD card is last
-			if(externalDir == null) {
-				for (int i = dirs.length - 1; i >= 0; i--) {
-					if (dirs[i] != null) {
-						externalDir = dirs[i];
-						break;
-					}
-				}
-			}
-			if(internalDir == null) {
-				for (File dir: dirs) {
+		// Past 5.0 we can query directly for SD Card
+		File internalDir = null, externalDir = null;
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			for(File dir: dirs) {
+				try {
 					if (dir != null) {
-						internalDir = dir;
-						break;
+						if(Environment.isExternalStorageRemovable(dir)) {
+							if(externalDir != null) {
+								externalDir = dir;
+							}
+						} else {
+							internalDir = dir;
+						}
+
 					}
+				} catch (Exception e) {
+					Log.e(TAG, "Failed to check if is external", e);
 				}
 			}
-			final File finalInternalDir = new File(internalDir, "music");
-			final File finalExternalDir = new File(externalDir, "music");
+		}
 
-			final EditText editTextBox = view.findViewById(android.R.id.edit);
-			if(finalInternalDir != null && (finalInternalDir.exists() || finalInternalDir.mkdirs())) {
-				internalLocation.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						String path = finalInternalDir.getPath();
-						editTextBox.setText(path);
-					}
-				});
-			} else {
-				internalLocation.setEnabled(false);
+		// Before 5.0, we have to guess.  Most of the time the SD card is last
+		if(externalDir == null) {
+			for (int i = dirs.length - 1; i >= 0; i--) {
+				if (dirs[i] != null) {
+					externalDir = dirs[i];
+					break;
+				}
 			}
+		}
+		if(internalDir == null) {
+			for (File dir: dirs) {
+				if (dir != null) {
+					internalDir = dir;
+					break;
+				}
+			}
+		}
+		final File finalInternalDir = new File(internalDir, "music");
+		final File finalExternalDir = new File(externalDir, "music");
 
-			if(finalExternalDir != null && !finalInternalDir.equals(finalExternalDir) && (finalExternalDir.exists() || finalExternalDir.mkdirs())) {
-				externalLocation.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						String path = finalExternalDir.getPath();
-						editTextBox.setText(path);
-					}
-				});
-			} else {
-				externalLocation.setEnabled(false);
-			}
+		final EditText editTextBox = view.findViewById(android.R.id.edit);
+		if(finalInternalDir != null && (finalInternalDir.exists() || finalInternalDir.mkdirs())) {
+			internalLocation.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String path = finalInternalDir.getPath();
+					editTextBox.setText(path);
+				}
+			});
+		} else {
+			internalLocation.setEnabled(false);
+		}
+
+		if(finalExternalDir != null && !finalInternalDir.equals(finalExternalDir) && (finalExternalDir.exists() || finalExternalDir.mkdirs())) {
+			externalLocation.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String path = finalExternalDir.getPath();
+					editTextBox.setText(path);
+				}
+			});
+		} else {
+			externalLocation.setEnabled(false);
 		}
 	}
 }

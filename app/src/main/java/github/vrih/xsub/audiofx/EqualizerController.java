@@ -55,11 +55,9 @@ public class EqualizerController {
 	private void init() {
 		equalizer = new Equalizer(0, audioSessionId);
 		bass = new BassBoost(0, audioSessionId);
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			loudnessAvailable = true;
-			loudnessEnhancerController = new LoudnessEnhancerController(audioSessionId);
-		}
-	}
+        loudnessAvailable = true;
+        loudnessEnhancerController = new LoudnessEnhancerController(audioSessionId);
+    }
 
 	public void saveSettings() {
 		try {

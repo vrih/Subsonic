@@ -16,4 +16,5 @@
 		app:popupTheme="?attr/actionbarPopupStyle"/>
 
 	<include layout="@layout/abstract_fragment_container"/>
+
 </LinearLayout>

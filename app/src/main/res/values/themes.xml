@@ -52,18 +52,14 @@
 		<item name="drawerTitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
 		<item name="drawerSubtitleStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
 	</style>
-	<style name="Theme.DSub.Light" parent="Theme.DSub.Light.Base">
-	</style>
-	<style name="Theme.DSub.Dark" parent="Theme.DSub.Dark.Base">
-	</style>
+	<style name="Theme.DSub.Light" parent="Theme.DSub.Light.Base"></style>
+	<style name="Theme.DSub.Dark" parent="Theme.DSub.Dark.Base"></style>
 	<style name="Theme.DSub.Black.Base" parent="Theme.DSub.Dark.Base">
 		<item name="card_background">@color/background_material_dark</item>
 		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
 		<item name="android:windowBackground">@android:color/black</item>
 	</style>
-	<style name="Theme.DSub.Black" parent="Theme.DSub.Black.Base">
-        <item name="android:textColorPrimaryInverse">@color/primary_text_material_light</item>
-    </style>
+	<style name="Theme.DSub.Black" parent="Theme.DSub.Black.Base"></style>
 	<style name="Theme.DSub.Holo.Base" parent="Theme.DSub.Dark.Base">
 		<item name="android:windowBackground">@drawable/background</item>
 		<item name="colorPrimary">@color/holoPrimary</item>
@@ -73,8 +69,7 @@
 		<item name="card_background">@color/background_material_dark</item>
 		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners</item>
 	</style>
-	<style name="Theme.DSub.Holo" parent="Theme.DSub.Holo.Base">
-	</style>
+	<style name="Theme.DSub.Holo" parent="Theme.DSub.Holo.Base"></style>
 
 	<style name="Theme.DSub.Light.No_Actionbar" parent="Theme.DSub.Light">
 		<item name="windowActionBar">false</item>
