@@ -290,7 +290,6 @@ class SubsonicFragmentActivity : SubsonicActivity(), DownloadService.OnSongChang
         trans.commit()
         invalidateOptionsMenu()
 
-        recreateSpinner()
         if (drawer != null) {
             drawer.closeDrawers()
         }
