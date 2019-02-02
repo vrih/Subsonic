@@ -92,17 +92,7 @@
 		<item name="spinBars">true</item>
 	</style>
 
-	<style name="LightSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
-		<item name="android:textColor">?android:attr/textColorPrimary</item>
-	</style>
-	<style name="DarkSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+    <style name="DarkSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
 		<item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-	</style>
-	<style name="LightActionMode" parent="@style/Widget.AppCompat.ActionMode">
-		<item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
-		<item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
-	</style>
-	<style name="DarkCloseButton" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
-		<item name="colorControlNormal">@android:color/black</item>
 	</style>
 </resources>

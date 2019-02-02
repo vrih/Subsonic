@@ -19,7 +19,7 @@
 		android:paddingTop="8dp"
 		android:paddingBottom="8dp"/>
 
-	<ImageView
+	<ImageButton
 		android:id="@+id/item_select"
 		app:srcCompat="?attr/select_server"
 		android:layout_gravity="center_vertical"

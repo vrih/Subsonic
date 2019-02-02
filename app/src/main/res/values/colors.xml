@@ -3,9 +3,7 @@
     <color name="appwidget_text">#FFFFFF</color>
 	<color name="overlayColor">#80000000</color>
 
-	<color name="playingBackground">#74cca4</color>
-
-	<color name="holo_blue_light">#ff33b5e5</color>
+    <color name="holo_blue_light">#ff33b5e5</color>
 	<color name="holo_orange_light">#ffffbb33</color>
 	<color name="holo_green_light">#ff99cc00</color>
 	<color name="holo_red_light">#ffff4444</color>
@@ -22,9 +20,6 @@
 
 
 	<color name="darkPrimary">#263238</color>
-	<color name="darkPrimaryDark">#212121</color>
-	<color name="darkAccent">#78909c</color>
-	<color name="darkElement">#CCFFFFFF</color>
-    <color name="primary_text_material_light">#deb0b8ed</color>
+    <color name="darkElement">#CCFFFFFF</color>
 
 </resources>

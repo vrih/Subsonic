@@ -28,7 +28,7 @@ import android.os.IBinder;
  */
 
 public class MostRecentSyncService extends Service {
-	private ssssssssssssssssssssMostRecentSyncAdapter mostRecentSyncAdapter;
+	private MostRecentSyncAdapter mostRecentSyncAdapter;
 	private static final Object syncLock = new Object();
 
 	@Override

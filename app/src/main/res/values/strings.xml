@@ -22,7 +22,6 @@
 	<string name="common.stream_external">Stream Video</string>
 	<string name="common.confirm">Confirm</string>
 	<string name="common.confirm_message">Do you want to %1$s %2$s?</string>
-	<string name="common.confirm_message_cache">cache</string>
 	<string name="common.empty">No data</string>
 	<string name="common.warning">Warning</string>
 	<string name="common.close">Close</string>
@@ -44,19 +43,7 @@
 
     <string name="main.welcome_title">Welcome!</string>
     <string name="main.welcome_text">Welcome to XSub! Please go to <b>Settings</b> and change the configuration to connect to it.</string>
-	<string name="main.about_title">About DSub</string>
-	<string name="main.faq_title">FAQ</string>
-	<string name="main.faq_text">
-	<![CDATA[
-		<font color="red">Cache vs Permanent Cache</font>:
-		<br/>When songs are downloaded by XSub, they can be deleted to make room for new downloads.  Permanently cached music on the other hand will never be automatically deleted.
-		<p/><font color="red">ChromeCast fails</font>:
-		<br/>Try setting the option Settings -> Playback -> Use device proxy.  It is a work around for Chromecast not accepting self-signed certificates.
-		<p/><font color="red">First level in Library are actually groups of artists</font>:
-		<br/>In the option menu, deselect "First level artists".  This will make it so that the entire first level of directories shown will be treated like groups of artists instead of the artists themselves.
-	]]>
-	</string>
-    <string name="main.offline">Go Offline</string>
+	<string name="main.offline">Go Offline</string>
 	<string name="main.online">Go Online</string>
 	<string name="main.albums_title">Album Lists</string>
     <string name="main.albums_newest">Recently added</string>
@@ -75,8 +62,6 @@
 	<string name="main.songs_frequent">@string/main.albums_frequent</string>
 	<string name="main.back_confirm">Press back again to exit</string>
 	<string name="main.scan_complete">Completed scan of Server</string>
-	<string name="main.artist">Artist</string>
-	<string name="main.title">Title</string>
 
 	<string name="menu.search">Search</string>
 	<string name="menu.shuffle">Shuffle</string>
@@ -84,7 +69,6 @@
 	<string name="menu.play">Play</string>
 	<string name="menu.play_last">Play Last</string>
     <string name="menu.settings">Settings</string>
-	<string name="menu.about">About</string>
 	<string name="menu.add_playlist">Add To Playlist</string>
 	<string name="menu.remove_playlist">Remove From Playlist</string>
 	<string name="menu.deleted_playlist">Deleted playlist %s</string>
@@ -99,7 +83,6 @@
 	<string name="menu.share">Share</string>
 	<string name="menu.delete_cache">Delete Cache</string>
 	<string name="menu.cast">Cast To Device</string>
-	<string name="menu.faq">FAQ</string>
 	<string name="menu.add_user">Add User</string>
 	<string name="menu.rescan">Rescan Server</string>
 	<string name="menu.rate">Set Rating</string>
@@ -253,38 +236,24 @@
     <string name="error.label">Error</string>
 
     <string name="settings.title">Settings</string>
-    <string name="settings.test_connection_title">Test connection</string>
-	<string name="settings.servers_add">Add Server</string>
-	<string name="settings.servers_remove">Remove Server</string>
-    <string name="settings.servers_title">Servers</string>
+	<string name="settings.servers_title">Servers</string>
     <string name="settings.server_unused">Unused</string>
     <string name="settings.server_name">Name</string>
     <string name="settings.server_address">Server address</string>
-	<string name="settings.server_local_network_ssid" >Local network SSID</string>
-	<string name="settings.server_local_network_ssid_hint">Current SSID: %s</string>
 	<string name="settings.server_internal_address">Local network address</string>
     <string name="settings.server_username">Username</string>
     <string name="settings.server_password">Password</string>
-	<string name="settings.server_open_browser">Open in browser</string>
 	<string name="settings.server_sync_summary">Whether or not syncing is enabled for this server</string>
 	<string name="settings.server_sync">Sync Enabled</string>
     <string name="settings.cache_title">Music cache</string>
     <string name="settings.preload_wifi">Songs to preload (Wifi)</string>
 	<string name="settings.preload_mobile">Songs to preload (Mobile)</string>
     <string name="settings.cache_size">Cache size</string>
-    <string name="settings.cache_location_error">Invalid cache location. Using default.</string>
-    <string name="settings.cache_location_reset">The cache location you have set is no longer writable. If you recently upgraded your phone OS to KitKat 4.4, then the way apps write to the SD Card has changed so that they can only write to a specific location.  The location that DSub uses has already been automatically changed to the correct location.  In order to delete all of the old app data, you will need to mount the SD Card on your computer and delete the old folder manually</string>
+	<string name="settings.cache_location_reset">The cache location you have set is no longer writable. If you recently upgraded your phone OS to KitKat 4.4, then the way apps write to the SD Card has changed so that they can only write to a specific location.  The location that DSub uses has already been automatically changed to the correct location.  In order to delete all of the old app data, you will need to mount the SD Card on your computer and delete the old folder manually</string>
 	<string name="settings.cache_location_internal">Internal</string>
 	<string name="settings.cache_location_external">External</string>
 	<string name="settings.cache_clear">Clear Cache</string>
-	<string name="settings.cache_clear_complete">Finished clearing cache</string>
-    <string name="settings.testing_connection">Testing connection…</string>
-    <string name="settings.testing_ok">Connection is OK</string>
-    <string name="settings.testing_unlicensed">Connection is OK. Server unlicensed.</string>
-    <string name="settings.connection_failure">Connection failure.</string>
-    <string name="settings.invalid_url">Please specify a valid URL.</string>
-    <string name="settings.invalid_username">Please specify a valid username (no trailing spaces).</string>
-    <string name="settings.appearance_title">Appearance</string>
+	<string name="settings.appearance_title">Appearance</string>
     <string name="settings.theme_title">Theme</string>
     <string name="settings.theme_light">Light</string>
     <string name="settings.theme_dark">Dark</string>
@@ -347,8 +316,7 @@
     <string name="settings.scrobble_summary">Remember to set up your Last.fm user and password on the Subsonic server</string>
     <string name="settings.hide_media_title">Hide from other</string>
     <string name="settings.hide_media_summary">Hide music files from other apps.</string>
-    <string name="settings.hide_media_toast">Takes effect next time Android scans your phone for music.</string>
-    <string name="settings.media_button_title">Media buttons</string>
+	<string name="settings.media_button_title">Media buttons</string>
     <string name="settings.media_button_summary">Respond to phone, headset and Bluetooth media buttons</string>
     <string name="settings.screen_lit_title">Keep screen on</string>
     <string name="settings.screen_lit_summary">Keeping the screen on while downloading improves download speed.</string>
@@ -599,14 +567,6 @@
 	<string name="details.title">Title</string>
 	<string name="details.url">URL</string>
 	<string name="details.error">Error Message</string>
-	<string name="details.author">Author</string>
-	<string name="details.email">Email</string>
-	<string name="details.version">Version</string>
-	<string name="details.files_cached">Files Cached</string>
-	<string name="details.files_permanent">Permanent Cached</string>
-	<string name="details.used_space">Used Space</string>
-	<string name="details.available_space">Available Space</string>
-	<string name="details.of">%1$s of %2$s</string>
 	<string name="details.song">Song</string>
 	<string name="details.position">Position</string>
 	<string name="details.updated">Updated</string>
@@ -623,7 +583,6 @@
 	<string name="playback_speed">Playback speed</string>
 	<string name="bookmark">Bookmark</string>
 	<string name="rate_good">Rate good</string>
-    <string name="playlist">Playlist</string>
 	<string name="repeat">Repeat</string>
 	<string name="pause">Pause</string>
 	<string name="stop">Stop</string>
@@ -631,9 +590,8 @@
 	<string name="skip_backwards">skip backwards</string>
 	<string name="skip_forwards">skip forwards</string>
 	<string name="divider">divider</string>
-    <string name="rewind">Rewind</string>
-	<string name="fast_forward">Fast forward</string>
-    <string name="queue">Play Queue</string>
+	<string name="queue">Play Queue</string>
+    <string name="more_button">More button</string>
 
     <plurals name="select_album_n_songs">
         <item quantity="zero">No songs</item>

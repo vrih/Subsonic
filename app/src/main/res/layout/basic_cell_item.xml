@@ -34,13 +34,14 @@
 				android:textColor="?android:textColorPrimary"
 				android:paddingStart="@dimen/Card.TextLeftPadding"/>
 
-			<ImageView
+			<ImageButton
+				android:contentDescription="@string/more_button"
 				android:id="@+id/item_more"
-				app:srcCompat="@drawable/download_none"
+				style="@style/MoreButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="end|center_vertical"
-				style="@style/MoreButton"/>
+				app:srcCompat="@drawable/download_none" />
 		</LinearLayout>
 	</LinearLayout>
 </github.vrih.xsub.view.CardView>
