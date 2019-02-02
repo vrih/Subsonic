@@ -29,7 +29,7 @@ import github.vrih.xsub.domain.MusicDirectory;
 import github.vrih.xsub.service.DownloadFile;
 
 public class SongDBHandler extends SQLiteOpenHelper {
-	private static SongDBHandler dbHandler;
+	private SongDBHandler dbHandler;
 
 	private static final int DATABASE_VERSION = 2;
 	private static final String DATABASE_NAME = "SongsDB";
@@ -44,7 +44,7 @@ public class SongDBHandler extends SQLiteOpenHelper {
 
 	private final Context context;
 
-	private SongDBHandler(Context context) {
+	public SongDBHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		this.context = context;
 	}
@@ -224,13 +224,5 @@ public class SongDBHandler extends SQLiteOpenHelper {
 			cursor.close();
 			db.close();
 		}
-	}
-
-	public static SongDBHandler getHandler(Context context) {
-		if(dbHandler == null) {
-			dbHandler = new SongDBHandler(context);
-		}
-
-		return dbHandler;
 	}
 }

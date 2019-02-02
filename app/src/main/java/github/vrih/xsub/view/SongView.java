@@ -228,7 +228,7 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		}
 
 		if(item instanceof PodcastEpisode || item.isAudioBook() || item.isPodcast()) {
-			isPlayed = SongDBHandler.getHandler(context).hasBeenCompleted(item);
+			isPlayed = new SongDBHandler(context).hasBeenCompleted(item);
 		}
 	}
 

@@ -28,7 +28,7 @@ import android.os.IBinder;
  */
 
 public class StarredSyncService extends Service {
-	private static StarredSyncAdapter starredSyncAdapter;
+	private StarredSyncAdapter starredSyncAdapter;
 	private static final Object syncLock = new Object();
 
 	@Override

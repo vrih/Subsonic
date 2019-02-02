@@ -28,7 +28,7 @@ import android.os.IBinder;
  */
 
 public class PodcastSyncService extends Service {
-	private static PodcastSyncAdapter podcastSyncAdapter;
+	private PodcastSyncAdapter podcastSyncAdapter;
 	private static final Object syncLock = new Object();
 
 	@Override

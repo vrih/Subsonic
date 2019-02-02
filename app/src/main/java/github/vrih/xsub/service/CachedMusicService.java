@@ -1623,7 +1623,7 @@ public class CachedMusicService implements MusicService {
 	private void updateAllSongs(Context context, MusicDirectory dir) {
 		List<Entry> songs = dir.getSongs();
 		if(!songs.isEmpty()) {
-			SongDBHandler.getHandler(context).addSongs(songs);
+			new SongDBHandler(context).addSongs(songs);
 		}
 	}
 

@@ -332,7 +332,7 @@ public class DownloadServiceLifecycleSupport {
 						MusicDirectory.Entry currentPlaying = state.getSongs().get(index);
 						List<MusicDirectory.Entry> songs = new ArrayList<>();
 
-						SongDBHandler dbHandler = SongDBHandler.getHandler(downloadService);
+						SongDBHandler dbHandler = new SongDBHandler(downloadService);
 						for(MusicDirectory.Entry song: state.getSongs()) {
 							Pair<Integer, String> onlineSongIds = dbHandler.getOnlineSongId(song);
 							if(onlineSongIds != null && onlineSongIds.getSecond() != null) {

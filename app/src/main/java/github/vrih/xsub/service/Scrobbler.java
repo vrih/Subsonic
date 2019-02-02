@@ -57,7 +57,7 @@ class Scrobbler {
 			@Override
 			protected Void doInBackground() {
 				if(isPastCutoff) {
-					SongDBHandler.getHandler(context).setSongPlayed(song, submission);
+					new SongDBHandler(context).setSongPlayed(song, submission);
 				}
 
 				// Scrobbling disabled

@@ -1668,7 +1668,7 @@ public class RESTMusicService implements MusicService {
 		SharedPreferences prefs = Util.getPreferences(context);
 		String cacheLocn = prefs.getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, null);
 		if(id.contains(cacheLocn)) {
-			Pair<Integer, String> cachedSongId = SongDBHandler.getHandler(context).getIdFromPath(Util.getRestUrlHash(context), id);
+			Pair<Integer, String> cachedSongId = new SongDBHandler(context).getIdFromPath(Util.getRestUrlHash(context), id);
 			if(cachedSongId != null) {
 				id = cachedSongId.getSecond();
 			} else {
