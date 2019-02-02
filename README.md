@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/vrih/XSub/tree/master.svg?style=svg)](https://circleci.com/gh/vrih/XSub/tree/master)
 ## Basic Instructions
 Grab dependent libraries
 ```
