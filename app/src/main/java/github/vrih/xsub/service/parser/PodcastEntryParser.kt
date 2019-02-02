@@ -74,7 +74,7 @@ class PodcastEntryParser(context: Context, instance: Int) : AbstractParser(conte
                         episode.date = episode.date?.replace("T", " ")
                     }
                     episode.coverArt = coverArt ?: get("coverArt")
-                    Log.w("Podcast", "parser coverart" + episode.coverArt);
+                    Log.w("Podcast", "parser coverart" + episode.coverArt)
                     episode.size = getLong("size")
                     episode.contentType = get("contentType")
                     episode.suffix = get("suffix")

@@ -35,7 +35,6 @@ import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
 import github.daneren2005.serverproxy.BufferProxy
 import github.vrih.xsub.R
-import github.vrih.xsub.activity.SubsonicActivity
 import github.vrih.xsub.audiofx.AudioEffectsController
 import github.vrih.xsub.audiofx.EqualizerController
 import github.vrih.xsub.domain.*

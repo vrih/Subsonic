@@ -20,42 +20,35 @@
 		android:background="@android:color/transparent">
 
 		<LinearLayout
+			android:orientation="horizontal"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
 			android:layout_above="@+id/download_song_title">
+			<ImageButton
+				android:id="@+id/download_rating_bad"
+				style="@style/DownloadActionImageButton"
+				app:srcCompat="?attr/rating_bad"/>
 
-			<LinearLayout
-                android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal">
+			<ImageButton
+				android:id="@+id/download_star"
+				style="@style/DownloadActionImageButton"
+				app:srcCompat="@android:drawable/star_big_off"/>
 
-				<ImageButton
-					android:id="@+id/download_rating_bad"
-					style="@style/DownloadActionImageButton"
-					app:srcCompat="?attr/rating_bad"/>
+			<ImageButton
+				android:id="@+id/download_playback_speed"
+				style="@style/DownloadActionImageButton"
+				app:srcCompat="?attr/playback_speed"/>
 
-				<ImageButton
-					android:id="@+id/download_star"
-					style="@style/DownloadActionImageButton"
-					app:srcCompat="@android:drawable/star_big_off"/>
+			<ImageButton
+				android:id="@+id/download_bookmark"
+				style="@style/DownloadActionImageButton"
+				app:srcCompat="?attr/bookmark"/>
 
-				<ImageButton
-					android:id="@+id/download_playback_speed"
-					style="@style/DownloadActionImageButton"
-					app:srcCompat="?attr/playback_speed"/>
-
-				<ImageButton
-					android:id="@+id/download_bookmark"
-					style="@style/DownloadActionImageButton"
-					app:srcCompat="?attr/bookmark"/>
-
-				<ImageButton
-					android:id="@+id/download_rating_good"
-					style="@style/DownloadActionImageButton"
-					app:srcCompat="?attr/rating_good"/>
-			</LinearLayout>
+			<ImageButton
+				android:id="@+id/download_rating_good"
+				style="@style/DownloadActionImageButton"
+				app:srcCompat="?attr/rating_good"/>
 		</LinearLayout>
 
 		<TextView

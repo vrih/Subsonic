@@ -23,7 +23,6 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Handler
 import android.util.Log
@@ -33,7 +32,6 @@ import android.widget.RemoteViews
 
 import androidx.core.app.NotificationCompat
 import github.vrih.xsub.R
-import github.vrih.xsub.activity.SubsonicActivity
 import github.vrih.xsub.activity.SubsonicFragmentActivity
 import github.vrih.xsub.domain.MusicDirectory
 import github.vrih.xsub.domain.PlayerState

@@ -32,7 +32,6 @@ import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import github.vrih.xsub.R
-import github.vrih.xsub.activity.SubsonicActivity
 import github.vrih.xsub.activity.SubsonicFragmentActivity
 import github.vrih.xsub.domain.MusicDirectory
 import github.vrih.xsub.domain.PlayerQueue
