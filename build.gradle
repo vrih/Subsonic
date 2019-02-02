@@ -27,4 +27,11 @@ allprojects {
 		}
 		google()
 	}
+	configurations {
+		all {
+			resolutionStrategy {
+				force "org.ow2.asm:asm:7.0"
+			}
+		}
+	}
 }
