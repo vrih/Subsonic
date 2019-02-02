@@ -40,6 +40,7 @@ import github.vrih.xsub.service.DownloadService
 import github.vrih.xsub.service.DownloadServiceLifecycleSupport
 import github.vrih.xsub.util.Constants
 import github.vrih.xsub.util.FileUtil
+import github.vrih.xsub.util.ImageLoader
 import github.vrih.xsub.util.Util
 
 /**
@@ -190,8 +191,7 @@ open class DSubWidgetProvider : AppWidgetProvider() {
             if (layout != R.layout.appwidget4x1 && layout != R.layout.appwidget4x2) {
                 large = true
             }
-            val imageLoader = SubsonicActivity.getStaticImageLoader(context)
-            var bitmap: Bitmap? = imageLoader?.getCachedImage(context, currentPlaying, large)
+            var bitmap = ImageLoader(context).getCachedImage(context, currentPlaying, large)
 
             if (bitmap == null) {
                 // Set default cover art

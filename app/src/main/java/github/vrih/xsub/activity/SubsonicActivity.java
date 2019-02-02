@@ -87,7 +87,7 @@ import static android.Manifest.permission;
 
 public class SubsonicActivity extends AppCompatActivity implements OnItemSelectedListener {
 	private static final String TAG = SubsonicActivity.class.getSimpleName();
-	private static ImageLoader IMAGE_LOADER;
+	private ImageLoader IMAGE_LOADER;
 	private static String theme;
 	private static boolean fullScreen;
 	private static final int MENU_GROUP_SERVER = 10;
@@ -865,12 +865,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	public synchronized ImageLoader getImageLoader() {
 		if (IMAGE_LOADER == null) {
 			IMAGE_LOADER = new ImageLoader(this);
-		}
-		return IMAGE_LOADER;
-	}
-	public synchronized static ImageLoader getStaticImageLoader(Context context) {
-		if (IMAGE_LOADER == null) {
-			IMAGE_LOADER = new ImageLoader(context);
 		}
 		return IMAGE_LOADER;
 	}

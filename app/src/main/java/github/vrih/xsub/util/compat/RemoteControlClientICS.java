@@ -41,7 +41,7 @@ public class RemoteControlClientICS extends RemoteControlClientBase {
 
 		mRemoteControl.setPlaybackState(RemoteControlClient.PLAYSTATE_STOPPED);
 		mRemoteControl.setTransportControlFlags(getTransportFlags());
-		imageLoader = SubsonicActivity.getStaticImageLoader(context);
+		imageLoader = new ImageLoader(context);
 	}
 	
 	public void unregister(final Context context) {
@@ -67,7 +67,7 @@ public class RemoteControlClientICS extends RemoteControlClientBase {
 		}
 
 		if(imageLoader == null) {
-			imageLoader = SubsonicActivity.getStaticImageLoader(context);
+			imageLoader = new ImageLoader(context);
 		}
 		
 		// Update the remote controls

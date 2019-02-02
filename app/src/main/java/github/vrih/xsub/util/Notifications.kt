@@ -155,11 +155,8 @@ object Notifications {
                            shouldFastForward: Boolean) {
         // Set the album art.
         try {
-            val imageLoader = SubsonicActivity.getStaticImageLoader(context)
-            var bitmap: Bitmap? = null
-            if (imageLoader != null) {
-                bitmap = imageLoader.getCachedImage(context, song, false)
-            }
+            val bitmap = ImageLoader(context).getCachedImage(context, song, false)
+
             if (bitmap == null) {
                 // set default album art
                 rv.setImageViewResource(R.id.notification_image, R.drawable.unknown_album)

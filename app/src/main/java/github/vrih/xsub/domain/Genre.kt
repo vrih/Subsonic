@@ -16,6 +16,5 @@ data class Genre(val name: String, val albumCount: Int, val songCount: Int) : Se
                 return genres
             }
         }
-
     }
 }

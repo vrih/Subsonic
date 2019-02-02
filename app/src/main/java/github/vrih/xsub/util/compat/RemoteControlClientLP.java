@@ -110,7 +110,7 @@ public class RemoteControlClientLP extends RemoteControlClientBase {
 		sessionExtras.putBoolean(AUTO_RESERVE_SKIP_TO_NEXT, true);
 		mediaSession.setExtras(sessionExtras);
 
-		imageLoader = SubsonicActivity.getStaticImageLoader(context);
+		imageLoader = new ImageLoader(context);
 	}
 
 	@Override
