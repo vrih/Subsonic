@@ -490,19 +490,16 @@ class DownloadService: Service() {
     }
 
     override fun onTrimMemory(level:Int) {
-        val imageLoader = SubsonicActivity.getStaticImageLoader(this)
-        if (imageLoader != null)
-        {
-            Log.i(TAG, "Memory Trim Level: $level")
-            when {
-                level < ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> when {
-                    level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> imageLoader.onLowMemory(0.75f)
-                    level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> imageLoader.onLowMemory(0.50f)
-                    level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> imageLoader.onLowMemory(0.25f)
-                }
-                level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE -> imageLoader.onLowMemory(0.25f)
-                level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> imageLoader.onLowMemory(0.75f)
+        val imageLoader = ImageLoader(this)
+        Log.i(TAG, "Memory Trim Level: $level")
+        when {
+            level < ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> when {
+                level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> imageLoader.onLowMemory(0.75f)
+                level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> imageLoader.onLowMemory(0.50f)
+                level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> imageLoader.onLowMemory(0.25f)
             }
+            level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE -> imageLoader.onLowMemory(0.25f)
+            level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> imageLoader.onLowMemory(0.75f)
         }
     }
 

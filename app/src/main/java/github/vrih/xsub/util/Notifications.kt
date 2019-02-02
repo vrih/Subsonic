@@ -155,7 +155,8 @@ object Notifications {
                            shouldFastForward: Boolean) {
         // Set the album art.
         try {
-            val bitmap = ImageLoader(context).getCachedImage(context, song, false)
+            val imageLoader = ImageLoader(context)
+            val bitmap = imageLoader.getCachedImage(context, song, false)
 
             if (bitmap == null) {
                 // set default album art

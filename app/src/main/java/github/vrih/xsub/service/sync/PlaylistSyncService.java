@@ -28,7 +28,7 @@ import android.os.IBinder;
  */
 
 public class PlaylistSyncService extends Service {
-	private static PlaylistSyncAdapter playlistSyncAdapter;
+	private PlaylistSyncAdapter playlistSyncAdapter;
 	private static final Object syncLock = new Object();
 
 	@Override
