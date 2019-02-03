@@ -11,9 +11,6 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: clone submodules #if permission for Gradlew Dependencies fail, use this.
-          command: git submodule init && git submodule update
-      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
