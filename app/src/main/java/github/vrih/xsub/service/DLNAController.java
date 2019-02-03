@@ -52,7 +52,6 @@ import org.fourthline.cling.support.model.item.VideoItem;
 import org.fourthline.cling.support.renderingcontrol.callback.SetVolume;
 import org.seamless.util.MimeType;
 
-import java.io.File;
 import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -62,12 +61,10 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicLong;
 
-import github.daneren2005.serverproxy.WebProxy;
 import github.vrih.xsub.R;
 import github.vrih.xsub.domain.DLNADevice;
 import github.vrih.xsub.domain.MusicDirectory;
 import github.vrih.xsub.domain.PlayerState;
-import github.vrih.xsub.util.FileUtil;
 import github.vrih.xsub.util.Pair;
 import github.vrih.xsub.util.Util;
 
