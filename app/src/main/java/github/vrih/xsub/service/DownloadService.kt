@@ -1,21 +1,3 @@
-/*
- This file is part of Subsonic.
-
- Subsonic is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- Subsonic is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with Subsonic.  If not, see <http://www.gnu.org/licenses/>.
-
- Copyright 2009 (C) Sindre Mehus
- */
 package github.vrih.xsub.service
 
 import android.annotation.TargetApi
@@ -31,7 +13,6 @@ import android.os.*
 import android.util.Log
 import android.view.KeyEvent
 import androidx.collection.LruCache
-import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
 import github.daneren2005.serverproxy.BufferProxy
 import github.vrih.xsub.R
@@ -123,7 +104,6 @@ class DownloadService: Service() {
     private var audioNoisyReceiver:AudioNoisyReceiver? = null
 
     private var mediaRouter:MediaRouteManager? = null
-        private set
 
     // Variables to manage getCurrentPosition sometimes starting from an arbitrary non-zero number
     private var subtractNextPosition:Long = 0
@@ -254,16 +234,7 @@ class DownloadService: Service() {
                 }
             }
 
-            if (currentPlaying != null)
-            {
-                val duration = currentPlaying!!.song.duration
-                if (duration != null)
-                {
-                    return duration * 1000
-                }
-            }
-
-            return 0
+            return currentPlaying?.song?.duration?.let { it * 1000 } ?: 0
         }
 
     val equalizerAvailable:Boolean
@@ -306,8 +277,6 @@ class DownloadService: Service() {
 
             return controller
         }
-    val remoteSelector:MediaRouteSelector
-        get() =mediaRouter!!.selector
 
     private val isSeekable:Boolean
         get() = when {
@@ -592,7 +561,7 @@ class DownloadService: Service() {
         var offset = 1
         val noNetwork = !Util.isOffline(this) && !Util.isNetworkConnected(this)
         var warnNetwork = false
-        var newDownloadList = ArrayList<DownloadFile>()
+        val newDownloadList = ArrayList<DownloadFile>()
 
         if (songs.isEmpty()) return
 
@@ -2212,7 +2181,7 @@ class DownloadService: Service() {
             }
 
             nextMediaPlayer = MediaPlayer()
-            nextMediaPlayer!!.setWakeMode(this@DownloadService, PowerManager.PARTIAL_WAKE_LOCK)
+            nextMediaPlayer?.setWakeMode(this@DownloadService, PowerManager.PARTIAL_WAKE_LOCK)
             try
             {
                 nextMediaPlayer!!.audioSessionId = audioSessionId
@@ -2922,10 +2891,6 @@ class DownloadService: Service() {
             Log.w(TAG, "Failed to apply replay gain values", e)
         }
 
-    }
-    private fun resetPlaybackSpeed() {
-        Util.getPreferences(this).edit().remove(Constants.PREFERENCES_KEY_PLAYBACK_SPEED).apply()
-        Util.getPreferences(this).edit().remove(Constants.PREFERENCES_KEY_SONG_PLAYBACK_SPEED).apply()
     }
 
     @Synchronized private fun applyPlaybackParamsMain() {

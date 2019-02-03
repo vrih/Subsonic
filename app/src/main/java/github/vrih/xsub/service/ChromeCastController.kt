@@ -35,13 +35,12 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
     private var error = false
     private var isStopping = false
     private var afterUpdateComplete: Runnable? = null
-    private val MAX_PLAYLIST_SIZE = 50
+    private val maxPlaylistSize = 50
 
     private var mediaPlayer: RemoteMediaClient? = null
     private var gain = 0.5
     private var cachedProgress: Int = 0
     private var cachedDuration: Int = 0
-    private val TAG = "ChromeCastController"
     private var indexOffset = 0
 
     private val rmcCallback = object : RemoteMediaClient.Callback() {
@@ -49,7 +48,6 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
             super.onQueueStatusUpdated()
             val mediaQueueItem = mediaPlayer!!.currentItem
             val mediaQueue = mediaPlayer!!.mediaQueue
-            Log.w("CAST", "Callback $mediaQueueItem$mediaQueue")
             if (mediaQueueItem != null) {
                 val index = mediaQueue.indexOfItemWithId(mediaQueueItem.itemId)
                 downloadService.setCurrentPlaying(index + indexOffset)
@@ -59,8 +57,8 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
             if(indexOffset > 0) {
                 val songList = downloadService.songs
                 val index = mediaQueue.indexOfItemWithId(mediaQueueItem.itemId)
-                if(songList.size > indexOffset + MAX_PLAYLIST_SIZE) {
-                    appendPlaylist(listOf(downloadService.songs[index + indexOffset + MAX_PLAYLIST_SIZE]))
+                if(songList.size > indexOffset + maxPlaylistSize) {
+                    appendPlaylist(listOf(downloadService.songs[index + indexOffset + maxPlaylistSize]))
                 }
             }
         }
@@ -74,34 +72,28 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
     }
 
     override fun start() {
-        Log.w(TAG, "Attempting to start chromecast song")
-
         if (error) {
             error = false
-            Log.w(TAG, "Attempting to restart song")
             //startSong(downloadService.getCurrentPlaying(), true, 0);
             return
         }
 
         try {
             val result = mediaPlayer!!.play()
-            result.setResultCallback { result ->
-                if (result.status.isSuccess) {
+            result.setResultCallback { res ->
+                if (res.status.isSuccess) {
                     downloadService.setPlayerState(PlayerState.STARTED)
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to start")
         }
 
     }
 
     override fun stop() {
-        Log.w(TAG, "Attempting to stop chromecast song")
         try {
             mediaPlayer!!.pause()
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to pause")
         }
 
     }
@@ -120,13 +112,11 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
                 mediaPlayer!!.stop()
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to stop mediaPlayer", e)
         }
 
         try {
             mediaPlayer = null
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to shutdown application", e)
         }
 
         if (proxy != null) {
@@ -143,11 +133,10 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
 
     override fun setCurrentPlaying(index: Int){
         val adjustedIndex = index - indexOffset
-        if(adjustedIndex in 0..(MAX_PLAYLIST_SIZE - 1)) {
+        if(adjustedIndex in 0..(maxPlaylistSize - 1)) {
             mediaPlayer?.queueJumpToItem(mediaPlayer?.mediaQueue?.itemIdAtIndex(index - indexOffset)
                     ?: 0, null)
         } else {
-            Log.w(TAG, "Error setting current playing: Out of range")
         }
     }
 
@@ -170,7 +159,7 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
         // safe to append. If it is larger than the max then we'll do nothing in case we end up
         // with an out of order playlist
 
-        if(mediaPlayer!!.mediaQueue.itemCount < MAX_PLAYLIST_SIZE) {
+        if(mediaPlayer!!.mediaQueue.itemCount < maxPlaylistSize) {
             for (song in songs)
                 mediaPlayer!!.queueAppendItem(entryToQueueItem(song), null)
         }
@@ -198,7 +187,6 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
         try {
             mediaPlayer!!.setStreamVolume(gain)
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to the volume")
         }
 
     }
@@ -212,7 +200,6 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
         try {
             mediaPlayer!!.setStreamVolume(gain)
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to the volume")
         }
 
     }
@@ -249,7 +236,6 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
     }
 
     private fun startSong(index: Int, playlist: List<DownloadFile>?, autoStart: Boolean, position: Int) {
-        Log.w(TAG, "Starting song")
 
         if (playlist == null || playlist.isEmpty()) {
             try {
@@ -279,7 +265,7 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
             // There is a limit to the size of playlist that can be sent to chromecast. We limit to the next 20 tracks
             var shouldAdd = true
             for ((i, file )in playlist.withIndex()) {
-                if (playlist.size > MAX_PLAYLIST_SIZE) {
+                if (playlist.size > maxPlaylistSize) {
                     shouldAdd = when {
                         i < index -> false
                         i > index + 20 -> false
@@ -290,16 +276,15 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
             }
 
             // Reset index size to 0 if playlist was > MAX_PLAYLIST_SIZE
-            val newIndex = if (playlist.size > MAX_PLAYLIST_SIZE) 0 else index
-            indexOffset = if(playlist.size > MAX_PLAYLIST_SIZE) index else 0
+            val newIndex = if (playlist.size > maxPlaylistSize) 0 else index
+            indexOffset = if(playlist.size > maxPlaylistSize) index else 0
 
             val callback = ResultCallback<RemoteMediaClient.MediaChannelResult> { result ->
                 when {
                     result.status.isSuccess -> downloadService.setPlayerState(PlayerState.STARTED)
                     // Handled in other handler
-                    result.status.statusCode == CastStatusCodes.REPLACED -> Log.i(TAG, "Playlist was replaced")
+                    result.status.statusCode == CastStatusCodes.REPLACED -> Log.i("CAST", "Playlist was replaced")
                     else -> {
-                        Log.e(TAG, "Failed to load: " + result.status.toString())
                         failedLoad()
                     }
                 }
@@ -320,10 +305,8 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
             mediaPlayer!!.registerCallback(rmcCallback)
 
         } catch (e: IllegalStateException) {
-            Log.e(TAG, "Problem occurred with media during loading", e)
             failedLoad()
         } catch (e: Exception) {
-            Log.e(TAG, "Problem opening media during loading", e)
             failedLoad()
         }
 
@@ -378,7 +361,5 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
         mediaPlayer = mCastSession.remoteMediaClient
     }
 
-    companion object {
-        private val TAG = ChromeCastController::class.java.simpleName
-    }
+    companion object
 }

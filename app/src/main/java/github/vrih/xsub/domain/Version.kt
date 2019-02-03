@@ -26,9 +26,13 @@ import java.io.Serializable
  * @author Sindre Mehus
  * @version $Revision: 1.3 $ $Date: 2006/01/20 21:25:16 $
  */
-class Version : Comparable<Version>, Serializable {
+class Version
+/**
+ * Creates a new version instance by parsing the given string.
+ * @param version A string of the format "1.27", "1.27.2" or "1.27.beta3".
+ */(version: String) : Comparable<Version>, Serializable {
     private var major: Int = 0
-    var minor: Int = 0
+    private var minor: Int = 0
     private var beta: Int = 0
     private var bugfix: Int = 0
 
@@ -56,17 +60,10 @@ class Version : Comparable<Version>, Serializable {
             return ""
         }
 
-    constructor()
-
-    /**
-     * Creates a new version instance by parsing the given string.
-     * @param version A string of the format "1.27", "1.27.2" or "1.27.beta3".
-     */
-    constructor(version: String) {
+    init {
         val s = version.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         major = Integer.valueOf(s[0])
         minor = Integer.valueOf(s[1])
-
         if (s.size > 2) {
             if (s[2].contains("beta")) {
                 beta = Integer.valueOf(s[2].replace("beta", ""))

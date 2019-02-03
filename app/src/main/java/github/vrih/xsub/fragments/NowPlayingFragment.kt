@@ -1154,10 +1154,10 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         if (entry?.getRating() == 1) {
             rateBadButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_bad_selected))
         } else {
-            if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                badRating = R.drawable.ic_action_rating_bad
+            badRating = if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                R.drawable.ic_action_rating_bad
             } else {
-                badRating = DrawableTint.getDrawableRes(context, R.attr.rating_bad)
+                DrawableTint.getDrawableRes(context, R.attr.rating_bad)
             }
             rateBadButton.setImageResource(badRating)
         }
@@ -1229,9 +1229,7 @@ class NowPlayingFragment : SubsonicFragment(), OnGestureListener, SectionAdapter
         val entries = ArrayList<Entry>()
 
         for (downloadFile in selected) {
-            if (downloadFile.getSong() != null) {
-                entries.add(downloadFile.getSong())
-            }
+            downloadFile.song?.let { entries.add(it) }
         }
 
         return entries

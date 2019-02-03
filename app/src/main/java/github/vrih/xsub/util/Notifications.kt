@@ -44,10 +44,10 @@ object Notifications {
     private val TAG = Notifications::class.java.simpleName
 
     // Notification IDs.
-    private val NOTIFICATION_ID_PLAYING = 100
-    private val NOTIFICATION_ID_DOWNLOADING = 102
-    private val NOTIFICATION_ID_SHUT_GOOGLE_UP = 103
-    private val NOTIFICATION_SYNC_GROUP = "github.vrih.xsub.sync"
+    private const val NOTIFICATION_ID_PLAYING = 100
+    private const val NOTIFICATION_ID_DOWNLOADING = 102
+    private const val NOTIFICATION_ID_SHUT_GOOGLE_UP = 103
+    private const val NOTIFICATION_SYNC_GROUP = "github.vrih.xsub.sync"
 
     private var playShowing = false
     private var downloadShowing = false
@@ -421,8 +421,7 @@ object Notifications {
         // On Android O+, service crashes if startForeground isn't called within 5 seconds of starting
         getDownloadingNotificationChannel(downloadService)
 
-        val builder: NotificationCompat.Builder
-        builder = NotificationCompat.Builder(downloadService)
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(downloadService)
                 .setSmallIcon(android.R.drawable.stat_sys_download)
                 .setContentTitle(downloadService.resources.getString(R.string.download_downloading_title, 0))
                 .setContentText(downloadService.resources.getString(R.string.download_downloading_summary, "Temp"))
@@ -435,14 +434,12 @@ object Notifications {
 
     @JvmStatic
     fun showSyncNotification(context: Context, stringId: Int, extra: String, extraId: String?) {
-        var extra = extra
         if (Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_SYNC_NOTIFICATION, true)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 getSyncNotificationChannel(context)
             }
 
-            val builder: NotificationCompat.Builder
-            builder = NotificationCompat.Builder(context)
+            val builder: NotificationCompat.Builder = NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.stat_notify_sync)
                     .setContentTitle(context.resources.getString(stringId))
                     .setContentText(extra)

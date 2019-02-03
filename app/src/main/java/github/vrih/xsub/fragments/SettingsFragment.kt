@@ -32,10 +32,6 @@ class ServerSettingsFragment : PreferenceFragmentCompat() {
 
         addPreferencesFromResource(R.xml.settings_servers)
     }
-
-    companion object {
-        const val FRAGMENT_TAG = "server_settings_fragment"
-    }
 }
 
 class AppearanceSettingsFragment : PreferenceFragmentCompat() {
@@ -43,10 +39,6 @@ class AppearanceSettingsFragment : PreferenceFragmentCompat() {
         val settingsActivity: SettingsActivity = activity as SettingsActivity
         settingsActivity.updateActionBarTitle("Appearance")
         addPreferencesFromResource(R.xml.settings_appearance)
-    }
-
-    companion object {
-        const val FRAGMENT_TAG = "appearance_settings_fragment"
     }
 }
 
@@ -56,10 +48,6 @@ class DrawerSettingsFragment : PreferenceFragmentCompat() {
         settingsActivity.updateActionBarTitle("Drawer")
         addPreferencesFromResource(R.xml.settings_drawer)
     }
-
-    companion object {
-        const val FRAGMENT_TAG = "drawer_settings_fragment"
-    }
 }
 
 class CacheSettingsFragment : PreferenceFragmentCompat() {
@@ -67,10 +55,6 @@ class CacheSettingsFragment : PreferenceFragmentCompat() {
         val settingsActivity: SettingsActivity = activity as SettingsActivity
         settingsActivity.updateActionBarTitle("Cache")
         addPreferencesFromResource(R.xml.settings_cache)
-    }
-
-    companion object {
-        const val FRAGMENT_TAG = "cache_settings_fragment"
     }
 }
 
@@ -80,10 +64,6 @@ class CastSettingsFragment : PreferenceFragmentCompat() {
         settingsActivity.updateActionBarTitle("Cast")
         addPreferencesFromResource(R.xml.settings_cast)
     }
-
-    companion object {
-        const val FRAGMENT_TAG = "cast_settings_fragment"
-    }
 }
 
 class PlaybackSettingsFragment : PreferenceFragmentCompat() {
@@ -91,10 +71,6 @@ class PlaybackSettingsFragment : PreferenceFragmentCompat() {
         val settingsActivity: SettingsActivity = activity as SettingsActivity
         settingsActivity.updateActionBarTitle("Playback")
         addPreferencesFromResource(R.xml.settings_playback)
-    }
-
-    companion object {
-        const val FRAGMENT_TAG = "playback_settings_fragmett"
     }
 }
 
@@ -104,11 +80,4 @@ class SyncSettingsFragment : PreferenceFragmentCompat() {
         settingsActivity.updateActionBarTitle("Sync")
         addPreferencesFromResource(R.xml.settings_sync)
     }
-
-    companion object {
-        const val FRAGMENT_TAG = "sync_settings_fragment"
-    }
 }
-
-
-

@@ -93,7 +93,7 @@ class MusicDirectory : Serializable {
     }
 
     fun shuffleChildren() {
-        Collections.shuffle(this.children)
+        this.children.shuffle()
     }
 
     fun sortChildren(context: Context) {
@@ -245,9 +245,7 @@ class MusicDirectory : Serializable {
         val isAudioBook: Boolean
             get() = type == TYPE_AUDIO_BOOK
 
-        constructor() {
-
-        }
+        constructor()
 
         constructor(id: String) {
             this.id = id

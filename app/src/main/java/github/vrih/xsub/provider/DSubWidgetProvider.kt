@@ -106,7 +106,7 @@ open class DSubWidgetProvider : AppWidgetProvider() {
     private fun hasInstances(context: Context): Boolean {
         val manager = AppWidgetManager.getInstance(context)
         val appWidgetIds = manager.getAppWidgetIds(ComponentName(context, javaClass))
-        return appWidgetIds.size > 0
+        return appWidgetIds.isNotEmpty()
     }
 
     /**

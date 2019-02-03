@@ -52,7 +52,7 @@ class SearchCritera(val query: String, val artistCount: Int, val albumCount: Int
                     currentPart.append(c)
                 }
             }
-            if (currentPart.length > 0) {
+            if (currentPart.isNotEmpty()) {
                 regex.append(Pattern.quote(currentPart.toString()))
             }
 

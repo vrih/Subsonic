@@ -113,7 +113,6 @@ class ServerInfo : Serializable {
 
         @JvmStatic
         fun isMadsonic6(context: Context): Boolean = getServerType(context) == TYPE_MADSONIC && checkServerVersion("2.0")
-        fun isAmpache(context: Context): Boolean = getServerType(context) == TYPE_AMPACHE
 
         private fun getCacheName(context: Context, instance: Int): String {
             return "server-" + Util.getRestUrl(context, null, instance, false).hashCode() + ".ser"
