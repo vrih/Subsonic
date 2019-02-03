@@ -14,7 +14,6 @@ import android.util.Log
 import android.view.KeyEvent
 import androidx.collection.LruCache
 import androidx.mediarouter.media.MediaRouter
-import github.daneren2005.serverproxy.BufferProxy
 import github.vrih.xsub.R
 import github.vrih.xsub.audiofx.AudioEffectsController
 import github.vrih.xsub.audiofx.EqualizerController
@@ -92,7 +91,6 @@ class DownloadService: Service() {
     private var effectsController:AudioEffectsController? = null
     private var remoteState = LOCAL
     private var positionCache:PositionCache? = null
-    private var proxy:BufferProxy? = null
 
     private var sleepTimer:Timer? = null
     private var timerDuration:Int = 0
@@ -522,11 +520,6 @@ class DownloadService: Service() {
         {
             remoteController!!.stop()
             remoteController!!.shutdown()
-        }
-        if (proxy != null)
-        {
-            proxy!!.stop()
-            proxy = null
         }
         if (audioNoisyReceiver != null)
         {
@@ -1012,11 +1005,6 @@ class DownloadService: Service() {
 
         updateRemotePlaylist()
         setNextPlaying()
-        if (proxy != null)
-        {
-            proxy!!.stop()
-            proxy = null
-        }
 
         suggestedPlaylistName = null
         suggestedPlaylistId = null
@@ -1334,12 +1322,6 @@ class DownloadService: Service() {
         applyPlaybackParamsMain()
         setNextPlaying()
 
-        // Proxy should not be being used here since the next player was already setup to play
-        if (proxy != null)
-        {
-            proxy!!.stop()
-            proxy = null
-        }
         checkDownloads()
         updateRemotePlaylist()
     }
@@ -1379,7 +1361,7 @@ class DownloadService: Service() {
             }
             else
             {
-                if (proxy != null && currentPlaying!!.isCompleteFileAvailable)
+                if (currentPlaying!!.isCompleteFileAvailable)
                 {
                     doPlay(currentPlaying!!, position, playerState === STARTED)
                     return
@@ -2084,22 +2066,6 @@ class DownloadService: Service() {
                 downloadFile.updateModificationDate()
 
                 dataSource = file.absolutePath
-                if (isPartial && !Util.isOffline(this))
-                {
-                    if (proxy == null)
-                    {
-                        proxy = BufferProxy(this)
-                        proxy!!.start()
-                    }
-                    proxy!!.setBufferFile(downloadFile)
-                    dataSource = proxy!!.getPrivateAddress(dataSource)
-                    Log.i(TAG, "Data Source: " + dataSource!!)
-                }
-                else if (proxy != null)
-                {
-                    proxy!!.stop()
-                    proxy = null
-                }
             }
 
             mediaPlayer!!.setDataSource(dataSource)
