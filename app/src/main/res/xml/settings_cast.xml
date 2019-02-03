@@ -5,12 +5,6 @@
 		android:title="@string/settings.casting">
 
 		<SwitchPreference
-			android:title="@string/settings.casting_proxy"
-			android:summary="@string/settings.casting_proxy_summary"
-			android:key="castProxy"
-			android:defaultValue="false"/>
-
-		<SwitchPreference
 			android:title="@string/settings.gapless_playback"
 			android:summary="@string/settings.gapless_playback_summary"
 			android:key="castingGaplessPlayback"

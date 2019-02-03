@@ -409,8 +409,6 @@
 	<string name="settings.replay_gain_type.album">Album tags</string>
 	<string name="settings.replay_gain_type.track">Track tags</string>
     <string name="settings.casting">Casting</string>
-	<string name="settings.casting_proxy">Use device proxy</string>
-	<string name="settings.casting_proxy_summary">Stream everything through the device as a proxy.  This gets around issues such as using self-signed certificates.</string>
 	<string name="settings.rename_duplicates">Rename duplicate tracks</string>
 	<string name="settings.rename_duplicates_summary">Rename duplicate tracks to the original filename so you can tell them apart.</string>
 	<string name="settings.start_on_headphones">Start on headphones</string>

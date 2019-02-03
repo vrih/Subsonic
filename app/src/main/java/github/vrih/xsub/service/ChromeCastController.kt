@@ -118,11 +118,6 @@ class ChromeCastController(downloadService: DownloadService) : RemoteController(
             mediaPlayer = null
         } catch (e: Exception) {
         }
-
-        if (proxy != null) {
-            proxy.stop()
-            proxy = null
-        }
     }
 
     override fun updatePlaylist() {

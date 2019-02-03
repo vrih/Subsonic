@@ -278,11 +278,6 @@ public class DLNAController extends RemoteController {
 			callback = null;
 		}
 
-		if(proxy != null) {
-			proxy.stop();
-			proxy = null;
-		}
-
 		running = false;
 	}
 
@@ -520,20 +515,7 @@ public class DLNAController extends RemoteController {
 
 			if(song.getCoverArt() != null) {
 				String coverArt = null;
-				if(proxy == null || proxy instanceof WebProxy) {
 					coverArt = musicService.getCoverArtUrl(downloadService, song);
-
-					// If proxy is going, it is a web proxy
-					if(proxy != null) {
-						coverArt = proxy.getPublicAddress(coverArt);
-					}
-				} else {
-					File coverArtFile = FileUtil.getAlbumArtFile(downloadService, song);
-					if(coverArtFile != null && coverArtFile.exists()) {
-						coverArt = proxy.getPublicAddress(coverArtFile.getPath());
-					}
-				}
-
 				if(coverArt != null) {
 					DIDLObject.Property.UPNP.ALBUM_ART_URI albumArtUri = new DIDLObject.Property.UPNP.ALBUM_ART_URI(URI.create(coverArt));
 					musicTrack.addProperty(albumArtUri);
